@@ -1,0 +1,8 @@
+// BoxLang needs a value to infer the type!
+
+function main() {
+    var x = 42;
+    println( "x has the value #x#" );
+}
+
+main();

@@ -1,0 +1,37 @@
+# BoxLings User State
+.boxlings/
+*.log
+
+# TestBox
+testbox/
+
+# CommandBox
+.commandbox/
+
+# BoxLang
+.boxlang/
+
+# IDE
+.vscode/
+.idea/
+*.iml
+.project
+.settings/
+.classpath
+
+# OS
+.DS_Store
+Thumbs.db
+*.swp
+*.swo
+*~
+
+# Temp files
+tmp/
+temp/
+*.tmp
+
+# Build artifacts
+dist/
+build/
+target/

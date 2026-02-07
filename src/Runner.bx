@@ -1,0 +1,287 @@
+/**
+ * Runner - Exercise Executor and Validator
+ * 
+ * Runs exercises, executes tests, and validates results
+ */
+class {
+    
+    /**
+     * Run an exercise and return results
+     * 
+     * @exercise The exercise to run
+     * @verbose Whether to print output (default true)
+     * @return Struct with success, output, errors
+     */
+    function runExercise( required exercise, boolean verbose = true ) {
+        var result = {
+            success: false,
+            output: "",
+            errors: [],
+            compilationSuccess: false,
+            executionSuccess: false,
+            testSuccess: false
+        };
+        
+        try {
+            var fullPath = expandPath( exercise.path );
+            
+            // Check if exercise file exists
+            if ( !fileExists( fullPath ) ) {
+                result.errors.append( "Exercise file not found: #exercise.path#" );
+                if ( verbose ) {
+                    println( "❌ Exercise file not found: #exercise.path#" );
+                }
+                return result;
+            }
+            
+            if ( verbose ) {
+                println( "Running exercise: #exercise.getDisplayName()#" );
+                println( "File: #exercise.path#" );
+                
+                if ( exercise.test ) {
+                    println( "📝 This exercise has tests!" );
+                    if ( exercise.isReadMode() ) {
+                        println( "   Read the test first: #exercise.test_path#" );
+                    } else if ( exercise.isWriteMode() ) {
+                        println( "   Write your own tests in: #exercise.test_path#" );
+                    }
+                }
+                
+                println( "" );
+            }
+            
+            // Step 1: Try to compile/parse the exercise
+            if ( verbose ) {
+                print( "Compiling... " );
+            }
+            
+            var compileResult = compileExercise( exercise );
+            result.compilationSuccess = compileResult.success;
+            
+            if ( !compileResult.success ) {
+                result.errors.append( compileResult.errors );
+                result.output = compileResult.output;
+                
+                if ( verbose ) {
+                    println( "❌" );
+                    println( "" );
+                    println( "Compilation errors:" );
+                    println( compileResult.output );
+                }
+                
+                return result;
+            }
+            
+            if ( verbose ) {
+                println( "✓" );
+            }
+            
+            // Step 2: If exercise has tests, run them
+            if ( exercise.test ) {
+                if ( verbose ) {
+                    println( "" );
+                    println( "Running tests..." );
+                    println( "" );
+                }
+                
+                var testResult = runTests( exercise );
+                result.testSuccess = testResult.success;
+                result.output &= testResult.output;
+                
+                if ( !testResult.success ) {
+                    result.errors.append( "Tests failed" );
+                    
+                    if ( verbose ) {
+                        println( testResult.output );
+                        println( "" );
+                        println( "❌ Tests failed. Keep trying!" );
+                        println( "💡 Tip: The test output shows what's expected vs what you got." );
+                    }
+                    
+                    return result;
+                }
+                
+                if ( verbose ) {
+                    println( testResult.output );
+                }
+                
+                result.success = true;
+                return result;
+            }
+            
+            // Step 3: For non-test exercises, just execute and check for errors
+            if ( verbose ) {
+                print( "Executing... " );
+            }
+            
+            var execResult = executeExercise( exercise );
+            result.executionSuccess = execResult.success;
+            result.output = execResult.output;
+            
+            if ( !execResult.success ) {
+                result.errors.append( execResult.errors );
+                
+                if ( verbose ) {
+                    println( "❌" );
+                    println( "" );
+                    println( "Runtime errors:" );
+                    println( execResult.output );
+                }
+                
+                return result;
+            }
+            
+            if ( verbose ) {
+                println( "✓" );
+                
+                if ( execResult.output.trim() != "" ) {
+                    println( "" );
+                    println( "Output:" );
+                    println( execResult.output );
+                }
+            }
+            
+            result.success = true;
+            return result;
+            
+        } catch( any e ) {
+            result.errors.append( e.message );
+            
+            if ( verbose ) {
+                println( "❌ Unexpected error: #e.message#" );
+                if ( e.detail ?: "" != "" ) {
+                    println( "   #e.detail#" );
+                }
+            }
+            
+            return result;
+        }
+    }
+    
+    /**
+     * Compile/parse an exercise
+     */
+    private function compileExercise( required exercise ) {
+        try {
+            var fullPath = expandPath( exercise.path );
+            
+            // For BoxLang, we can try to parse/validate the file
+            // This is a simplified check - actual compilation happens on execution
+            
+            var content = fileRead( fullPath );
+            
+            // Basic syntax validation
+            if ( content.trim() == "" ) {
+                return {
+                    success: false,
+                    errors: [ "File is empty" ],
+                    output: "Error: The exercise file is empty"
+                };
+            }
+            
+            // TODO: Add more sophisticated syntax checking if BoxLang provides APIs
+            
+            return {
+                success: true,
+                errors: [],
+                output: ""
+            };
+            
+        } catch( any e ) {
+            return {
+                success: false,
+                errors: [ e.message ],
+                output: "Compilation error: #e.message#"
+            };
+        }
+    }
+    
+    /**
+     * Execute an exercise file
+     */
+    private function executeExercise( required exercise ) {
+        try {
+            var fullPath = expandPath( exercise.path );
+            var output = "";
+            var exitCode = 0;
+            
+            // Execute the exercise file
+            bx:execute
+                name="boxlang"
+                arguments="#fullPath#"
+                variable="output"
+                errorVariable="errorOutput"
+                returnVariable="exitCode"
+                timeout="30" {
+            }
+            
+            if ( exitCode != 0 ) {
+                return {
+                    success: false,
+                    errors: [ "Non-zero exit code: #exitCode#" ],
+                    output: errorOutput ?: output
+                };
+            }
+            
+            return {
+                success: true,
+                errors: [],
+                output: output ?: ""
+            };
+            
+        } catch( any e ) {
+            return {
+                success: false,
+                errors: [ e.message ],
+                output: "Execution error: #e.message#"
+            };
+        }
+    }
+    
+    /**
+     * Run TestBox tests for an exercise
+     */
+    private function runTests( required exercise ) {
+        var testFullPath = expandPath( exercise.test_path );
+        
+        if ( !fileExists( testFullPath ) ) {
+            return {
+                success: true,
+                output: "ℹ️  No test file found (expected: #exercise.test_path#)",
+                errors: []
+            };
+        }
+        
+        try {
+            var output = "";
+            var exitCode = 0;
+            
+            // Run TestBox via BoxLang CLI
+            // TestBox will print results directly to console
+            bx:execute
+                name="boxlang"
+                arguments="testbox run --bundles=#testFullPath#"
+                variable="output"
+                errorVariable="errorOutput"
+                returnVariable="exitCode"
+                timeout="30" {
+            }
+            
+            // Exit code 0 = all tests passed
+            var success = exitCode == 0;
+            
+            return {
+                success: success,
+                output: output ?: errorOutput,
+                errors: success ? [] : [ "Tests failed" ]
+            };
+            
+        } catch( any e ) {
+            return {
+                success: false,
+                output: "Test execution error: #e.message#",
+                errors: [ e.message ]
+            };
+        }
+    }
+}

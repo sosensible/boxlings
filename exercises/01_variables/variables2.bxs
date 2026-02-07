@@ -1,0 +1,9 @@
+// BoxLang uses type inference - it can figure out the type from the value.
+// TODO: Complete this line to make the code compile!
+
+function main() {
+    var x;
+    println( "x has the value #x#" );
+}
+
+main();

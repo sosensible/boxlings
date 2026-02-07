@@ -1,0 +1,15 @@
+// Need to add `var` keyword for MAX_POINTS
+
+function main() {
+    // Convention: Use UPPERCASE for "constant" values
+    var MAX_POINTS = 100;
+    
+    println( "The maximum points is: #MAX_POINTS#" );
+    
+    // This works in BoxLang (no true constants)
+    MAX_POINTS = 200;
+    
+    println( "But we can still change it to: #MAX_POINTS#" );
+}
+
+main();

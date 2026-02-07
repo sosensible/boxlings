@@ -1,0 +1,4 @@
+// The function name was wrong - it should be println(), not printline()!
+
+println( "Hello from BoxLings!" );
+println( "I'm ready to learn BoxLang!" );

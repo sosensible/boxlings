@@ -1,0 +1,321 @@
+/**
+ * BoxLings - Interactive BoxLang Learning Tool
+ * 
+ * Main CLI entry point with main() convention
+ * Inspired by rustlings
+ */
+class {
+
+    /**
+     * Main entry point for BoxLings CLI
+     * 
+     * @args Array of command line arguments
+     */
+    function main( args = [] ) {
+        try {
+            // Parse CLI arguments
+            var cli = new src.CLI();
+            var parsed = cli.parse( args );
+            
+            // Show version
+            if ( parsed.options.version ?: false ) {
+                printVersion();
+                return;
+            }
+            
+            // Show help
+            if ( parsed.options.help ?: false ) {
+                printHelp();
+                return;
+            }
+            
+            // Load exercise info
+            var infoFile = new src.InfoFile();
+            var exercises = infoFile.loadExercises();
+            
+            if ( exercises.isEmpty() ) {
+                println( "❌ No exercises found! Check info.json" );
+                cliExit( 1 );
+            }
+            
+            // Initialize app state
+            var appState = new src.AppState( exercises );
+            
+            // Route to command
+            var command = parsed.positionals.len() > 0 ? parsed.positionals[1] : "watch";
+            
+            switch( command ) {
+                case "run":
+                    runCommand( appState, parsed );
+                    break;
+                case "check-all":
+                    checkAllCommand( appState );
+                    break;
+                case "reset":
+                    resetCommand( appState, parsed );
+                    break;
+                case "hint":
+                    hintCommand( appState, parsed );
+                    break;
+                case "show-test":
+                    showTestCommand( appState, parsed );
+                    break;
+                case "list":
+                    listCommand( appState );
+                    break;
+                case "watch":
+                default:
+                    watchCommand( appState );
+                    break;
+            }
+            
+        } catch( any e ) {
+            println( "❌ Error: #e.message#" );
+            if ( e.detail ?: "" != "" ) {
+                println( "   #e.detail#" );
+            }
+            cliExit( 1 );
+        }
+    }
+    
+    /**
+     * Run a specific exercise or the next pending one
+     */
+    private function runCommand( required appState, required parsed ) {
+        var exerciseName = parsed.positionals.len() > 1 ? parsed.positionals[2] : "";
+        
+        if ( exerciseName != "" ) {
+            appState.setCurrentByName( exerciseName );
+        }
+        
+        var runner = new src.Runner();
+        var result = runner.runExercise( appState.getCurrent() );
+        
+        if ( result.success ) {
+            println( "✅ Exercise complete!" );
+            appState.markCurrentDone();
+        } else {
+            println( "❌ Exercise failed. Keep trying!" );
+            cliExit( 1 );
+        }
+    }
+    
+    /**
+     * Check all exercises
+     */
+    private function checkAllCommand( required appState ) {
+        println( "Checking all exercises..." );
+        println( "" );
+        
+        var runner = new src.Runner();
+        var total = appState.getExercises().len();
+        var passed = 0;
+        
+        appState.getExercises().each( function( exercise, index ) {
+            print( "[#index#/#total#] #exercise.name#... " );
+            
+            var result = runner.runExercise( exercise, false ); // silent mode
+            
+            if ( result.success ) {
+                println( "✓" );
+                passed++;
+                exercise.done = true;
+            } else {
+                println( "✗" );
+                exercise.done = false;
+            }
+        });
+        
+        appState.save();
+        
+        println( "" );
+        println( "Results: #passed#/#total# exercises passing" );
+        
+        if ( passed < total ) {
+            var pending = total - passed;
+            println( "❌ #pending# exercise#pending == 1 ? '' : 's'# still need work" );
+            cliExit( 1 );
+        } else {
+            println( "🎉 All exercises complete!" );
+        }
+    }
+    
+    /**
+     * Reset an exercise to original state
+     */
+    private function resetCommand( required appState, required parsed ) {
+        if ( parsed.positionals.len() < 2 ) {
+            println( "❌ Usage: boxlang BoxLings.bx reset <exercise_name>" );
+            cliExit( 1 );
+        }
+        
+        var exerciseName = parsed.positionals[2];
+        appState.setCurrentByName( exerciseName );
+        
+        var exercise = appState.getCurrent();
+        var sourcePath = "solutions/#exercise.dir#/#exercise.name##exercise.extension#";
+        
+        if ( !fileExists( sourcePath ) ) {
+            println( "❌ Solution file not found: #sourcePath#" );
+            cliExit( 1 );
+        }
+        
+        fileCopy( sourcePath, exercise.path );
+        println( "✅ Exercise reset: #exercise.path#" );
+    }
+    
+    /**
+     * Show hint for exercise
+     */
+    private function hintCommand( required appState, required parsed ) {
+        var exerciseName = parsed.positionals.len() > 1 ? parsed.positionals[2] : "";
+        
+        if ( exerciseName != "" ) {
+            appState.setCurrentByName( exerciseName );
+        }
+        
+        var exercise = appState.getCurrent();
+        
+        println( "💡 Hint for #exercise.name#:" );
+        println( "" );
+        println( exercise.hint );
+    }
+    
+    /**
+     * Show test file for exercise
+     */
+    private function showTestCommand( required appState, required parsed ) {
+        var exerciseName = parsed.positionals.len() > 1 ? parsed.positionals[2] : "";
+        
+        if ( exerciseName != "" ) {
+            appState.setCurrentByName( exerciseName );
+        }
+        
+        var exercise = appState.getCurrent();
+        
+        if ( !exercise.test ) {
+            println( "ℹ️  Exercise #exercise.name# has no tests" );
+            return;
+        }
+        
+        println( "📝 Test file: #exercise.test_path#" );
+        println( "" );
+        
+        if ( fileExists( exercise.test_path ) ) {
+            var content = fileRead( exercise.test_path );
+            println( content );
+        } else {
+            println( "❌ Test file not found: #exercise.test_path#" );
+        }
+    }
+    
+    /**
+     * List all exercises
+     */
+    private function listCommand( required appState ) {
+        var terminal = new src.Terminal();
+        
+        println( "BoxLings Exercises" );
+        println( "==================" );
+        println( "" );
+        
+        var currentTopic = "";
+        
+        appState.getExercises().each( function( exercise, index ) {
+            // Print topic header
+            if ( exercise.dir != currentTopic ) {
+                currentTopic = exercise.dir;
+                println( "" );
+                println( "## #currentTopic#" );
+            }
+            
+            var status = exercise.done ? "✓" : "○";
+            var current = appState.getCurrentIndex() == index ? "→ " : "  ";
+            
+            println( "#current##status# #exercise.name#" );
+        });
+        
+        println( "" );
+        var progress = appState.getProgress();
+        println( "Progress: #progress.completed#/#progress.total# exercises complete" );
+    }
+    
+    /**
+     * Watch mode - interactive learning
+     */
+    private function watchCommand( required appState ) {
+        var terminal = new src.Terminal();
+        
+        // Show welcome message on first run
+        if ( appState.getCurrentIndex() == 1 ) {
+            terminal.showWelcome();
+        }
+        
+        println( "🦀 Welcome to BoxLings!" );
+        println( "" );
+        println( "Starting watch mode..." );
+        println( "Press 'h' for help" );
+        println( "" );
+        
+        // TODO: Implement full watch mode in Phase 2
+        // For now, run current exercise
+        var runner = new src.Runner();
+        var exercise = appState.getCurrent();
+        
+        println( "Current exercise: #exercise.name#" );
+        println( "File: #exercise.path#" );
+        if ( exercise.test ) {
+            println( "Test: #exercise.test_path#" );
+        }
+        println( "" );
+        
+        var result = runner.runExercise( exercise );
+        
+        if ( result.success ) {
+            println( "" );
+            println( "✅ Exercise complete! Enter 'n' to move to the next exercise." );
+            println( "   Run: boxlang BoxLings.bx run" );
+        } else {
+            println( "" );
+            println( "Keep trying! Press 'h' for a hint." );
+            println( "   Hint: boxlang BoxLings.bx hint" );
+        }
+    }
+    
+    /**
+     * Print version information
+     */
+    private function printVersion() {
+        println( "BoxLings v1.0.0" );
+        println( "Interactive BoxLang learning tool" );
+    }
+    
+    /**
+     * Print help message
+     */
+    private function printHelp() {
+        println( "BoxLings - Interactive BoxLang Learning Tool" );
+        println( "" );
+        println( "USAGE:" );
+        println( "    boxlang BoxLings.bx [COMMAND] [OPTIONS]" );
+        println( "" );
+        println( "COMMANDS:" );
+        println( "    (default)        Start watch mode (interactive)" );
+        println( "    run [name]       Run specific exercise or next pending" );
+        println( "    check-all        Check all exercises" );
+        println( "    reset <name>     Reset exercise to original state" );
+        println( "    hint [name]      Show hint for exercise" );
+        println( "    show-test [name] Display test file for exercise" );
+        println( "    list             List all exercises with status" );
+        println( "" );
+        println( "OPTIONS:" );
+        println( "    --help           Show this help message" );
+        println( "    --version        Show version information" );
+        println( "" );
+        println( "EXAMPLES:" );
+        println( "    boxlang BoxLings.bx                    ## Start watch mode" );
+        println( "    boxlang BoxLings.bx run variables1     ## Run specific exercise" );
+        println( "    boxlang BoxLings.bx hint variables1    ## Show hint" );
+        println( "    boxlang BoxLings.bx list               ## List all exercises" );
+    }
+}

@@ -1,0 +1,68 @@
+{
+  "format_version": 1,
+  "welcome_message": "Welcome to BoxLings! We'll teach you BoxLang AND test-driven development. For exercises with tests, read the test file first to understand what your code should do!",
+  "final_message": "Congratulations! You've mastered BoxLang fundamentals. Keep practicing and building amazing things with BoxLang!",
+  "exercises": [
+    {
+      "name": "intro1",
+      "dir": "00_intro",
+      "path": "exercises/00_intro/intro1.bxs",
+      "test": false,
+      "hint": "This exercise is just to verify your setup. Enter 'n' to move on to the next exercise.",
+      "skip_check_unsolved": true
+    },
+    {
+      "name": "intro2",
+      "dir": "00_intro",
+      "path": "exercises/00_intro/intro2.bxs",
+      "test": false,
+      "hint": "The compiler is telling you that the function name is wrong. Read the error message carefully - it suggests the correct function name!"
+    },
+    {
+      "name": "variables1",
+      "dir": "01_variables",
+      "path": "exercises/01_variables/variables1.bxs",
+      "test": false,
+      "hint": "In BoxLang, you need the 'var' keyword to declare variables inside functions."
+    },
+    {
+      "name": "variables2",
+      "dir": "01_variables",
+      "path": "exercises/01_variables/variables2.bxs",
+      "test": false,
+      "hint": "BoxLang uses type inference - it can figure out the type from the value you assign. Try giving 'x' a value!"
+    },
+    {
+      "name": "variables3",
+      "dir": "01_variables",
+      "path": "exercises/01_variables/variables3.bxs",
+      "test": true,
+      "test_path": "exercises/01_variables/variables3Test.bx",
+      "test_mode": "read",
+      "hint": "Read the test file first! It tells you exactly what values to use. The test expects x=10, y=20, and sum=30."
+    },
+    {
+      "name": "variables4",
+      "dir": "01_variables",
+      "path": "exercises/01_variables/variables4.bxs",
+      "test": false,
+      "hint": "In BoxLang, variables are dynamically typed - you can reassign them to different types!"
+    },
+    {
+      "name": "variables5",
+      "dir": "01_variables",
+      "path": "exercises/01_variables/variables5.bxs",
+      "test": true,
+      "test_path": "exercises/01_variables/variables5Test.bx",
+      "test_mode": "read",
+      "hint": "Shadowing allows you to reuse variable names. Check the test to see what the final value should be."
+    },
+    {
+      "name": "variables6",
+      "dir": "01_variables",
+      "path": "exercises/01_variables/variables6.bxs",
+      "test": false,
+      "hint": "Constants in BoxLang... well, BoxLang doesn't have true constants like other languages. Variables can always be reassigned!"
+    }
+  ]
+}

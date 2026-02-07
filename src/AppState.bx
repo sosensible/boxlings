@@ -1,0 +1,234 @@
+/**
+ * AppState - Progress Tracking and State Management
+ * 
+ * Manages exercise state and user progress
+ */
+class {
+    
+    property name="exercises" type="array";
+    property name="currentIndex" type="numeric" default="1";
+    property name="statePath" type="string" default=".boxlings/state.json";
+    
+    /**
+     * Constructor
+     */
+    function init( required array exercises ) {
+        variables.exercises = arguments.exercises;
+        variables.currentIndex = 1;
+        
+        // Load saved state if exists
+        loadState();
+        
+        return this;
+    }
+    
+    /**
+     * Load state from JSON file
+     */
+    function loadState() {
+        var fullPath = expandPath( variables.statePath );
+        
+        if ( !fileExists( fullPath ) ) {
+            return;
+        }
+        
+        try {
+            var content = fileRead( fullPath );
+            var state = JSONDeserialize( content );
+            
+            // Restore current index
+            if ( state.keyExists( "currentIndex" ) ) {
+                variables.currentIndex = state.currentIndex;
+            }
+            
+            // Restore exercise done status
+            if ( state.keyExists( "exercises" ) && isArray( state.exercises ) ) {
+                state.exercises.each( function( savedExercise ) {
+                    var exercise = findExerciseByName( savedExercise.name );
+                    if ( !isNull( exercise ) ) {
+                        exercise.done = savedExercise.done ?: false;
+                    }
+                });
+            }
+            
+        } catch( any e ) {
+            // Ignore errors loading state - just start fresh
+            println( "⚠️  Warning: Could not load saved state. Starting fresh." );
+        }
+    }
+    
+    /**
+     * Save state to JSON file
+     */
+    function save() {
+        var state = {
+            currentIndex: variables.currentIndex,
+            lastUpdated: now(),
+            exercises: variables.exercises.map( function( exercise ) {
+                return {
+                    name: exercise.name,
+                    done: exercise.done
+                };
+            })
+        };
+        
+        var fullPath = expandPath( variables.statePath );
+        
+        // Ensure directory exists
+        var dir = getDirectoryFromPath( fullPath );
+        if ( !directoryExists( dir ) ) {
+            directoryCreate( dir, true, true );
+        }
+        
+        fileWrite( fullPath, JSONSerialize( state ) );
+    }
+    
+    /**
+     * Get current exercise
+     */
+    function getCurrent() {
+        if ( variables.currentIndex < 1 || variables.currentIndex > variables.exercises.len() ) {
+            throw(
+                type = "InvalidIndex",
+                message = "Current index out of bounds: #variables.currentIndex#"
+            );
+        }
+        
+        return variables.exercises[ variables.currentIndex ];
+    }
+    
+    /**
+     * Get current index
+     */
+    function getCurrentIndex() {
+        return variables.currentIndex;
+    }
+    
+    /**
+     * Set current exercise by name
+     */
+    function setCurrentByName( required string name ) {
+        var found = false;
+        
+        variables.exercises.each( function( exercise, index ) {
+            if ( exercise.name == name ) {
+                variables.currentIndex = index;
+                found = true;
+            }
+        });
+        
+        if ( !found ) {
+            throw(
+                type = "ExerciseNotFound",
+                message = "Exercise not found: #name#"
+            );
+        }
+        
+        save();
+    }
+    
+    /**
+     * Find exercise by name
+     */
+    private function findExerciseByName( required string name ) {
+        var result = variables.exercises.filter( function( exercise ) {
+            return exercise.name == name;
+        });
+        
+        return result.len() > 0 ? result[1] : null;
+    }
+    
+    /**
+     * Mark current exercise as done and move to next
+     */
+    function markCurrentDone() {
+        var current = getCurrent();
+        current.markDone();
+        save();
+    }
+    
+    /**
+     * Move to next exercise
+     */
+    function moveToNext() {
+        if ( variables.currentIndex < variables.exercises.len() ) {
+            variables.currentIndex++;
+            save();
+        }
+    }
+    
+    /**
+     * Move to previous exercise
+     */
+    function moveToPrevious() {
+        if ( variables.currentIndex > 1 ) {
+            variables.currentIndex--;
+            save();
+        }
+    }
+    
+    /**
+     * Get all exercises
+     */
+    function getExercises() {
+        return variables.exercises;
+    }
+    
+    /**
+     * Get progress statistics
+     */
+    function getProgress() {
+        var completed = variables.exercises.filter( function( exercise ) {
+            return exercise.done;
+        }).len();
+        
+        var total = variables.exercises.len();
+        var percentage = total > 0 ? round( (completed / total) * 100 ) : 0;
+        
+        return {
+            completed: completed,
+            total: total,
+            percentage: percentage,
+            remaining: total - completed
+        };
+    }
+    
+    /**
+     * Get next pending exercise
+     */
+    function getNextPending() {
+        var found = variables.exercises.filter( function( exercise ) {
+            return !exercise.done;
+        });
+        
+        return found.len() > 0 ? found[1] : null;
+    }
+    
+    /**
+     * Check if all exercises are complete
+     */
+    function isComplete() {
+        return getProgress().completed == getProgress().total;
+    }
+    
+    /**
+     * Reset all progress
+     */
+    function reset() {
+        variables.exercises.each( function( exercise ) {
+            exercise.markPending();
+        });
+        
+        variables.currentIndex = 1;
+        save();
+    }
+    
+    /**
+     * Get exercises by topic/directory
+     */
+    function getExercisesByTopic( required string topic ) {
+        return variables.exercises.filter( function( exercise ) {
+            return exercise.dir == topic;
+        });
+    }
+}

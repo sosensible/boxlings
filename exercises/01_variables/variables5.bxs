@@ -1,0 +1,19 @@
+// Shadowing allows you to reuse variable names within the same scope.
+// This exercise has tests! Read variables5Test.bx first.
+//
+// TODO: Fix this code to make the tests pass!
+
+function main() {
+    var x = 5;
+    println( "x is: #x#" );
+    
+    var x = x * 2;
+    println( "x is now: #x#" );
+    
+    var x = x + 5;
+    println( "x is finally: #x#" );
+    
+    return x;
+}
+
+var result = main();

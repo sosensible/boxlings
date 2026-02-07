@@ -1,0 +1,143 @@
+/**
+ * InfoFile Parser
+ * 
+ * Loads and parses exercise metadata from info.json
+ */
+class {
+    
+    property name="infoPath" type="string" default="info.json";
+    property name="formatVersion" type="numeric" default="1";
+    property name="welcomeMessage" type="string" default="";
+    property name="finalMessage" type="string" default="";
+    
+    /**
+     * Constructor
+     */
+    function init( string infoPath = "info.json" ) {
+        variables.infoPath = arguments.infoPath;
+        return this;
+    }
+    
+    /**
+     * Load exercises from info.json
+     * 
+     * @return Array of Exercise objects
+     */
+    function loadExercises() {
+        var fullPath = expandPath( variables.infoPath );
+        
+        if ( !fileExists( fullPath ) ) {
+            throw(
+                type = "InfoFileNotFound",
+                message = "info.json file not found",
+                detail = "Expected to find info.json at: #fullPath#"
+            );
+        }
+        
+        try {
+            var content = fileRead( fullPath );
+            var data = JSONDeserialize( content );
+            
+            // Validate format version
+            if ( data.keyExists( "format_version" ) ) {
+                variables.formatVersion = data.format_version;
+                
+                if ( variables.formatVersion > 1 ) {
+                    throw(
+                        type = "UnsupportedFormatVersion",
+                        message = "Unsupported info.json format version: #variables.formatVersion#",
+                        detail = "This version of BoxLings only supports format version 1"
+                    );
+                }
+            }
+            
+            // Store messages
+            if ( data.keyExists( "welcome_message" ) ) {
+                variables.welcomeMessage = data.welcome_message;
+            }
+            
+            if ( data.keyExists( "final_message" ) ) {
+                variables.finalMessage = data.final_message;
+            }
+            
+            // Parse exercises
+            if ( !data.keyExists( "exercises" ) || !isArray( data.exercises ) ) {
+                throw(
+                    type = "InvalidInfoFile",
+                    message = "info.json missing 'exercises' array"
+                );
+            }
+            
+            var exercises = [];
+            
+            data.exercises.each( function( exerciseData ) {
+                exercises.append( parseExercise( exerciseData ) );
+            });
+            
+            return exercises;
+            
+        } catch( any e ) {
+            if ( e.type == "InfoFileNotFound" || e.type == "UnsupportedFormatVersion" || e.type == "InvalidInfoFile" ) {
+                rethrow;
+            }
+            
+            throw(
+                type = "InfoFileParseError",
+                message = "Failed to parse info.json",
+                detail = e.message
+            );
+        }
+    }
+    
+    /**
+     * Parse a single exercise from JSON data
+     */
+    private function parseExercise( required struct data ) {
+        // Validate required fields
+        if ( !data.keyExists( "name" ) ) {
+            throw( type = "InvalidExercise", message = "Exercise missing 'name' field" );
+        }
+        
+        if ( !data.keyExists( "dir" ) ) {
+            throw( type = "InvalidExercise", message = "Exercise '#data.name#' missing 'dir' field" );
+        }
+        
+        if ( !data.keyExists( "path" ) ) {
+            throw( type = "InvalidExercise", message = "Exercise '#data.name#' missing 'path' field" );
+        }
+        
+        // Create Exercise object
+        return new Exercise(
+            name = data.name,
+            dir = data.dir,
+            path = data.path,
+            test = data.test ?: false,
+            test_path = data.test_path ?: "",
+            test_mode = data.test_mode ?: "read",
+            hint = data.hint ?: "No hint available for this exercise.",
+            done = false, // Always start as not done
+            skip_check_unsolved = data.skip_check_unsolved ?: false
+        );
+    }
+    
+    /**
+     * Get welcome message
+     */
+    function getWelcomeMessage() {
+        return variables.welcomeMessage;
+    }
+    
+    /**
+     * Get final message
+     */
+    function getFinalMessage() {
+        return variables.finalMessage;
+    }
+    
+    /**
+     * Get format version
+     */
+    function getFormatVersion() {
+        return variables.formatVersion;
+    }
+}

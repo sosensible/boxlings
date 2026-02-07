@@ -1,0 +1,51 @@
+{
+    "name": "BoxLings",
+    "version": "1.0.0",
+    "author": "Luis Majano <lmajano@ortussolutions.com>",
+    "slug": "boxlings",
+    "type": "boxlang",
+    "homepage": "https://github.com/ortus-boxlang/boxlings",
+    "documentation": "https://github.com/ortus-boxlang/boxlings/blob/main/README.md",
+    "repository": {
+        "type": "git",
+        "url": "https://github.com/ortus-boxlang/boxlings.git"
+    },
+    "bugs": "https://github.com/ortus-boxlang/boxlings/issues",
+    "shortDescription": "Interactive BoxLang learning tool with TDD/BDD exercises",
+    "description": "BoxLings is a collection of small exercises to get you used to reading and writing BoxLang code while learning test-driven development. Inspired by rustlings.",
+    "keywords": [
+        "boxlang",
+        "learning",
+        "exercises",
+        "tutorial",
+        "cli",
+        "tdd",
+        "bdd",
+        "testing",
+        "testbox",
+        "education"
+    ],
+    "private": false,
+    "license": [
+        {
+            "type": "MIT",
+            "url": "https://opensource.org/licenses/MIT"
+        }
+    ],
+    "devDependencies": {
+        "testbox": "^6.0.0"
+    },
+    "installPaths": {
+        "testbox": "testbox/"
+    },
+    "scripts": {
+        "start": "boxlang BoxLings.bx",
+        "test": "boxlang testbox run",
+        "test:watch": "boxlang testbox run --watch",
+        "test:verbose": "boxlang testbox run --verbose",
+        "install": "box install"
+    },
+    "engines": {
+        "boxlang": ">=1.0.0"
+    }
+}

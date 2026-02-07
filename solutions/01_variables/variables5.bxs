@@ -1,0 +1,16 @@
+// Shadowing: declaring var x multiple times creates new bindings
+
+function main() {
+    var x = 5;
+    println( "x is: #x#" );
+    
+    var x = x * 2;
+    println( "x is now: #x#" );
+    
+    var x = x + 5;
+    println( "x is finally: #x#" );
+    
+    return x;
+}
+
+var result = main();

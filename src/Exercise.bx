@@ -1,0 +1,136 @@
+/**
+ * Exercise Model
+ * 
+ * Represents a single BoxLings exercise with metadata
+ */
+class {
+    
+    // Properties
+    property name="name" type="string";
+    property name="dir" type="string";
+    property name="path" type="string";
+    property name="test" type="boolean" default="false";
+    property name="test_path" type="string" default="";
+    property name="test_mode" type="string" default="read";
+    property name="hint" type="string" default="";
+    property name="done" type="boolean" default="false";
+    property name="skip_check_unsolved" type="boolean" default="false";
+    
+    /**
+     * Constructor
+     */
+    function init(
+        required string name,
+        required string dir,
+        required string path,
+        boolean test = false,
+        string test_path = "",
+        string test_mode = "read",
+        string hint = "",
+        boolean done = false,
+        boolean skip_check_unsolved = false
+    ) {
+        variables.name = arguments.name;
+        variables.dir = arguments.dir;
+        variables.path = arguments.path;
+        variables.test = arguments.test;
+        variables.test_path = arguments.test_path;
+        variables.test_mode = arguments.test_mode;
+        variables.hint = arguments.hint;
+        variables.done = arguments.done;
+        variables.skip_check_unsolved = arguments.skip_check_unsolved;
+        
+        return this;
+    }
+    
+    /**
+     * Get file extension from path
+     */
+    function getExtension() {
+        var parts = variables.path.listToArray( "." );
+        return parts.len() > 0 ? "." & parts[ parts.len() ] : ".bxs";
+    }
+    
+    /**
+     * Check if exercise file exists
+     */
+    function exists() {
+        return fileExists( variables.path );
+    }
+    
+    /**
+     * Check if test file exists
+     */
+    function testExists() {
+        return variables.test && variables.test_path != "" && fileExists( variables.test_path );
+    }
+    
+    /**
+     * Get display name for terminal
+     */
+    function getDisplayName() {
+        return "[#variables.dir#] #variables.name#";
+    }
+    
+    /**
+     * Mark as done
+     */
+    function markDone() {
+        variables.done = true;
+    }
+    
+    /**
+     * Mark as pending
+     */
+    function markPending() {
+        variables.done = false;
+    }
+    
+    /**
+     * Is this a read-tests exercise?
+     */
+    function isReadMode() {
+        return variables.test && variables.test_mode == "read";
+    }
+    
+    /**
+     * Is this a write-tests exercise?
+     */
+    function isWriteMode() {
+        return variables.test && variables.test_mode == "write";
+    }
+    
+    /**
+     * Convert to struct for serialization
+     */
+    function toStruct() {
+        return {
+            name: variables.name,
+            dir: variables.dir,
+            path: variables.path,
+            test: variables.test,
+            test_path: variables.test_path,
+            test_mode: variables.test_mode,
+            hint: variables.hint,
+            done: variables.done,
+            skip_check_unsolved: variables.skip_check_unsolved
+        };
+    }
+    
+    /**
+     * Create from struct
+     */
+    static function fromStruct( required struct data ) {
+        return new Exercise(
+            name = data.name,
+            dir = data.dir,
+            path = data.path,
+            test = data.test ?: false,
+            test_path = data.test_path ?: "",
+            test_mode = data.test_mode ?: "read",
+            hint = data.hint ?: "",
+            done = data.done ?: false,
+            skip_check_unsolved = data.skip_check_unsolved ?: false
+        );
+    }
+}

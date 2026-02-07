@@ -1,0 +1,9 @@
+// In BoxLang, you need the `var` keyword to declare variables inside functions.
+// TODO: Add the missing keyword to make this code compile!
+
+function main() {
+    x = 5;
+    println( "x has the value #x#" );
+}
+
+main();

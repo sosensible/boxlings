@@ -1,0 +1,157 @@
+/**
+ * Terminal - UI Utilities and Display Helpers
+ * 
+ * Handles terminal output, colors, and formatting
+ */
+class {
+    
+    /**
+     * Show welcome message
+     */
+    function showWelcome() {
+        CLIClear();
+        
+        println( "       Welcome to...                      " );
+        println( "                 _                        " );
+        println( "  ___  _____  __| |   (_)_ __   __ _ ___  " );
+        println( " / _ \/ _  \ \/ /| |  | | '_ \ / _` / __| " );
+        println( "|  __/ (_) |>  < | |__| | | | | (_| \__ \ " );
+        println( " \___|\____/_/\_\|____|_|_| |_|\__, |___/ " );
+        println( "                                |___/      " );
+        println( "" );
+        println( "Welcome to BoxLings!" );
+        println( "" );
+        println( "BoxLings will teach you BoxLang through small exercises with intentional errors." );
+        println( "But there's something special: we also teach you Test-Driven Development (TDD)!" );
+        println( "" );
+        println( "HOW IT WORKS:" );
+        println( "1. For exercises with tests, READ THE TEST FILE FIRST" );
+        println( "2. The test tells you EXACTLY what your code should do" );
+        println( "3. Fix the exercise code until the tests pass" );
+        println( "4. Later, you'll write your own tests!" );
+        println( "" );
+        println( "WHY TESTS MATTER:" );
+        println( "- Tests are documentation that never gets out of date" );
+        println( "- Tests give you confidence your code works" );
+        println( "- Professional developers use tests every day" );
+        println( "" );
+        println( "Let's get started!" );
+        println( "" );
+        println( "Press ENTER to continue..." );
+        
+        CLIRead();
+        CLIClear();
+    }
+    
+    /**
+     * Show completion message
+     */
+    function showCompletion( required string message ) {
+        println( "" );
+        println( "🎉 ═══════════════════════════════════════════════════════════════" );
+        println( "" );
+        println( "                    CONGRATULATIONS!" );
+        println( "" );
+        println( "         You've completed all BoxLings exercises!" );
+        println( "" );
+        println( "🎉 ═══════════════════════════════════════════════════════════════" );
+        println( "" );
+        
+        if ( message != "" ) {
+            println( message );
+            println( "" );
+        }
+    }
+    
+    /**
+     * Show progress bar
+     */
+    function showProgress( required numeric completed, required numeric total ) {
+        var percentage = total > 0 ? round( (completed / total) * 100 ) : 0;
+        var barWidth = 40;
+        var filledWidth = round( (percentage / 100) * barWidth );
+        
+        var bar = "";
+        for ( var i = 1; i <= barWidth; i++ ) {
+            bar &= i <= filledWidth ? "█" : "░";
+        }
+        
+        println( "[#bar#] #percentage#% (#completed#/#total#)" );
+    }
+    
+    /**
+     * Print with color (simplified - full ANSI support in future)
+     */
+    function printColor( required string text, string color = "default" ) {
+        // TODO: Add ANSI color codes
+        // For now, just print normally
+        println( text );
+    }
+    
+    /**
+     * Print success message
+     */
+    function printSuccess( required string text ) {
+        println( "✅ #text#" );
+    }
+    
+    /**
+     * Print error message
+     */
+    function printError( required string text ) {
+        println( "❌ #text#" );
+    }
+    
+    /**
+     * Print info message
+     */
+    function printInfo( required string text ) {
+        println( "ℹ️  #text#" );
+    }
+    
+    /**
+     * Print warning message
+     */
+    function printWarning( required string text ) {
+        println( "⚠️  #text#" );
+    }
+    
+    /**
+     * Print hint
+     */
+    function printHint( required string text ) {
+        println( "💡 #text#" );
+    }
+    
+    /**
+     * Print test indicator
+     */
+    function printTest( required string text ) {
+        println( "🧪 #text#" );
+    }
+    
+    /**
+     * Clear terminal
+     */
+    function clear() {
+        CLIClear();
+    }
+    
+    /**
+     * Print section header
+     */
+    function printHeader( required string text ) {
+        var line = repeatString( "=", text.len() );
+        println( "" );
+        println( text );
+        println( line );
+        println( "" );
+    }
+    
+    /**
+     * Print section divider
+     */
+    function printDivider() {
+        println( "────────────────────────────────────────────────────────────────" );
+    }
+}
