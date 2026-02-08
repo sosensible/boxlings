@@ -1,0 +1,18 @@
+class extends="testbox.system.BaseSpec" {
+    function run() {
+        describe( "Data Types Exercise 3 - Booleans", () => {
+            it( "should use proper boolean type", () => {
+                include "datatypes3.bxs";
+                expect( isBoolean( variables.isActive ) ).toBeTrue();
+            });
+            
+            it( "should produce correct output", () => {
+                savecontent variable="output" {
+                    include "datatypes3.bxs";
+                }
+                expect( output ).toInclude( "System is active" );
+                expect( output ).toInclude( "Count is falsey" );
+            });
+        });
+    }
+}

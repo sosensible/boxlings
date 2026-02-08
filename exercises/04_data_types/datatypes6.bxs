@@ -1,0 +1,11 @@
+// TODO: Fix the struct syntax!
+
+function main() {
+    // Structs use curly braces with key:value pairs
+    var person = [ name="Luis", age=40 ];  // Wrong brackets and syntax!
+    
+    println( "Name: #person.name#" );
+    println( "Age: #person.age#" );
+}
+
+main();

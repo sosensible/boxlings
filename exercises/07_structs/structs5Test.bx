@@ -1,0 +1,13 @@
+class extends="testbox.system.BaseSpec" {
+    function run() {
+        describe( "Structs Exercise 5 - Ordered Structs", () => {
+            it( "should preserve key order", () => {
+                include "structs5.bxs";
+                var keys = variables.steps.keyArray();
+                expect( keys[1] ).toBe( "first" );
+                expect( keys[2] ).toBe( "second" );
+                expect( keys[3] ).toBe( "third" );
+            });
+        });
+    }
+}

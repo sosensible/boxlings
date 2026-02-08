@@ -1,0 +1,12 @@
+// TODO: Access function arguments correctly
+
+function greet( name, greeting ) {
+    // Wrong! Using variable name directly instead of arguments scope
+    println( "#greeting#, #name#!" );
+}
+
+function main() {
+    greet( "BoxLang", "Hello" );
+}
+
+main();

@@ -1,0 +1,17 @@
+// Fixed: Changed OR to AND operators
+function canVote( age, isCitizen ) {
+    return age >= 18 && isCitizen;  // Both conditions must be true
+}
+
+function isTeenager( age ) {
+    return age >= 13 && age <= 19;  // Must be in range
+}
+
+function main() {
+    println( canVote( 20, true ) );
+    println( canVote( 20, false ) );
+    println( isTeenager( 15 ) );
+    println( isTeenager( 25 ) );
+}
+
+main();

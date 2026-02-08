@@ -1,0 +1,11 @@
+// Fixed: Added default value for greeting
+function greet( name, greeting = "Hello" ) {
+    println( "#greeting#, #name#!" );
+}
+
+function main() {
+    greet( "BoxLang", "Hi" );
+    greet( "Luis" );
+}
+
+main();

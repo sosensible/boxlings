@@ -1,0 +1,13 @@
+// Fixed: Create HashMap instance
+import java:java.util.HashMap
+
+class {
+    function main( args = [] ) {
+        var map = new HashMap();
+        
+        map.put( "language", "BoxLang" );
+        map.put( "version", "1.0" );
+        
+        println( "Language: #map.get( 'language' )#" );
+    }
+}

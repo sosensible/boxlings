@@ -1,0 +1,10 @@
+// TODO: Fix string escaping
+
+function main() {
+    // How do you print: He said "Hello"
+    var quote = "He said "Hello"";  // This will break!
+    
+    println( quote );
+}
+
+main();

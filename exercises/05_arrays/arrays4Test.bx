@@ -1,0 +1,15 @@
+class extends="testbox.system.BaseSpec" {
+    function run() {
+        describe( "Arrays Exercise 4 - 1-based Indexing", () => {
+            it( "should access first element with index 1", () => {
+                include "arrays4.bxs";
+                expect( variables.first ).toBe( "a" );
+            });
+            
+            it( "should access last element correctly", () => {
+                include "arrays4.bxs";
+                expect( variables.last ).toBe( "e" );
+            });
+        });
+    }
+}

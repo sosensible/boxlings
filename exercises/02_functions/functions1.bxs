@@ -1,0 +1,9 @@
+// TODO: Add the call_me() function here!
+// The function should not take any arguments and not return anything.
+// It should just print "Hello from call_me!"
+
+function main() {
+    call_me(); // This will fail - function doesn't exist
+}
+
+main();

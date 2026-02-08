@@ -1,0 +1,12 @@
+// Fixed: Added return statement
+function add( a, b ) {
+    var sum = a + b;
+    return sum;
+}
+
+function main() {
+    var result = add( 5, 10 );
+    println( "The sum is: #result#" );
+}
+
+main();

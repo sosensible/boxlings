@@ -1,0 +1,14 @@
+// TODO: Fix the struct property access
+
+function main() {
+    var car = {
+        make: "Toyota",
+        model: "Camry",
+        year: 2024
+    };
+    
+    // TODO: Fix this - wrong property name!
+    println( "Car: #car.manufacturer# #car.model#" );
+}
+
+main();

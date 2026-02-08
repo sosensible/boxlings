@@ -1,0 +1,12 @@
+class extends="testbox.system.BaseSpec" {
+    function run() {
+        describe( "Data Types Exercise 6 - Structs", () => {
+            it( "should create struct with correct syntax", () => {
+                include "datatypes6.bxs";
+                expect( isStruct( variables.person ) ).toBeTrue();
+                expect( variables.person.name ).toBe( "Luis" );
+                expect( variables.person.age ).toBe( 40 );
+            });
+        });
+    }
+}

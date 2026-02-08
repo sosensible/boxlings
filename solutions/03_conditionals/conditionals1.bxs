@@ -1,0 +1,15 @@
+// Fixed: Added else clause
+function bigger( a, b ) {
+    if ( a > b ) {
+        return a;
+    } else {
+        return b;
+    }
+}
+
+function main() {
+    println( bigger( 10, 5 ) );
+    println( bigger( 3, 8 ) );
+}
+
+main();

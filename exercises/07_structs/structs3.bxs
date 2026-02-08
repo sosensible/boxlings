@@ -1,0 +1,20 @@
+// TODO: Use struct member functions
+
+function main() {
+    var scores = {
+        math: 95,
+        english: 87,
+        science: 92
+    };
+    
+    // TODO: Get the count of keys
+    var count = ???;
+    
+    // TODO: Check if 'math' key exists
+    var hasMath = ???;
+    
+    println( "Total subjects: #count#" );
+    println( "Has math: #hasMath#" );
+}
+
+main();

@@ -1,0 +1,14 @@
+// Fixed: Ordered struct uses [] with key:value
+function main() {
+    var menu = [
+        appetizer: "Salad",
+        main: "Steak",
+        dessert: "Cake"
+    ];
+    
+    menu.each( (key, value) => {
+        println( "#key#: #value#" );
+    });
+}
+
+main();

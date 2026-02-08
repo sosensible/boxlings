@@ -1,0 +1,14 @@
+// TODO: Import a Java class
+// Import java.util.ArrayList using the java: prefix
+
+class {
+    function main( args = [] ) {
+        // TODO: Add import for ArrayList
+        
+        var list = new ArrayList();
+        list.add( "BoxLang" );
+        list.add( "Rocks" );
+        
+        println( "List size: #list.size()#" );
+    }
+}

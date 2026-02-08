@@ -1,0 +1,12 @@
+class extends="testbox.system.BaseSpec" {
+    function run() {
+        describe( "Structs Exercise 4 - Nested Structs", () => {
+            it( "should access nested properties", () => {
+                savecontent variable="output" {
+                    include "structs4.bxs";
+                }
+                expect( output ).toInclude( "Houston" );
+            });
+        });
+    }
+}

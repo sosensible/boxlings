@@ -1,0 +1,14 @@
+class extends="testbox.system.BaseSpec" {
+    function run() {
+        describe( "Arrays Exercise 3 - Iteration", () => {
+            it( "should iterate over all items", () => {
+                savecontent variable="output" {
+                    include "arrays3.bxs";
+                }
+                expect( output ).toInclude( "apple" );
+                expect( output ).toInclude( "banana" );
+                expect( output ).toInclude( "cherry" );
+            });
+        });
+    }
+}

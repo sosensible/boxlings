@@ -1,0 +1,9 @@
+// Fixed: Escape quotes or use single quotes
+function main() {
+    var quote = "He said ""Hello""";  // Escape with double quotes
+    // Or use: 'He said "Hello"'
+    
+    println( quote );
+}
+
+main();

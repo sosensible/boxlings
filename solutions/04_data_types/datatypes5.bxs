@@ -1,0 +1,9 @@
+// Fixed: Arrays use square brackets []
+function main() {
+    var fruits = [ "apple", "banana", "orange" ];
+    
+    println( "First fruit: #fruits[1]#" );
+    println( "Total fruits: #fruits.len()#" );
+}
+
+main();

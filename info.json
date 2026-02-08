@@ -63,6 +63,358 @@
       "path": "exercises/01_variables/variables6.bxs",
       "test": false,
       "hint": "Constants in BoxLang... well, BoxLang doesn't have true constants like other languages. Variables can always be reassigned!"
+    },
+    {
+      "name": "functions1",
+      "dir": "02_functions",
+      "path": "exercises/02_functions/functions1.bxs",
+      "test": false,
+      "hint": "This main function is calling a function that doesn't exist yet. You need to create a function called call_me() that prints a message. Functions in BoxLang are declared using the 'function' keyword."
+    },
+    {
+      "name": "functions2",
+      "dir": "02_functions",
+      "path": "exercises/02_functions/functions2.bxs",
+      "test": true,
+      "test_path": "exercises/02_functions/functions2Test.bx",
+      "test_mode": "read",
+      "hint": "The greet() function is trying to use a variable called 'name', but it doesn't have access to it. You need to add 'name' as a parameter to the function signature."
+    },
+    {
+      "name": "functions3",
+      "dir": "02_functions",
+      "path": "exercises/02_functions/functions3.bxs",
+      "test": true,
+      "test_path": "exercises/02_functions/functions3Test.bx",
+      "test_mode": "read",
+      "hint": "Your function calculates the sum but doesn't return it! Functions need the 'return' keyword to send a value back to the caller."
+    },
+    {
+      "name": "functions4",
+      "dir": "02_functions",
+      "path": "exercises/02_functions/functions4.bxs",
+      "test": true,
+      "test_path": "exercises/02_functions/functions4Test.bx",
+      "test_mode": "read",
+      "hint": "In BoxLang, you can provide default values for parameters using the = syntax in the function signature. This way, if the argument isn't provided, the default is used."
+    },
+    {
+      "name": "functions5",
+      "dir": "02_functions",
+      "path": "exercises/02_functions/functions5.bxs",
+      "test": false,
+      "hint": "BoxLang has two types of function expressions: Closures (=>) and Lambdas (->). Closures use the FAT ARROW (=>) and can access variables from their surrounding scope. Lambdas use the skinny arrow (->) and are pure functions."
+    },
+    {
+      "name": "functions6",
+      "dir": "02_functions",
+      "path": "exercises/02_functions/functions6.bxs",
+      "test": false,
+      "hint": "When using array methods like map(), filter(), reduce(), you typically use LAMBDAS (->), not closures (=>). Lambdas are pure functions that just transform data without side effects."
+    },
+    {
+      "name": "conditionals1",
+      "dir": "03_conditionals",
+      "path": "exercises/03_conditionals/conditionals1.bxs",
+      "test": true,
+      "test_path": "exercises/03_conditionals/conditionals1Test.bx",
+      "test_mode": "read",
+      "hint": "Your function only returns a value when a > b. What happens when b is bigger or they're equal? You need an else clause!"
+    },
+    {
+      "name": "conditionals2",
+      "dir": "03_conditionals",
+      "path": "exercises/03_conditionals/conditionals2.bxs",
+      "test": true,
+      "test_path": "exercises/03_conditionals/conditionals2Test.bx",
+      "test_mode": "read",
+      "hint": "The ternary operator is BoxLang's shorthand for if/else. Syntax: condition ? valueIfTrue : valueIfFalse"
+    },
+    {
+      "name": "conditionals3",
+      "dir": "03_conditionals",
+      "path": "exercises/03_conditionals/conditionals3.bxs",
+      "test": true,
+      "test_path": "exercises/03_conditionals/conditionals3Test.bx",
+      "test_mode": "read",
+      "hint": "Your switch handles weekdays but not weekends! Add cases for Saturday and Sunday."
+    },
+    {
+      "name": "conditionals4",
+      "dir": "03_conditionals",
+      "path": "exercises/03_conditionals/conditionals4.bxs",
+      "test": true,
+      "test_path": "exercises/03_conditionals/conditionals4Test.bx",
+      "test_mode": "read",
+      "hint": "Think carefully about AND vs OR. For voting: BOTH conditions must be true. For teenagers: age must be BETWEEN 13 AND 19."
+    },
+    {
+      "name": "datatypes1",
+      "dir": "04_data_types",
+      "path": "exercises/04_data_types/datatypes1.bxs",
+      "test": true,
+      "test_path": "exercises/04_data_types/datatypes1Test.bx",
+      "test_mode": "read",
+      "hint": "In BoxLang, the + operator is for numbers. Use & (ampersand) to concatenate strings!"
+    },
+    {
+      "name": "datatypes2",
+      "dir": "04_data_types",
+      "path": "exercises/04_data_types/datatypes2.bxs",
+      "test": true,
+      "test_path": "exercises/04_data_types/datatypes2Test.bx",
+      "test_mode": "read",
+      "hint": "Use int() to convert a decimal to an integer, or use the backslash operator for integer division."
+    },
+    {
+      "name": "datatypes3",
+      "dir": "04_data_types",
+      "path": "exercises/04_data_types/datatypes3.bxs",
+      "test": true,
+      "test_path": "exercises/04_data_types/datatypes3Test.bx",
+      "test_mode": "read",
+      "hint": "The string 'true' is not the same as the boolean true. Remove the quotes!"
+    },
+    {
+      "name": "datatypes4",
+      "dir": "04_data_types",
+      "path": "exercises/04_data_types/datatypes4.bxs",
+      "test": false,
+      "hint": "Use dateAdd() to add time to a date. Format: dateAdd('d', amount, date)"
+    },
+    {
+      "name": "datatypes5",
+      "dir": "04_data_types",
+      "path": "exercises/04_data_types/datatypes5.bxs",
+      "test": true,
+      "test_path": "exercises/04_data_types/datatypes5Test.bx",
+      "test_mode": "read",
+      "hint": "Arrays use square brackets [ ], not curly braces { }!"
+    },
+    {
+      "name": "datatypes6",
+      "dir": "04_data_types",
+      "path": "exercises/04_data_types/datatypes6.bxs",
+      "test": true,
+      "test_path": "exercises/04_data_types/datatypes6Test.bx",
+      "test_mode": "read",
+      "hint": "Structs use curly braces { }, not square brackets [ ]! And use : not = for key-value pairs."
+    },
+    {
+      "name": "datatypes7",
+      "dir": "04_data_types",
+      "path": "exercises/04_data_types/datatypes7.bxs",
+      "test": true,
+      "test_path": "exercises/04_data_types/datatypes7Test.bx",
+      "test_mode": "read",
+      "hint": "Ordered structs use square brackets [ ] with key:value syntax to preserve order!"
+    },
+    {
+      "name": "datatypes8",
+      "dir": "04_data_types",
+      "path": "exercises/04_data_types/datatypes8.bxs",
+      "test": false,
+      "hint": "Use type-checking functions: isArray(), isStruct(), isNumeric(), isBoolean(), etc."
+    },
+    {
+      "name": "arrays1",
+      "dir": "05_arrays",
+      "path": "exercises/05_arrays/arrays1.bxs",
+      "test": false,
+      "hint": "Arrays in BoxLang start at index 1, not 0! This is different from most languages."
+    },
+    {
+      "name": "arrays2",
+      "dir": "05_arrays",
+      "path": "exercises/05_arrays/arrays2.bxs",
+      "test": true,
+      "test_path": "exercises/05_arrays/arrays2Test.bx",
+      "test_mode": "read",
+      "hint": "Use the append() member function to add items to an array."
+    },
+    {
+      "name": "arrays3",
+      "dir": "05_arrays",
+      "path": "exercises/05_arrays/arrays3.bxs",
+      "test": true,
+      "test_path": "exercises/05_arrays/arrays3Test.bx",
+      "test_mode": "read",
+      "hint": "When iterating with each(), use a closure (=>) not a lambda (->)."
+    },
+    {
+      "name": "arrays4",
+      "dir": "05_arrays",
+      "path": "exercises/05_arrays/arrays4.bxs",
+      "test": true,
+      "test_path": "exercises/05_arrays/arrays4Test.bx",
+      "test_mode": "read",
+      "hint": "Remember: BoxLang arrays are 1-based! First element is [1], last is [length]."
+    },
+    {
+      "name": "scopes1",
+      "dir": "06_scopes",
+      "path": "exercises/06_scopes/scopes1.bxs",
+      "test": true,
+      "test_path": "exercises/06_scopes/scopes1Test.bx",
+      "test_mode": "read",
+      "hint": "Unscoped variables in scripts go to the 'variables' scope. Access them with variables.x"
+    },
+    {
+      "name": "scopes2",
+      "dir": "06_scopes",
+      "path": "exercises/06_scopes/scopes2.bxs",
+      "test": true,
+      "test_path": "exercises/06_scopes/scopes2Test.bx",
+      "test_mode": "read",
+      "hint": "Variables inside functions need the 'var' keyword to be in local scope."
+    },
+    {
+      "name": "scopes3",
+      "dir": "06_scopes",
+      "path": "exercises/06_scopes/scopes3.bxs",
+      "test": true,
+      "test_path": "exercises/06_scopes/scopes3Test.bx",
+      "test_mode": "read",
+      "hint": "Function parameters are available in the 'arguments' scope. Access them with arguments.name"
+    },
+    {
+      "name": "scopes4",
+      "dir": "06_scopes",
+      "path": "exercises/06_scopes/scopes4.bx",
+      "test": false,
+      "hint": "In classes: 'variables' is private, 'this' is public. Properties go to variables scope."
+    },
+    {
+      "name": "scopes5",
+      "dir": "06_scopes",
+      "path": "exercises/06_scopes/scopes5.bxs",
+      "test": false,
+      "hint": "The server scope persists for the entire BoxLang runtime. Run the script multiple times to see!"
+    },
+    {
+      "name": "structs1",
+      "dir": "07_structs",
+      "path": "exercises/07_structs/structs1.bxs",
+      "test": false,
+      "hint": "Check the struct definition - what keys does it actually have? Use the correct property name."
+    },
+    {
+      "name": "structs2",
+      "dir": "07_structs",
+      "path": "exercises/07_structs/structs2.bxs",
+      "test": true,
+      "test_path": "exercises/07_structs/structs2Test.bx",
+      "test_mode": "read",
+      "hint": "BoxLang struct keys are case-insensitive! NAME, name, NaMe all refer to the same key."
+    },
+    {
+      "name": "structs3",
+      "dir": "07_structs",
+      "path": "exercises/07_structs/structs3.bxs",
+      "test": true,
+      "test_path": "exercises/07_structs/structs3Test.bx",
+      "test_mode": "read",
+      "hint": "Use count() to get the number of keys, and keyExists() to check if a key exists."
+    },
+    {
+      "name": "structs4",
+      "dir": "07_structs",
+      "path": "exercises/07_structs/structs4.bxs",
+      "test": true,
+      "test_path": "exercises/07_structs/structs4Test.bx",
+      "test_mode": "read",
+      "hint": "Nested structs are accessed with dot notation: outer.inner.property"
+    },
+    {
+      "name": "structs5",
+      "dir": "07_structs",
+      "path": "exercises/07_structs/structs5.bxs",
+      "test": true,
+      "test_path": "exercises/07_structs/structs5Test.bx",
+      "test_mode": "read",
+      "hint": "Ordered structs use square brackets [ ] with key:value syntax, not curly braces { }."
+    },
+    {
+      "name": "strings1",
+      "dir": "08_strings",
+      "path": "exercises/08_strings/strings1.bxs",
+      "test": false,
+      "hint": "BoxLang uses ## for expression interpolation, not $ like some other languages."
+    },
+    {
+      "name": "strings2",
+      "dir": "08_strings",
+      "path": "exercises/08_strings/strings2.bxs",
+      "test": true,
+      "test_path": "exercises/08_strings/strings2Test.bx",
+      "test_mode": "read",
+      "hint": "In BoxLang, just continue your string on the next line - no special syntax needed!"
+    },
+    {
+      "name": "strings3",
+      "dir": "08_strings",
+      "path": "exercises/08_strings/strings3.bxs",
+      "test": true,
+      "test_path": "exercises/08_strings/strings3Test.bx",
+      "test_mode": "read",
+      "hint": "Use ucase() for uppercase and trim() to remove whitespace."
+    },
+    {
+      "name": "strings4",
+      "dir": "08_strings",
+      "path": "exercises/08_strings/strings4.bxs",
+      "test": true,
+      "test_path": "exercises/08_strings/strings4Test.bx",
+      "test_mode": "read",
+      "hint": "The & operator concatenates strings. The + operator is for numbers!"
+    },
+    {
+      "name": "strings5",
+      "dir": "08_strings",
+      "path": "exercises/08_strings/strings5.bxs",
+      "test": true,
+      "test_path": "exercises/08_strings/strings5Test.bx",
+      "test_mode": "read",
+      "hint": "Use listToArray( string, delimiter ) to convert a delimited string to an array."
+    },
+    {
+      "name": "strings6",
+      "dir": "08_strings",
+      "path": "exercises/08_strings/strings6.bxs",
+      "test": false,
+      "hint": "Escape quotes by doubling them: \"\" or use single quotes on the outside."
+    },
+    {
+      "name": "imports1",
+      "dir": "09_imports",
+      "path": "exercises/09_imports/imports1.bx",
+      "test": false,
+      "hint": "Use the import statement at the top of your class: import ClassName"
+    },
+    {
+      "name": "imports2",
+      "dir": "09_imports",
+      "path": "exercises/09_imports/imports2.bx",
+      "test": true,
+      "test_path": "exercises/09_imports/imports2Test.bx",
+      "test_mode": "read",
+      "hint": "Java classes need the java: prefix. Example: import java:java.util.ArrayList"
+    },
+    {
+      "name": "imports3",
+      "dir": "09_imports",
+      "path": "exercises/09_imports/imports3.bx",
+      "test": false,
+      "hint": "When using an alias, create instances with the alias name: new AliasName()"
+    },
+    {
+      "name": "imports4",
+      "dir": "09_imports",
+      "path": "exercises/09_imports/imports4.bx",
+      "test": true,
+      "test_path": "exercises/09_imports/imports4Test.bx",
+      "test_mode": "read",
+      "hint": "After importing, create an instance with: new HashMap()"
     }
   ]
 }

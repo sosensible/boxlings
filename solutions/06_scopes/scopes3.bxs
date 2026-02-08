@@ -1,0 +1,10 @@
+// Fixed: Access arguments via arguments scope
+function greet( name, greeting ) {
+    println( "#arguments.greeting#, #arguments.name#!" );
+}
+
+function main() {
+    greet( "BoxLang", "Hello" );
+}
+
+main();

@@ -1,0 +1,18 @@
+// TODO: Use the ternary operator to make this one line!
+// Format: condition ? valueIfTrue : valueIfFalse
+
+function isAdult( age ) {
+    // This should be one line using ternary operator
+    if ( age >= 18 ) {
+        return "Adult";
+    } else {
+        return "Minor";
+    }
+}
+
+function main() {
+    println( isAdult( 20 ) );  // Adult
+    println( isAdult( 15 ) );  // Minor
+}
+
+main();

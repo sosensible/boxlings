@@ -1,0 +1,9 @@
+// Fixed: Would need actual User class, but demonstrates syntax
+import User
+
+class {
+    function main( args = [] ) {
+        // Import allows us to use User directly
+        println( "Import syntax demonstrated" );
+    }
+}

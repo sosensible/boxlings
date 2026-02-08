@@ -1,0 +1,12 @@
+class extends="testbox.system.BaseSpec" {
+    function run() {
+        describe( "Strings Exercise 5 - List Functions", () => {
+            it( "should convert list to array", () => {
+                include "strings5.bxs";
+                expect( isArray( variables.fruits ) ).toBeTrue();
+                expect( variables.fruits.len() ).toBe( 3 );
+                expect( variables.fruits[1] ).toBe( "apple" );
+            });
+        });
+    }
+}

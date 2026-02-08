@@ -1,0 +1,20 @@
+/**
+ * TestBox Test for conditionals1 exercise
+ * 
+ * This test verifies your if/else logic returns the bigger number.
+ */
+class extends="testbox.system.BaseSpec" {
+    
+    function run() {
+        describe( "Conditionals Exercise 1 - if/else", () => {
+            
+            it( "should return the bigger of two numbers", () => {
+                include "conditionals1.bxs";
+                expect( bigger( 10, 5 ) ).toBe( 10 );
+                expect( bigger( 3, 8 ) ).toBe( 8 );
+                expect( bigger( 7, 7 ) ).toBe( 7 );
+            });
+            
+        });
+    }
+}

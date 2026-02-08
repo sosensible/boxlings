@@ -1,0 +1,11 @@
+// Fixed: Use listToArray()
+function main() {
+    var csv = "apple,banana,orange";
+    
+    var fruits = listToArray( csv );
+    
+    println( "Array: #fruits.toString()#" );
+    println( "First fruit: #fruits[1]#" );
+}
+
+main();

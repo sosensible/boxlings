@@ -1,0 +1,21 @@
+// TODO: Fix the logical operators!
+// BoxLang supports both: && / || and 'and' / 'or'
+
+function canVote( age, isCitizen ) {
+    // This logic is wrong!
+    return age >= 18 || isCitizen;  // Should be AND, not OR
+}
+
+function isTeenager( age ) {
+    // This logic is also wrong!
+    return age >= 13 || age <= 19;  // Should be AND, not OR
+}
+
+function main() {
+    println( canVote( 20, true ) );   // true
+    println( canVote( 20, false ) );  // Should be false!
+    println( isTeenager( 15 ) );      // true
+    println( isTeenager( 25 ) );      // Should be false!
+}
+
+main();

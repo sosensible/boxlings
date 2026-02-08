@@ -1,0 +1,10 @@
+// Fixed: Use => for closure in each()
+function main() {
+    var fruits = [ "apple", "banana", "cherry" ];
+    
+    fruits.each( fruit => {
+        println( fruit );
+    });
+}
+
+main();

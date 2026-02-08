@@ -1,0 +1,11 @@
+class extends="testbox.system.BaseSpec" {
+    function run() {
+        describe( "Scopes Exercise 2 - local scope", () => {
+            it( "should return correct calculation", () => {
+                include "scopes2.bxs";
+                var result = calculate();
+                expect( result ).toBe( 15 );
+            });
+        });
+    }
+}

@@ -1,0 +1,8 @@
+// Fixed: Access from variables scope
+x = 10;
+
+function main() {
+    println( "x is: #variables.x#" );
+}
+
+main();

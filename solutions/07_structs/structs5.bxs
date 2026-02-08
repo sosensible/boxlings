@@ -1,0 +1,14 @@
+// Fixed: Use ordered struct syntax []
+function main() {
+    var steps = [
+        first: "Wash",
+        second: "Rinse",
+        third: "Dry"
+    ];
+    
+    steps.each( (key, value) => {
+        println( "#key#: #value#" );
+    });
+}
+
+main();

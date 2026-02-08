@@ -1,0 +1,18 @@
+// TODO: Create an ORDERED struct that preserves key order
+// Ordered structs use [] with key:value syntax
+
+function main() {
+    // Regular structs don't preserve insertion order
+    var menu = {
+        appetizer: "Salad",
+        main: "Steak",
+        dessert: "Cake"
+    };
+    
+    // Change this to an ordered struct so order is preserved!
+    menu.each( (key, value) => {
+        println( "#key#: #value#" );
+    });
+}
+
+main();

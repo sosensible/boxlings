@@ -1,0 +1,16 @@
+// Fixed: Use count() and keyExists()
+function main() {
+    var scores = {
+        math: 95,
+        english: 87,
+        science: 92
+    };
+    
+    var count = scores.count();
+    var hasMath = scores.keyExists( "math" );
+    
+    println( "Total subjects: #count#" );
+    println( "Has math: #hasMath#" );
+}
+
+main();

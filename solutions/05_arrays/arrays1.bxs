@@ -1,0 +1,9 @@
+// Fixed: Arrays start at 1!
+function main() {
+    var colors = [ "red", "green", "blue" ];
+    
+    println( "First color: #colors[1]#" );
+    println( "Second color: #colors[2]#" );
+}
+
+main();

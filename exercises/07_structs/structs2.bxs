@@ -1,0 +1,15 @@
+// TODO: Remember - BoxLang struct keys are case-insensitive!
+
+function main() {
+    var user = {
+        NAME: "Luis",
+        AGE: 40
+    };
+    
+    // These should all work - keys are case-insensitive!
+    println( "Name: #user.name#" );
+    println( "Age: #user.age#" );
+    println( "Also works: #user.NaMe#" );
+}
+
+main();

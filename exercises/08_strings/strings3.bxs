@@ -1,0 +1,16 @@
+// TODO: Use string member functions
+
+function main() {
+    var text = "  BoxLang is awesome!  ";
+    
+    // TODO: Convert to uppercase
+    var upper = ???;
+    
+    // TODO: Trim whitespace
+    var trimmed = ???;
+    
+    println( "Upper: #upper#" );
+    println( "Trimmed: '#trimmed#'" );
+}
+
+main();

@@ -1,0 +1,10 @@
+class extends="testbox.system.BaseSpec" {
+    function run() {
+        describe( "Data Types Exercise 1 - Strings", () => {
+            it( "should concatenate strings correctly", () => {
+                include "datatypes1.bxs";
+                expect( variables.fullName ).toBe( "BoxLang" );
+            });
+        });
+    }
+}

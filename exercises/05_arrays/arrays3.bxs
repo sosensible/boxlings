@@ -1,0 +1,12 @@
+// TODO: Fix the array iteration syntax
+
+function main() {
+    var fruits = [ "apple", "banana", "cherry" ];
+    
+    // TODO: Use each() to iterate - fix the syntax!
+    fruits.each( fruit -> {  // Wrong arrow!
+        println( fruit );
+    });
+}
+
+main();

@@ -1,0 +1,17 @@
+// Fixed: Changed -> to => for closure
+function main() {
+    var counter = 0;
+    
+    // Closure uses => (fat arrow) and captures counter
+    var increment = () => {
+        counter++;
+    };
+    
+    increment();
+    increment();
+    increment();
+    
+    println( "Counter is now: #counter#" );
+}
+
+main();

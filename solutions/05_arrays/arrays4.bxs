@@ -1,0 +1,12 @@
+// Fixed: 1-based indexing
+function main() {
+    var letters = [ "a", "b", "c", "d", "e" ];
+    
+    var first = letters[1];
+    var last = letters[5];
+    
+    println( "First: #first#" );
+    println( "Last: #last#" );
+}
+
+main();

@@ -1,0 +1,10 @@
+// TODO: Import the User class
+// Assume there's a User.bx class in the same directory
+
+class {
+    function main( args = [] ) {
+        // TODO: Add import statement at the top
+        var user = new User( "Luis", 40 );
+        println( user.getName() );
+    }
+}

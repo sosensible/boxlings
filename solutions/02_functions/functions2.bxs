@@ -1,0 +1,11 @@
+// Fixed: Added the 'name' parameter
+function greet( name ) {
+    println( "Hello, #name#!" );
+}
+
+function main() {
+    greet( "BoxLang" );
+    greet( "Luis" );
+}
+
+main();

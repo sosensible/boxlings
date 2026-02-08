@@ -1,0 +1,25 @@
+// TODO: Fix the scope access in this class
+// 'this' is public, 'variables' is private
+
+class {
+    property name;
+    
+    function init( name ) {
+        // TODO: Should this go to 'this' or 'variables'?
+        this.name = arguments.name;
+        return this;
+    }
+    
+    function getName() {
+        // TODO: Should we access from 'this' or 'variables'?
+        return this.name;
+    }
+    
+    function main( args = [] ) {
+        var obj = new scopes4( "BoxLang" );
+        println( "Name: #obj.getName()#" );
+        
+        // This should fail - name is in variables, not this
+        println( "Direct access: #obj.name#" );
+    }
+}

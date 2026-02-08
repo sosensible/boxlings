@@ -1,0 +1,13 @@
+// TODO: Add a default value for the greeting parameter!
+// If no greeting is provided, it should default to "Hello"
+
+function greet( name, greeting ) {
+    println( "#greeting#, #name#!" );
+}
+
+function main() {
+    greet( "BoxLang", "Hi" );        // Should print: Hi, BoxLang!
+    greet( "Luis" );                  // Should print: Hello, Luis!
+}
+
+main();

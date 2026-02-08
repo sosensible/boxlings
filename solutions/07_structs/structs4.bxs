@@ -1,0 +1,15 @@
+// Fixed: Nested property access
+function main() {
+    var company = {
+        name: "Ortus",
+        address: {
+            city: "Houston",
+            state: "TX",
+            zip: "77001"
+        }
+    };
+    
+    println( "City: #company.address.city#" );
+}
+
+main();

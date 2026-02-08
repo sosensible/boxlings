@@ -202,31 +202,49 @@ class {
     private function executeExercise( required exercise ) {
         try {
             var fullPath = expandPath( exercise.path );
-            var output = "";
-            var exitCode = 0;
+            
+            var result = {
+                output: "",
+                errorOutput: "",
+                exitCode: 0
+            };
             
             // Execute the exercise file
             bx:execute
                 name="boxlang"
                 arguments="#fullPath#"
-                variable="output"
-                errorVariable="errorOutput"
-                returnVariable="exitCode"
+                variable="result.output"
+                errorVariable="result.errorOutput"
+                returnVariable="result.exitCode"
                 timeout="30" {
             }
             
-            if ( exitCode != 0 ) {
+            // Check for errors in output or errorOutput
+            var hasErrors = false;
+            var allOutput = (result.output ?: "") & (result.errorOutput ?: "");
+            
+            // Check exit code
+            if ( result.exitCode != 0 ) {
+                hasErrors = true;
+            }
+            
+            // Check for exceptions or errors in any output
+            if ( allOutput.findNoCase( "[ERROR]" ) || allOutput.findNoCase( "Exception:" ) || allOutput.findNoCase( "ortus.boxlang.runtime" ) ) {
+                hasErrors = true;
+            }
+            
+            if ( hasErrors ) {
                 return {
                     success: false,
-                    errors: [ "Non-zero exit code: #exitCode#" ],
-                    output: errorOutput ?: output
+                    errors: [ "Execution failed" ],
+                    output: allOutput
                 };
             }
             
             return {
                 success: true,
                 errors: [],
-                output: output ?: ""
+                output: result.output ?: ""
             };
             
         } catch( any e ) {

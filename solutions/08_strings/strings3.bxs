@@ -1,0 +1,12 @@
+// Fixed: Use ucase() and trim()
+function main() {
+    var text = "  BoxLang is awesome!  ";
+    
+    var upper = text.ucase();
+    var trimmed = text.trim();
+    
+    println( "Upper: #upper#" );
+    println( "Trimmed: '#trimmed#'" );
+}
+
+main();

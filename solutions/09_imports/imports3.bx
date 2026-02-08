@@ -1,0 +1,10 @@
+// Fixed: Use the alias JavaDate
+import java:java.util.Date as JavaDate
+
+class {
+    function main( args = [] ) {
+        var javaDate = new JavaDate();
+        
+        println( "Java Date: #javaDate.toString()#" );
+    }
+}

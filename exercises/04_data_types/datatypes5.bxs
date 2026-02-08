@@ -1,0 +1,11 @@
+// TODO: Fix the array syntax!
+
+function main() {
+    // Arrays in BoxLang use square brackets []
+    var fruits = { "apple", "banana", "orange" };  // Wrong brackets!
+    
+    println( "First fruit: #fruits[1]#" );
+    println( "Total fruits: #fruits.len()#" );
+}
+
+main();

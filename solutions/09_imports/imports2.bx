@@ -1,0 +1,12 @@
+// Fixed: Added java: prefix for ArrayList
+import java:java.util.ArrayList
+
+class {
+    function main( args = [] ) {
+        var list = new ArrayList();
+        list.add( "BoxLang" );
+        list.add( "Rocks" );
+        
+        println( "List size: #list.size()#" );
+    }
+}

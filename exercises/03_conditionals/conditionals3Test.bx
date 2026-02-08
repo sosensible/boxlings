@@ -1,0 +1,26 @@
+/**
+ * TestBox Test for conditionals3 exercise
+ * 
+ * This test verifies your switch statement handles all cases.
+ */
+class extends="testbox.system.BaseSpec" {
+    
+    function run() {
+        describe( "Conditionals Exercise 3 - Switch", () => {
+            
+            it( "should identify weekdays correctly", () => {
+                include "conditionals3.bxs";
+                expect( getDayType( "Monday" ) ).toBe( "Weekday" );
+                expect( getDayType( "Wednesday" ) ).toBe( "Weekday" );
+                expect( getDayType( "Friday" ) ).toBe( "Weekday" );
+            });
+            
+            it( "should identify weekend days correctly", () => {
+                include "conditionals3.bxs";
+                expect( getDayType( "Saturday" ) ).toBe( "Weekend" );
+                expect( getDayType( "Sunday" ) ).toBe( "Weekend" );
+            });
+            
+        });
+    }
+}

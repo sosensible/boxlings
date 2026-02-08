@@ -1,0 +1,28 @@
+/**
+ * TestBox Test for functions3 exercise
+ * 
+ * This test verifies your function returns the correct sum.
+ */
+class extends="testbox.system.BaseSpec" {
+    
+    function run() {
+        describe( "Functions Exercise 3 - Return Values", () => {
+            
+            it( "should return the sum of two numbers", () => {
+                include "functions3.bxs";
+                
+                // The script should have defined the add function
+                var result = add( 5, 10 );
+                expect( result ).toBe( 15 );
+            });
+            
+            it( "should work with different numbers", () => {
+                include "functions3.bxs";
+                
+                expect( add( 100, 200 ) ).toBe( 300 );
+                expect( add( -5, 5 ) ).toBe( 0 );
+            });
+            
+        });
+    }
+}

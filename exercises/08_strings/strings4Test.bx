@@ -1,0 +1,10 @@
+class extends="testbox.system.BaseSpec" {
+    function run() {
+        describe( "Strings Exercise 4 - Concatenation", () => {
+            it( "should concatenate strings correctly", () => {
+                include "strings4.bxs";
+                expect( variables.message ).toBe( "Hello World" );
+            });
+        });
+    }
+}

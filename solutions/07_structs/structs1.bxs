@@ -1,0 +1,12 @@
+// Fixed: Use correct property name
+function main() {
+    var car = {
+        make: "Toyota",
+        model: "Camry",
+        year: 2024
+    };
+    
+    println( "Car: #car.make# #car.model#" );
+}
+
+main();

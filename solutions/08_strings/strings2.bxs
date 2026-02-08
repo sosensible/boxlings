@@ -1,0 +1,11 @@
+// Fixed: Multi-line string
+function main() {
+    var poem = "Roses are red
+Violets are blue
+BoxLang is awesome
+And so are you!";
+    
+    println( poem );
+}
+
+main();

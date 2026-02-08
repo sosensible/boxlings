@@ -1,0 +1,30 @@
+/**
+ * TestBox Test for conditionals4 exercise
+ * 
+ * This test checks complex logical operators (AND, OR).
+ */
+class extends="testbox.system.BaseSpec" {
+    
+    function run() {
+        describe( "Conditionals Exercise 4 - Logical Operators", () => {
+            
+            it( "should require both age and citizenship to vote", () => {
+                include "conditionals4.bxs";
+                expect( canVote( 20, true ) ).toBeTrue();
+                expect( canVote( 20, false ) ).toBeFalse();
+                expect( canVote( 16, true ) ).toBeFalse();
+                expect( canVote( 16, false ) ).toBeFalse();
+            });
+            
+            it( "should correctly identify teenagers", () => {
+                include "conditionals4.bxs";
+                expect( isTeenager( 15 ) ).toBeTrue();
+                expect( isTeenager( 13 ) ).toBeTrue();
+                expect( isTeenager( 19 ) ).toBeTrue();
+                expect( isTeenager( 12 ) ).toBeFalse();
+                expect( isTeenager( 20 ) ).toBeFalse();
+            });
+            
+        });
+    }
+}

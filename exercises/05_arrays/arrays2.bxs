@@ -1,0 +1,13 @@
+// TODO: Use array member functions to manipulate the array
+
+function main() {
+    var numbers = [ 1, 2, 3 ];
+    
+    // TODO: Append the number 4 to the array
+    // Use the append() member function
+    
+    println( "Array: #numbers.toString()#" );
+    println( "Length: #numbers.len()#" );
+}
+
+main();

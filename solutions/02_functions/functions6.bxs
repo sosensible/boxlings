@@ -1,0 +1,12 @@
+// Fixed: Changed => to -> for lambda (pure function)
+function main() {
+    var numbers = [ 1, 2, 3, 4, 5 ];
+    
+    // Lambda uses -> (skinny arrow) - pure function
+    var doubled = numbers.map( (n) -> n * 2 );
+    
+    println( "Original: #numbers.toString()#" );
+    println( "Doubled: #doubled.toString()#" );
+}
+
+main();

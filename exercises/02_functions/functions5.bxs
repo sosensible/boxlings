@@ -1,0 +1,20 @@
+// Closures in BoxLang use the => (fat arrow) syntax
+// They capture variables from their surrounding scope
+
+function main() {
+    var counter = 0;
+    
+    // TODO: Fix this closure syntax!
+    // Closures use => (fat arrow), not ->
+    var increment = () -> {
+        counter++;
+    };
+    
+    increment();
+    increment();
+    increment();
+    
+    println( "Counter is now: #counter#" );
+}
+
+main();

@@ -1,0 +1,17 @@
+// TODO: Access nested struct properties
+
+function main() {
+    var company = {
+        name: "Ortus",
+        address: {
+            city: "Houston",
+            state: "TX",
+            zip: "77001"
+        }
+    };
+    
+    // TODO: Fix the nested access
+    println( "City: #company.city#" );  // Wrong! Need to go through address
+}
+
+main();
