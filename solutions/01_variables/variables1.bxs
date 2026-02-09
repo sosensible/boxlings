@@ -3,7 +3,7 @@
 
 function main() {
     var x = 5
-    println( "x has the value #x#" )
+    println( "local variable [x] has the value #x#" )
 }
 
 main()

@@ -1,4 +1,4 @@
-// Missing semicolon after the boolean assignment!
+// Variables can be reassigned to different types
 
 function main() {
     var x = 5

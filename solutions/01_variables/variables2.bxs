@@ -2,15 +2,15 @@
 // Different values = different types
 
 function main() {
-    var x = 42;  // Integer
+    var x = 42  // Integer
 
     println( "x has the value: #x#" )
     println( "x is of type: #x.getClass().getName()#" )
 
     // You could also try:
-    // var x = "hello";  // String
-    // var x = [1,2,3];  // Array
-    // var x = {key: "value"};  // Struct
+    // var x = "hello"  // String
+    // var x = [1,2,3]  // Array
+    // var x = {key: "value"}  // Struct
 }
 
 main()
