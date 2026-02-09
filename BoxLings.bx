@@ -65,6 +65,9 @@ class {
                 case "reset":
                     resetCommand( appState, parsed )
                     break
+                case "reset-all":
+                    resetAllCommand( appState )
+                    break
                 case "hint":
                     hintCommand( appState, parsed )
                     break
@@ -177,6 +180,33 @@ class {
 
         fileCopy( sourcePath, exercise.path )
         println( "✅ Exercise reset: #exercise.path#" )
+    }
+
+    /**
+     * Reset all exercises and progress state
+     */
+    private function resetAllCommand( required appState ) {
+        CLIClear()
+
+        var total = appState.getExercises().len()
+        var resetCount = 0
+
+        appState.getExercises().each( ( exercise ) =>  {
+            var sourcePath = "solutions/#exercise.dir#/#exercise.name##exercise.getExtension()#"
+
+            if ( fileExists( sourcePath ) ) {
+                fileCopy( sourcePath, exercise.path )
+                resetCount++
+            }
+
+            exercise.markPending()
+        })
+
+        appState.currentIndex = 1
+        appState.save()
+
+        println( "✅ Reset complete. Exercises restored: #resetCount#/#total#" )
+        println( "ℹ️  Progress cleared. Ready for a new student." )
     }
 
     /**
@@ -650,6 +680,7 @@ class {
         println( "│    run [name]       Run specific exercise" )
         println( "│    check-all        Check all exercises" )
         println( "│    reset <name>     Reset exercise to original" )
+        println( "│    reset-all        Reset all exercises and progress" )
         println( "│    hint [name]      Show hint" )
         println( "│    show-test [name] Display test file" )
         println( "│    list             List all exercises" )
