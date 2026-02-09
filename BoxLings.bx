@@ -336,24 +336,15 @@ class {
             // Run the exercise
             var result = runner.runExercise( exercise )
 
-            println( "" )
-            println( "══════════════════════════════════════════════════════════════" )
-
             if ( result.success ) {
                 println( "" )
                 println( "┌─ Success! ─────────────────────────────────────────────────┐" )
                 println( "│" )
                 println( "│  ✅ Exercise complete!" )
                 println( "│" )
-                println( "│  Commands:" )
-                println( "│    n → Next exercise" )
-                println( "│    h → Show hint" )
-                println( "│    l → List all exercises" )
-                println( "│    q → Quit" )
-                println( "│" )
                 println( "└────────────────────────────────────────────────────────────┘" )
                 println( "" )
-                print( "→ " )
+                print( "n=Next  h=Hint  l=List  q=Quit → " )
                 var cmd = waitForCommandOrFileChange( exercise, lastModified )
 
                 // If file changed, auto-rerun
@@ -385,25 +376,16 @@ class {
                 }
             } else {
                 println( "" )
-                println( "┌─ Oopsy! ───────────────────────────────────────────────┐" )
+                println( "┌─ Not Quite! ───────────────────────────────────────────────┐" )
                 println( "│" )
                 println( "│  ❌ Keep trying!" )
                 println( "│" )
                 println( "│  👀 Watching for file changes..." )
                 println( "│  💾 Save your file to auto-rerun" )
                 println( "│" )
-                println( "│  Commands:" )
-                println( "│    r → Rerun now" )
-                println( "│    h → Show hint" )
-                println( "│    t → Show test file (if available)" )
-                println( "│    l → List all exercises" )
-                println( "│    q → Quit" )
-                println( "│" )
                 println( "└────────────────────────────────────────────────────────────┘" )
                 println( "" )
-                terminal.printInfo( "👀 Watching for changes..." )
-                println( "" )
-                print( "Press ENTER to manually rerun, or edit file: " )
+                print( "r=Rerun  h=Hint  t=Test  l=List  q=Quit  [Enter]=Rerun → " )
 
                 var cmd = waitForCommandOrFileChange( exercise, lastModified )
 
