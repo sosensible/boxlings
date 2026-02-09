@@ -4,13 +4,13 @@ function main() {
         math: 95,
         english: 87,
         science: 92
-    };
+    }
     
-    var count = scores.count();
-    var hasMath = scores.keyExists( "math" );
+    var count = scores.count()
+    var hasMath = scores.keyExists( "math" )
     
-    println( "Total subjects: #count#" );
-    println( "Has math: #hasMath#" );
+    println( "Total subjects: #count#" )
+    println( "Has math: #hasMath#" )
 }
 
-main();
+main()

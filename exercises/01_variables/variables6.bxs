@@ -5,14 +5,14 @@
 
 function main() {
     // Convention: Use UPPERCASE for "constant" values
-    MAX_POINTS = 100;
+    MAX_POINTS = 100
     
-    println( "The maximum points is: #MAX_POINTS#" );
+    println( "The maximum points is: #MAX_POINTS#" )
     
     // This works in BoxLang (no true constants)
-    MAX_POINTS = 200;
+    MAX_POINTS = 200
     
-    println( "But we can still change it to: #MAX_POINTS#" );
+    println( "But we can still change it to: #MAX_POINTS#" )
 }
 
-main();
+main()

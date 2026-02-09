@@ -10,20 +10,20 @@ class extends="testbox.system.BaseSpec" {
             
             it( "should use provided greeting when given", () => {
                 savecontent variable="output" {
-                    include "functions4.bxs";
+                    include "functions4.bxs"
                 }
                 
-                expect( output ).toInclude( "Hi, BoxLang!" );
-            });
+                expect( output ).toInclude( "Hi, BoxLang!" )
+            })
             
             it( "should use default greeting when not provided", () => {
                 savecontent variable="output" {
-                    include "functions4.bxs";
+                    include "functions4.bxs"
                 }
                 
-                expect( output ).toInclude( "Hello, Luis!" );
-            });
+                expect( output ).toInclude( "Hello, Luis!" )
+            })
             
-        });
+        })
     }
 }

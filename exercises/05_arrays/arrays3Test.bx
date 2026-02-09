@@ -3,12 +3,12 @@ class extends="testbox.system.BaseSpec" {
         describe( "Arrays Exercise 3 - Iteration", () => {
             it( "should iterate over all items", () => {
                 savecontent variable="output" {
-                    include "arrays3.bxs";
+                    include "arrays3.bxs"
                 }
-                expect( output ).toInclude( "apple" );
-                expect( output ).toInclude( "banana" );
-                expect( output ).toInclude( "cherry" );
-            });
-        });
+                expect( output ).toInclude( "apple" )
+                expect( output ).toInclude( "banana" )
+                expect( output ).toInclude( "cherry" )
+            })
+        })
     }
 }

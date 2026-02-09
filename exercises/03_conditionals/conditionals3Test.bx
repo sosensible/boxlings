@@ -9,18 +9,18 @@ class extends="testbox.system.BaseSpec" {
         describe( "Conditionals Exercise 3 - Switch", () => {
             
             it( "should identify weekdays correctly", () => {
-                include "conditionals3.bxs";
-                expect( getDayType( "Monday" ) ).toBe( "Weekday" );
-                expect( getDayType( "Wednesday" ) ).toBe( "Weekday" );
-                expect( getDayType( "Friday" ) ).toBe( "Weekday" );
-            });
+                include "conditionals3.bxs"
+                expect( getDayType( "Monday" ) ).toBe( "Weekday" )
+                expect( getDayType( "Wednesday" ) ).toBe( "Weekday" )
+                expect( getDayType( "Friday" ) ).toBe( "Weekday" )
+            })
             
             it( "should identify weekend days correctly", () => {
-                include "conditionals3.bxs";
-                expect( getDayType( "Saturday" ) ).toBe( "Weekend" );
-                expect( getDayType( "Sunday" ) ).toBe( "Weekend" );
-            });
+                include "conditionals3.bxs"
+                expect( getDayType( "Saturday" ) ).toBe( "Weekend" )
+                expect( getDayType( "Sunday" ) ).toBe( "Weekend" )
+            })
             
-        });
+        })
     }
 }

@@ -3,10 +3,10 @@ class extends="testbox.system.BaseSpec" {
         describe( "Structs Exercise 4 - Nested Structs", () => {
             it( "should access nested properties", () => {
                 savecontent variable="output" {
-                    include "structs4.bxs";
+                    include "structs4.bxs"
                 }
-                expect( output ).toInclude( "Houston" );
-            });
-        });
+                expect( output ).toInclude( "Houston" )
+            })
+        })
     }
 }

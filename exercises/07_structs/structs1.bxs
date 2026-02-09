@@ -5,10 +5,10 @@ function main() {
         make: "Toyota",
         model: "Camry",
         year: 2024
-    };
+    }
     
     // TODO: Fix this - wrong property name!
-    println( "Car: #car.manufacturer# #car.model#" );
+    println( "Car: #car.manufacturer# #car.model#" )
 }
 
-main();
+main()

@@ -4,11 +4,11 @@
 // Hint: The test expects x=10, y=20, and sum=30
 
 function main() {
-    var x = ???;
-    var y = ???;
-    var sum = ???;
+    var x = ???
+    var y = ???
+    var sum = ???
     
-    println( "The sum of #x# and #y# is #sum#" );
+    println( "The sum of #x# and #y# is #sum#" )
 }
 
-main();
+main()

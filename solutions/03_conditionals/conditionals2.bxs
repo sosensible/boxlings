@@ -1,11 +1,11 @@
 // Fixed: Used ternary operator
 function isAdult( age ) {
-    return age >= 18 ? "Adult" : "Minor";
+    return age >= 18 ? "Adult" : "Minor"
 }
 
 function main() {
-    println( isAdult( 20 ) );
-    println( isAdult( 15 ) );
+    println( isAdult( 20 ) )
+    println( isAdult( 15 ) )
 }
 
-main();
+main()

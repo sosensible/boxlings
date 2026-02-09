@@ -6,4 +6,4 @@ function main() {
     call_me(); // This will fail - function doesn't exist
 }
 
-main();
+main()

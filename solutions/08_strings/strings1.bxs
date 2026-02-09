@@ -1,9 +1,9 @@
 // Fixed: Use ## for interpolation
 function main() {
-    var name = "BoxLang";
-    var version = "1.0";
+    var name = "BoxLang"
+    var version = "1.0"
     
-    println( "Welcome to #name# version #version#" );
+    println( "Welcome to #name# version #version#" )
 }
 
-main();
+main()

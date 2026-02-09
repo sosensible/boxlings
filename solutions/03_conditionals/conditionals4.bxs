@@ -8,10 +8,10 @@ function isTeenager( age ) {
 }
 
 function main() {
-    println( canVote( 20, true ) );
-    println( canVote( 20, false ) );
-    println( isTeenager( 15 ) );
-    println( isTeenager( 25 ) );
+    println( canVote( 20, true ) )
+    println( canVote( 20, false ) )
+    println( isTeenager( 15 ) )
+    println( isTeenager( 25 ) )
 }
 
-main();
+main()

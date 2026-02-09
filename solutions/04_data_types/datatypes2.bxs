@@ -1,13 +1,13 @@
 // Fixed: Use int() for integer division
 function main() {
-    var a = 10;
-    var b = 3;
+    var a = 10
+    var b = 3
     
-    var remainder = a % b;
-    var quotient = int( a / b );
+    var remainder = a % b
+    var quotient = int( a / b )
     
-    println( "Quotient: #quotient#" );
-    println( "Remainder: #remainder#" );
+    println( "Quotient: #quotient#" )
+    println( "Remainder: #remainder#" )
 }
 
-main();
+main()

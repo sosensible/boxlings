@@ -10,13 +10,13 @@ class extends="testbox.system.BaseSpec" {
             
             it( "should accept a name parameter and greet properly", () => {
                 savecontent variable="output" {
-                    include "functions2.bxs";
+                    include "functions2.bxs"
                 }
                 
-                expect( output ).toInclude( "Hello, BoxLang!" );
-                expect( output ).toInclude( "Hello, Luis!" );
-            });
+                expect( output ).toInclude( "Hello, BoxLang!" )
+                expect( output ).toInclude( "Hello, Luis!" )
+            })
             
-        });
+        })
     }
 }

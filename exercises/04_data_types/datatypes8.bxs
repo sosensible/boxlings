@@ -4,14 +4,14 @@ function processValue( value ) {
     // TODO: Check what type we received and handle accordingly
     // Use isArray(), isStruct(), isNumeric(), isBoolean(), etc.
     
-    println( "Processing: #value.toString()#" );
+    println( "Processing: #value.toString()#" )
 }
 
 function main() {
-    processValue( [1,2,3] );
-    processValue( {name: "test"} );
-    processValue( 42 );
-    processValue( "hello" );
+    processValue( [1,2,3] )
+    processValue( {name: "test"} )
+    processValue( 42 )
+    processValue( "hello" )
 }
 
-main();
+main()

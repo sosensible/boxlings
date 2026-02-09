@@ -2,8 +2,8 @@
 // Using `var` is optional but recommended for clarity.
 
 function main() {
-    var x = 5;
-    println( "x has the value #x#" );
+    var x = 5
+    println( "x has the value #x#" )
 }
 
-main();
+main()

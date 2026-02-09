@@ -6,7 +6,7 @@ function main() {
     var x
 
     // This works (x is null), but not very useful!
-    // Try: var x = 42; or var x = "hello"; or var x = [1,2,3];
+    // Try: var x = 42; or var x = "hello"; or var x = [1,2,3]
 
     println( "x has the value: #x#" )
     println( "x is of type: #x.getClass().getName()#" )

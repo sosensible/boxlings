@@ -1,5 +1,5 @@
 // TODO: Fix the function name below!
 // The compiler will tell you what's wrong.
 
-printline( "Hello from BoxLings!" );
-println( "I'm ready to learn BoxLang!" );
+printline( "Hello from BoxLings!" )
+println( "I'm ready to learn BoxLang!" )

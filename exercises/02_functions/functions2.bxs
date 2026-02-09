@@ -2,12 +2,12 @@
 // The function should accept a 'name' parameter
 
 function greet() {
-    println( "Hello, #name#!" );
+    println( "Hello, #name#!" )
 }
 
 function main() {
-    greet( "BoxLang" );
-    greet( "Luis" );
+    greet( "BoxLang" )
+    greet( "Luis" )
 }
 
-main();
+main()

@@ -2,11 +2,11 @@
 // In BoxLang, use & (ampersand) to concatenate strings, not +
 
 function main() {
-    var firstName = "Box";
-    var lastName = "Lang";
+    var firstName = "Box"
+    var lastName = "Lang"
     var fullName = firstName + lastName;  // Wrong operator!
     
-    println( "Full name: #fullName#" );
+    println( "Full name: #fullName#" )
 }
 
-main();
+main()

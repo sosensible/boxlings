@@ -4,7 +4,7 @@ class {
     
     function init( name ) {
         variables.name = arguments.name;  // Store in variables (private)
-        return this;
+        return this
     }
     
     function getName() {
@@ -12,10 +12,10 @@ class {
     }
     
     function main( args = [] ) {
-        var obj = new scopes4( "BoxLang" );
-        println( "Name: #obj.getName()#" );
+        var obj = new scopes4( "BoxLang" )
+        println( "Name: #obj.getName()#" )
         
         // This works via implicit accessor
-        println( "Direct access: #obj.name#" );
+        println( "Direct access: #obj.name#" )
     }
 }

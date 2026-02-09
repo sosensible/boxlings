@@ -1,13 +1,13 @@
 // Fixed: Added var keyword
 function calculate() {
-    var x = 5;
-    var y = 10;
-    return x + y;
+    var x = 5
+    var y = 10
+    return x + y
 }
 
 function main() {
-    var result = calculate();
-    println( "Result: #result#" );
+    var result = calculate()
+    println( "Result: #result#" )
 }
 
-main();
+main()

@@ -4,12 +4,12 @@
 function calculate() {
     x = 5;      // Missing var!
     y = 10;     // Missing var!
-    return x + y;
+    return x + y
 }
 
 function main() {
-    var result = calculate();
-    println( "Result: #result#" );
+    var result = calculate()
+    println( "Result: #result#" )
 }
 
-main();
+main()

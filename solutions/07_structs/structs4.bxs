@@ -7,9 +7,9 @@ function main() {
             state: "TX",
             zip: "77001"
         }
-    };
+    }
     
-    println( "City: #company.address.city#" );
+    println( "City: #company.address.city#" )
 }
 
-main();
+main()

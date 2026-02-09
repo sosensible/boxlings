@@ -7,10 +7,10 @@ function getDayType( day ) {
         case "Wednesday":
         case "Thursday":
         case "Friday":
-            return "Weekday";
+            return "Weekday"
         // Missing cases for weekend!
         default:
-            return "Unknown";
+            return "Unknown"
     }
 }
 
@@ -20,4 +20,4 @@ function main() {
     println( getDayType( "Sunday" ) );    // Should be Weekend!
 }
 
-main();
+main()

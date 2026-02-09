@@ -14,30 +14,30 @@ class extends="testbox.system.BaseSpec" {
             it( "should start with x equal to 5", () => {
                 // We can't easily test intermediate values in a script
                 // So we'll just verify the final result
-                include "variables5.bxs";
+                include "variables5.bxs"
                 
                 // The result variable should exist
-                expect( variables ).toHaveKey( "result" );
-            });
+                expect( variables ).toHaveKey( "result" )
+            })
             
             it( "should end with x equal to 15", () => {
-                include "variables5.bxs";
+                include "variables5.bxs"
                 
                 // After all the shadowing:
                 // x = 5
                 // x = x * 2  => x = 10
                 // x = x + 5  => x = 15
-                expect( variables.result ).toBe( 15 );
-            });
+                expect( variables.result ).toBe( 15 )
+            })
             
             it( "should demonstrate shadowing by declaring var x multiple times", () => {
-                var content = fileRead( expandPath( "exercises/01_variables/variables5.bxs" ) );
+                var content = fileRead( expandPath( "exercises/01_variables/variables5.bxs" ) )
                 
                 // The code should have multiple "var x" declarations
-                var matches = reMatchNoCase( "var\s+x\s*=", content );
-                expect( matches.len() ).toBeGTE( 3, "Should have at least 3 'var x' declarations" );
-            });
+                var matches = reMatchNoCase( "var\s+x\s*=", content )
+                expect( matches.len() ).toBeGTE( 3, "Should have at least 3 'var x' declarations" )
+            })
             
-        });
+        })
     }
 }

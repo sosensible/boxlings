@@ -1,10 +1,10 @@
 // The call_me() function is now defined!
 function call_me() {
-    println( "Hello from call_me!" );
+    println( "Hello from call_me!" )
 }
 
 function main() {
-    call_me();
+    call_me()
 }
 
-main();
+main()

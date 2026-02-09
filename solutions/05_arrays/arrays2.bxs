@@ -1,11 +1,11 @@
 // Fixed: Used append() member function
 function main() {
-    var numbers = [ 1, 2, 3 ];
+    var numbers = [ 1, 2, 3 ]
     
-    numbers.append( 4 );
+    numbers.append( 4 )
     
-    println( "Array: #numbers.toString()#" );
-    println( "Length: #numbers.len()#" );
+    println( "Array: #numbers.toString()#" )
+    println( "Length: #numbers.len()#" )
 }
 
-main();
+main()

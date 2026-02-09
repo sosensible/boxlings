@@ -5,11 +5,11 @@ import java:java.util.HashMap
 class {
     function main( args = [] ) {
         // TODO: Create a HashMap instance
-        var map = ???;
+        var map = ???
         
-        map.put( "language", "BoxLang" );
-        map.put( "version", "1.0" );
+        map.put( "language", "BoxLang" )
+        map.put( "version", "1.0" )
         
-        println( "Language: #map.get( 'language' )#" );
+        println( "Language: #map.get( 'language' )#" )
     }
 }

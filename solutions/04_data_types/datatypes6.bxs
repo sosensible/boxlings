@@ -1,9 +1,9 @@
 // Fixed: Structs use {} with key:value syntax
 function main() {
-    var person = { name: "Luis", age: 40 };
+    var person = { name: "Luis", age: 40 }
     
-    println( "Name: #person.name#" );
-    println( "Age: #person.age#" );
+    println( "Name: #person.name#" )
+    println( "Age: #person.age#" )
 }
 
-main();
+main()

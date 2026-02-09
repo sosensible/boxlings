@@ -5,16 +5,16 @@ function main() {
         math: 95,
         english: 87,
         science: 92
-    };
+    }
     
     // TODO: Get the count of keys
-    var count = ???;
+    var count = ???
     
     // TODO: Check if 'math' key exists
-    var hasMath = ???;
+    var hasMath = ???
     
-    println( "Total subjects: #count#" );
-    println( "Has math: #hasMath#" );
+    println( "Total subjects: #count#" )
+    println( "Has math: #hasMath#" )
 }
 
-main();
+main()

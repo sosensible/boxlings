@@ -2,11 +2,11 @@
 
 function greet( name, greeting ) {
     // Wrong! Using variable name directly instead of arguments scope
-    println( "#greeting#, #name#!" );
+    println( "#greeting#, #name#!" )
 }
 
 function main() {
-    greet( "BoxLang", "Hello" );
+    greet( "BoxLang", "Hello" )
 }
 
-main();
+main()

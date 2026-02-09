@@ -1,13 +1,13 @@
 // TODO: Convert between lists and arrays
 
 function main() {
-    var csv = "apple,banana,orange";
+    var csv = "apple,banana,orange"
     
     // TODO: Convert comma-separated list to array
-    var fruits = ???;
+    var fruits = ???
     
-    println( "Array: #fruits.toString()#" );
-    println( "First fruit: #fruits[1]#" );
+    println( "Array: #fruits.toString()#" )
+    println( "First fruit: #fruits[1]#" )
 }
 
-main();
+main()

@@ -4,9 +4,9 @@ function main() {
         make: "Toyota",
         model: "Camry",
         year: 2024
-    };
+    }
     
-    println( "Car: #car.make# #car.model#" );
+    println( "Car: #car.make# #car.model#" )
 }
 
-main();
+main()

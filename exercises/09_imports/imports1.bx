@@ -4,7 +4,7 @@
 class {
     function main( args = [] ) {
         // TODO: Add import statement at the top
-        var user = new User( "Luis", 40 );
-        println( user.getName() );
+        var user = new User( "Luis", 40 )
+        println( user.getName() )
     }
 }

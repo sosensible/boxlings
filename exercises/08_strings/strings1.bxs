@@ -1,11 +1,11 @@
 // TODO: Fix the string interpolation!
 
 function main() {
-    var name = "BoxLang";
-    var version = "1.0";
+    var name = "BoxLang"
+    var version = "1.0"
     
     // TODO: Use ## for expression interpolation in BoxLang
     println( "Welcome to $name version $version" );  // Wrong! Use ##
 }
 
-main();
+main()

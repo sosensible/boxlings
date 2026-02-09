@@ -1,11 +1,11 @@
 // TODO: Fix the variable scope access
 
 // In scripts, unscoped variables go to the 'variables' scope
-x = 10;
+x = 10
 
 function main() {
     // This won't work - x is in variables scope, not local
-    println( "x is: #x#" );
+    println( "x is: #x#" )
 }
 
-main();
+main()

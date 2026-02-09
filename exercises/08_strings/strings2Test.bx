@@ -2,10 +2,10 @@ class extends="testbox.system.BaseSpec" {
     function run() {
         describe( "Strings Exercise 2 - Multi-line", () => {
             it( "should create multi-line string", () => {
-                include "strings2.bxs";
-                expect( variables.poem ).toInclude( "Roses" );
+                include "strings2.bxs"
+                expect( variables.poem ).toInclude( "Roses" )
                 expect( variables.poem ).toInclude( char(10) ); // Contains newline
-            });
-        });
+            })
+        })
     }
 }

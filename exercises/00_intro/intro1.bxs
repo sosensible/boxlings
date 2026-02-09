@@ -6,11 +6,11 @@
 // When you're ready, enter 'n' in watch mode or run:
 // boxlang BoxLings.bx run intro2
 
-println( "       Welcome to BoxLings                    " );
-println( "==========================================================" );
-println( "This exercise compiles successfully. The remaining exercises contain" );
-println( "intentional errors. It's your job to find and fix them!" );
-println( "" );
-println( "Good luck!" );
-println( "" );
-println( "The file for this exercise is at: exercises/00_intro/intro1.bxs" );
+println( "       Welcome to BoxLings                    " )
+println( "==========================================================" )
+println( "This exercise compiles successfully. The remaining exercises contain" )
+println( "intentional errors. It's your job to find and fix them!" )
+println( "" )
+println( "Good luck!" )
+println( "" )
+println( "The file for this exercise is at: exercises/00_intro/intro1.bxs" )

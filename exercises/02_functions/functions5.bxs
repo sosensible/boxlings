@@ -2,19 +2,19 @@
 // They capture variables from their surrounding scope
 
 function main() {
-    var counter = 0;
+    var counter = 0
     
     // TODO: Fix this closure syntax!
     // Closures use => (fat arrow), not ->
     var increment = () -> {
-        counter++;
-    };
+        counter++
+    }
     
-    increment();
-    increment();
-    increment();
+    increment()
+    increment()
+    increment()
     
-    println( "Counter is now: #counter#" );
+    println( "Counter is now: #counter#" )
 }
 
-main();
+main()

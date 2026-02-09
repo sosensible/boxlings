@@ -5,9 +5,9 @@
 // TODO: This code works as-is, but add `var` for better readability!
 
 function main() {
-    var x = 5;
+    var x = 5
     // x = 5;  // This works, but it's better to declare with `var` for clarity --- IGNORE ---
-    println( "local variable [x] has the value #x#" );
+    println( "local variable [x] has the value #x#" )
 }
 
-main();
+main()

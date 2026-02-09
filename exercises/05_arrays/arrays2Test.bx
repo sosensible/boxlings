@@ -2,10 +2,10 @@ class extends="testbox.system.BaseSpec" {
     function run() {
         describe( "Arrays Exercise 2 - Member Functions", () => {
             it( "should append item to array", () => {
-                include "arrays2.bxs";
-                expect( variables.numbers.len() ).toBe( 4 );
-                expect( variables.numbers[4] ).toBe( 4 );
-            });
-        });
+                include "arrays2.bxs"
+                expect( variables.numbers.len() ).toBe( 4 )
+                expect( variables.numbers[4] ).toBe( 4 )
+            })
+        })
     }
 }

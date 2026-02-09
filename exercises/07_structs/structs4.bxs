@@ -8,10 +8,10 @@ function main() {
             state: "TX",
             zip: "77001"
         }
-    };
+    }
     
     // TODO: Fix the nested access
     println( "City: #company.city#" );  // Wrong! Need to go through address
 }
 
-main();
+main()

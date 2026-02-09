@@ -4,11 +4,11 @@ function main() {
         first: "Wash",
         second: "Rinse",
         third: "Dry"
-    ];
+    ]
     
     steps.each( (key, value) => {
-        println( "#key#: #value#" );
-    });
+        println( "#key#: #value#" )
+    })
 }
 
-main();
+main()

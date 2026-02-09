@@ -1,11 +1,11 @@
 // The test told us: x=10, y=20, sum=30
 
 function main() {
-    var x = 10;
-    var y = 20;
-    var sum = x + y;
+    var x = 10
+    var y = 20
+    var sum = x + y
     
-    println( "The sum of #x# and #y# is #sum#" );
+    println( "The sum of #x# and #y# is #sum#" )
 }
 
-main();
+main()

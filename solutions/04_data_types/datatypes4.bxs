@@ -1,10 +1,10 @@
 // Fixed: Use dateAdd() for date arithmetic
 function main() {
-    var today = now();
-    var tomorrow = dateAdd( "d", 1, today );
+    var today = now()
+    var tomorrow = dateAdd( "d", 1, today )
     
-    println( "Today: #dateFormat( today, 'yyyy-mm-dd' )#" );
-    println( "Tomorrow: #dateFormat( tomorrow, 'yyyy-mm-dd' )#" );
+    println( "Today: #dateFormat( today, 'yyyy-mm-dd' )#" )
+    println( "Tomorrow: #dateFormat( tomorrow, 'yyyy-mm-dd' )#" )
 }
 
-main();
+main()

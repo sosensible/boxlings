@@ -1,11 +1,11 @@
 // TODO: Fix the date arithmetic
 
 function main() {
-    var today = now();
+    var today = now()
     var tomorrow = today + 1;  // Wrong! Can't add number to date directly
     
-    println( "Today: #dateFormat( today, 'yyyy-mm-dd' )#" );
-    println( "Tomorrow: #dateFormat( tomorrow, 'yyyy-mm-dd' )#" );
+    println( "Today: #dateFormat( today, 'yyyy-mm-dd' )#" )
+    println( "Tomorrow: #dateFormat( tomorrow, 'yyyy-mm-dd' )#" )
 }
 
-main();
+main()

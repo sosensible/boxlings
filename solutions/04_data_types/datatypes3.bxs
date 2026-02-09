@@ -1,17 +1,17 @@
 // Fixed: Boolean without quotes
 function main() {
     var isActive = true;  // Boolean, not string
-    var count = 0;
+    var count = 0
     
     if ( isActive ) {
-        println( "System is active" );
+        println( "System is active" )
     }
     
     if ( count ) {
-        println( "Count is truthy" );
+        println( "Count is truthy" )
     } else {
-        println( "Count is falsey" );
+        println( "Count is falsey" )
     }
 }
 
-main();
+main()

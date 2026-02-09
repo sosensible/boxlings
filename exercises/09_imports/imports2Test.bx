@@ -3,14 +3,14 @@ class extends="testbox.system.BaseSpec" {
         describe( "Imports Exercise 2 - Java Imports", () => {
             it( "should import and use Java ArrayList", () => {
                 // Execute the class main method
-                var importsClass = new imports2();
+                var importsClass = new imports2()
                 
                 savecontent variable="output" {
-                    importsClass.main( [] );
+                    importsClass.main( [] )
                 }
                 
-                expect( output ).toInclude( "List size: 2" );
-            });
-        });
+                expect( output ).toInclude( "List size: 2" )
+            })
+        })
     }
 }

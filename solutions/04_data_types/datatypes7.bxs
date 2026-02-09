@@ -4,11 +4,11 @@ function main() {
         appetizer: "Salad",
         main: "Steak",
         dessert: "Cake"
-    ];
+    ]
     
     menu.each( (key, value) => {
-        println( "#key#: #value#" );
-    });
+        println( "#key#: #value#" )
+    })
 }
 
-main();
+main()

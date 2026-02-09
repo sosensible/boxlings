@@ -2,14 +2,14 @@ class extends="testbox.system.BaseSpec" {
     function run() {
         describe( "Data Types Exercise 2 - Numbers", () => {
             it( "should calculate remainder correctly", () => {
-                include "datatypes2.bxs";
-                expect( variables.remainder ).toBe( 1 );
-            });
+                include "datatypes2.bxs"
+                expect( variables.remainder ).toBe( 1 )
+            })
             
             it( "should calculate integer quotient", () => {
-                include "datatypes2.bxs";
-                expect( variables.quotient ).toBe( 3 );
-            });
-        });
+                include "datatypes2.bxs"
+                expect( variables.quotient ).toBe( 3 )
+            })
+        })
     }
 }

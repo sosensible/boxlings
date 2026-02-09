@@ -2,7 +2,7 @@
 // If no greeting is provided, it should default to "Hello"
 
 function greet( name, greeting ) {
-    println( "#greeting#, #name#!" );
+    println( "#greeting#, #name#!" )
 }
 
 function main() {
@@ -10,4 +10,4 @@ function main() {
     greet( "Luis" );                  // Should print: Hello, Luis!
 }
 
-main();
+main()

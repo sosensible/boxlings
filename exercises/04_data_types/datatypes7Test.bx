@@ -2,12 +2,12 @@ class extends="testbox.system.BaseSpec" {
     function run() {
         describe( "Data Types Exercise 7 - Ordered Structs", () => {
             it( "should preserve key insertion order", () => {
-                include "datatypes7.bxs";
-                var keys = variables.menu.keyArray();
-                expect( keys[1] ).toBe( "appetizer" );
-                expect( keys[2] ).toBe( "main" );
-                expect( keys[3] ).toBe( "dessert" );
-            });
-        });
+                include "datatypes7.bxs"
+                var keys = variables.menu.keyArray()
+                expect( keys[1] ).toBe( "appetizer" )
+                expect( keys[2] ).toBe( "main" )
+                expect( keys[3] ).toBe( "dessert" )
+            })
+        })
     }
 }

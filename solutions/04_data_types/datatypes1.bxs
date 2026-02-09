@@ -1,10 +1,10 @@
 // Fixed: Use & for string concatenation
 function main() {
-    var firstName = "Box";
-    var lastName = "Lang";
-    var fullName = firstName & lastName;
+    var firstName = "Box"
+    var lastName = "Lang"
+    var fullName = firstName & lastName
     
-    println( "Full name: #fullName#" );
+    println( "Full name: #fullName#" )
 }
 
-main();
+main()

@@ -1,21 +1,21 @@
 // Fixed: Added type checks
 function processValue( value ) {
     if ( isArray( value ) ) {
-        println( "Array with #value.len()# items" );
+        println( "Array with #value.len()# items" )
     } else if ( isStruct( value ) ) {
-        println( "Struct with #value.count()# keys" );
+        println( "Struct with #value.count()# keys" )
     } else if ( isNumeric( value ) ) {
-        println( "Number: #value#" );
+        println( "Number: #value#" )
     } else {
-        println( "String: #value#" );
+        println( "String: #value#" )
     }
 }
 
 function main() {
-    processValue( [1,2,3] );
-    processValue( {name: "test"} );
-    processValue( 42 );
-    processValue( "hello" );
+    processValue( [1,2,3] )
+    processValue( {name: "test"} )
+    processValue( 42 )
+    processValue( "hello" )
 }
 
-main();
+main()

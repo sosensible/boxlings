@@ -3,10 +3,10 @@ class extends="testbox.system.BaseSpec" {
         describe( "Scopes Exercise 1 - variables scope", () => {
             it( "should access unscoped variables from variables scope", () => {
                 savecontent variable="output" {
-                    include "scopes1.bxs";
+                    include "scopes1.bxs"
                 }
-                expect( output ).toInclude( "x is: 10" );
-            });
-        });
+                expect( output ).toInclude( "x is: 10" )
+            })
+        })
     }
 }

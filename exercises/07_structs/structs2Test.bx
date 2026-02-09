@@ -3,11 +3,11 @@ class extends="testbox.system.BaseSpec" {
         describe( "Structs Exercise 2 - Case Insensitivity", () => {
             it( "should access keys case-insensitively", () => {
                 savecontent variable="output" {
-                    include "structs2.bxs";
+                    include "structs2.bxs"
                 }
-                expect( output ).toInclude( "Luis" );
-                expect( output ).toInclude( "40" );
-            });
-        });
+                expect( output ).toInclude( "Luis" )
+                expect( output ).toInclude( "40" )
+            })
+        })
     }
 }

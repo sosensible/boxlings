@@ -4,7 +4,7 @@
 function main() {
     var poem = "Roses are red";  // TODO: Make this multi-line!
     
-    println( poem );
+    println( poem )
 }
 
-main();
+main()

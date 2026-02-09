@@ -2,14 +2,14 @@
 // They are PURE functions - no side effects, data in, data out
 
 function main() {
-    var numbers = [ 1, 2, 3, 4, 5 ];
+    var numbers = [ 1, 2, 3, 4, 5 ]
     
     // TODO: This is trying to use a lambda, but the syntax is wrong!
     // Lambdas use -> (skinny arrow), not =>
-    var doubled = numbers.map( (n) => n * 2 );
+    var doubled = numbers.map( (n) => n * 2 )
     
-    println( "Original: #numbers.toString()#" );
-    println( "Doubled: #doubled.toString()#" );
+    println( "Original: #numbers.toString()#" )
+    println( "Doubled: #doubled.toString()#" )
 }
 
-main();
+main()

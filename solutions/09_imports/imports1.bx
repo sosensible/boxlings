@@ -4,6 +4,6 @@ import User
 class {
     function main( args = [] ) {
         // Import allows us to use User directly
-        println( "Import syntax demonstrated" );
+        println( "Import syntax demonstrated" )
     }
 }

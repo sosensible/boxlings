@@ -3,11 +3,11 @@ function main() {
     var user = {
         NAME: "Luis",
         AGE: 40
-    };
+    }
     
-    println( "Name: #user.name#" );
-    println( "Age: #user.age#" );
-    println( "Also works: #user.NaMe#" );
+    println( "Name: #user.name#" )
+    println( "Age: #user.age#" )
+    println( "Also works: #user.NaMe#" )
 }
 
-main();
+main()

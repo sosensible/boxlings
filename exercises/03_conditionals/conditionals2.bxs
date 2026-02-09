@@ -4,9 +4,9 @@
 function isAdult( age ) {
     // This should be one line using ternary operator
     if ( age >= 18 ) {
-        return "Adult";
+        return "Adult"
     } else {
-        return "Minor";
+        return "Minor"
     }
 }
 
@@ -15,4 +15,4 @@ function main() {
     println( isAdult( 15 ) );  // Minor
 }
 
-main();
+main()

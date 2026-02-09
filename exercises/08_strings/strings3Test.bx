@@ -2,14 +2,14 @@ class extends="testbox.system.BaseSpec" {
     function run() {
         describe( "Strings Exercise 3 - Member Functions", () => {
             it( "should convert to uppercase", () => {
-                include "strings3.bxs";
-                expect( variables.upper ).toInclude( "BOXLANG" );
-            });
+                include "strings3.bxs"
+                expect( variables.upper ).toInclude( "BOXLANG" )
+            })
             
             it( "should trim whitespace", () => {
-                include "strings3.bxs";
-                expect( variables.trimmed ).toBe( "BoxLang is awesome!" );
-            });
-        });
+                include "strings3.bxs"
+                expect( variables.trimmed ).toBe( "BoxLang is awesome!" )
+            })
+        })
     }
 }

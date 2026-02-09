@@ -2,14 +2,14 @@
 // Arrays are 1-based in BoxLang!
 
 function main() {
-    var letters = [ "a", "b", "c", "d", "e" ];
+    var letters = [ "a", "b", "c", "d", "e" ]
     
     // Get the first and last elements
     var first = letters[0];  // Wrong index!
     var last = letters[4];   // Wrong index!
     
-    println( "First: #first#" );
-    println( "Last: #last#" );
+    println( "First: #first#" )
+    println( "Last: #last#" )
 }
 
-main();
+main()
