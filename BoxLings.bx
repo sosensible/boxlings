@@ -298,9 +298,21 @@ class {
         }
 
         var running = true
+        var loopCount = 0
 
         while ( running ) {
-            terminal.clear()
+            loopCount++
+            println( "[DEBUG] === Loop iteration #loopCount# ===" )
+
+            // SAFETY: Prevent infinite loops during debugging
+            if ( loopCount > 10 ) {
+                println( "[DEBUG] STOPPING - Loop limit reached!" )
+                sleep( 5000 )
+                break
+            }
+
+            // Debug
+           // terminal.clear()
 
             // Show header with box
             terminal.printBoxed( [
@@ -316,7 +328,7 @@ class {
             var exercise = appState.getCurrent()
 
             // Show current exercise in a box
-            println( "┌─ Current Exercise ─────────────────────────────────────────┐" )
+            println( "┌─ 👉 Current Exercise ─────────────────────────────────────────┐" )
             println( "│" )
             println( "│  📝 #exercise.getDisplayName()#" )
             println( "│  📂 #exercise.path#" )
@@ -346,8 +358,17 @@ class {
                 println( "" )
                 print( "[#terminal.BOLD & terminal.ansi256( 81 )#n#terminal.RESET#] Next  [#terminal.BOLD##terminal.ansi256(81)#h#terminal.RESET#] Hint  [#terminal.BOLD##terminal.ansi256(81)#l#terminal.RESET#] List  [#terminal.BOLD##terminal.ansi256(81)#q#terminal.RESET#] Quit: " )
                 var cmd = waitForCommandOrFileChange( exercise, lastModified )
+                println( "[DEBUG] Received command: [#cmd#]" )
 
-                if ( cmd == "n" ) {
+                if ( cmd == "FILE_CHANGED" ) {
+                    // Exercise already succeeded - update timestamp and stay on success screen
+                    println( "" )
+                    println( "[DEBUG] FILE_CHANGED in success branch - updating timestamp" )
+                    lastModified = fileExists( fullPath ) ? getFileInfo( fullPath ).lastModified : now()
+                    println( "ℹ️  File changed, but exercise already complete. Press 'n' for next." )
+                    sleep( 2000 )
+                    continue
+                } else if ( cmd == "n" ) {
                     appState.markCurrentDone()
                     appState.moveToNext()
 
@@ -368,8 +389,15 @@ class {
                     CLIRead()
                 } else if ( cmd == "q" ) {
                     running = false
+                } else if ( cmd == "TIMEOUT" || cmd == "ERROR" ) {
+                    // Watcher timed out or errored - just loop back
+                    println( "[DEBUG] TIMEOUT/ERROR in success branch - continuing" )
+                    sleep( 1000 )
+                    continue
                 } else {
-                    // Timeout or unexpected input - just loop back
+                    // Unexpected input - just loop back
+                    println( "[DEBUG] Unexpected input in success branch: [#cmd#] - continuing" )
+                    sleep( 1000 )
                     continue
                 }
             } else {
@@ -390,13 +418,22 @@ class {
                 // If file changed, auto-rerun
                 if ( cmd == "FILE_CHANGED" ) {
                     println( "" )
+                    println( "[DEBUG] FILE_CHANGED detected, updating timestamp and rerunning..." )
+                    // UPDATE THE TIMESTAMP so we don't detect the same change again!
+                    lastModified = fileExists( fullPath ) ? getFileInfo( fullPath ).lastModified : now()
+                    println( "[DEBUG] Updated lastModified to: #lastModified#" )
                     terminal.printSuccess( "File changed! Rerunning..." )
                     sleep( 1000 )
+                    // Small delay to ensure watcher cleanup completes
+                    println( "[DEBUG] Waiting for watcher cleanup..." )
+                    sleep( 500 )
                     continue
                 }
 
                 // Manual rerun
                 if ( cmd == "r" || cmd == "" ) {
+                    println( "[DEBUG] Manual rerun (cmd=#cmd#)" )
+                    sleep( 1000 )
                     continue
                 }
 
@@ -425,12 +462,21 @@ class {
                     CLIRead()
                 } else if ( cmd == "q" ) {
                     running = false
+                } else if ( cmd == "TIMEOUT" || cmd == "ERROR" ) {
+                    // Watcher timed out or errored - just loop and rerun
+                    println( "[DEBUG] TIMEOUT/ERROR in failure branch - continuing" )
+                    sleep( 1000 )
+                    continue
                 } else {
-                    // Timeout or any other input - just loop and rerun
+                    // Any other input - just loop and rerun
+                    println( "[DEBUG] Unexpected input in failure branch: [#cmd#] - continuing" )
+                    sleep( 1000 )
                     continue
                 }
             }
+
         }
+        // End LOOP
 
         terminal.clear()
 
@@ -499,9 +545,8 @@ class {
     }
 
     /**
-     * Wait for keyboard input or detect file changes using BoxFutures + Watcher
-     * Races between user input and file watching - whichever happens first wins
-     * Uses Java WatchService for efficient event-driven file monitoring (no polling!)
+     * Wait for keyboard input or file changes - whichever happens first
+     * Uses Java WatchService for efficient event-driven file monitoring
      *
      * @exercise The current exercise
      * @lastModified The last known modification time
@@ -510,30 +555,54 @@ class {
     private function waitForCommandOrFileChange( required exercise, required lastModified ) {
         var watcher = new src.Watcher()
 
-        // Future for file watching using Watcher (Java WatchService - event-driven!)
-        var fileFuture = asyncRun( () => {
-            var changed = watcher.watch( exercise.path, lastModified, 300 ) // 5 minute timeout
-            return changed ? "FILE_CHANGED" : "TIMEOUT"
-        } )
+        try {
+            // Start watcher in background
+            var watcherFuture = asyncRun( () => {
+                var changed = watcher.watch( exercise.path, lastModified, 300 )
+                return changed ? "FILE_CHANGED" : "TIMEOUT"
+            } )
 
-        // Future for user input
-        var inputFuture = asyncRun( () => {
-            return CLIRead().trim().lcase()
-        } )
+            // Start user input in background too
+            var inputFuture = asyncRun( () => {
+                return CLIRead().trim().lcase()
+            } )
 
-        // Race: whichever completes first wins!
-        var result = asyncAny( [ fileFuture, inputFuture ] ).get()
+            // Wait for whichever completes first
+            var result = asyncAny( [ watcherFuture, inputFuture ] ).get()
 
-        // Clean up - stop watcher and cancel losing future
-        watcher.stop()
+            // DEBUG: Show what we got
+            println( "[DEBUG] waitForCommandOrFileChange returned: #result.toString()#" )
+            sleep( 500 )
 
-        if ( result == "FILE_CHANGED" || result == "TIMEOUT" ) {
-            inputFuture.cancel( true )
-        } else {
-            fileFuture.cancel( true )
+            // Stop watcher and cancel the other future
+            watcher.stop()
+
+            if ( result == "FILE_CHANGED" ) {
+                println( "[DEBUG] File changed - cancelling input future" )
+                var cancelled = inputFuture.cancel( true )
+                println( "[DEBUG] Input future cancelled: #cancelled#, isDone: #inputFuture.isDone()#, isCancelled: #inputFuture.isCancelled()#" )
+                return "FILE_CHANGED"
+            } else if ( result == "TIMEOUT" ) {
+                println( "[DEBUG] Timeout - cancelling input future" )
+                var cancelled = inputFuture.cancel( true )
+                println( "[DEBUG] Input future cancelled: #cancelled#" )
+                return "TIMEOUT"
+            } else {
+                // User input won
+                println( "[DEBUG] User input: [#result#] - cancelling watcher future" )
+                var cancelled = watcherFuture.cancel( true )
+                println( "[DEBUG] Watcher future cancelled: #cancelled#, isDone: #watcherFuture.isDone()#, isCancelled: #watcherFuture.isCancelled()#" )
+                return result
+            }
+
+        } catch( any e ) {
+            watcher.stop()
+            println( "⚠️  Watch error: #e.message#" )
+            println( "      #e.stackTrace#"  )
+            //sleep( 10000 )
+
+            return "ERROR"
         }
-
-        return result
     }
 
     /**
