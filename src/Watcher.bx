@@ -32,9 +32,16 @@ class {
     /**
      * Start watching a file for changes
      * Returns true when file changes after lastModified timestamp, false on timeout
+     *
+     * @filePath - path to the file to watch (relative to project root)
+     * @lastModified - timestamp to compare against (only trigger if file modified after this)
+     * @timeout - max time to watch in seconds (default 300s = 5 minutes)
      */
     function watch( required string filePath, required date lastModified, numeric timeout = 300 ) {
         try {
+            println( "[DEBUG Watcher] Starting watch for: #filePath#" )
+            println( "[DEBUG Watcher] lastModified param: #lastModified#" )
+
             var fullPath = expandPath( filePath )
             var javaPath = Paths.get( fullPath )
             var directory = javaPath.getParent()
@@ -52,77 +59,111 @@ class {
             var fileName = javaPath.getFileName().toString()
             var checksElapsed = 0
             var lastEventTime = now()
+            var fileChanged = false
 
             // Watch loop
-            while ( variables.watching && checksElapsed < timeout ) {
-                var key = variables.watchService.poll(
-                    1,
-                    TimeUnit.SECONDS
-                )
-
-                checksElapsed++
-
-                if ( isNull( key ) ) {
-                    continue
+            while ( variables.watching && checksElapsed < timeout ) {                // Check if we've been asked to stop
+                if ( !variables.watching ) {
+                    println( "[DEBUG Watcher] Stop requested, exiting loop" )
+                    break
                 }
 
-                // Check events
-                var events = key.pollEvents()
+                try {
+                    var key = variables.watchService.poll(
+                        1,
+                        TimeUnit.SECONDS
+                    )
 
-                for ( var event in events ) {
-                    var changedFile = event.context().toString()
+                    checksElapsed++
 
-                    if ( changedFile == fileName ) {
-                        // Debounce: ignore events within 500ms of last event
-                        var now = now()
-                        if ( dateDiff( "s", lastEventTime, now ) < 1 ) {
-                            continue
-                        }
-                        lastEventTime = now
+                    if ( isNull( key ) ) {
+                        continue
+                    }
 
-                        // Check if file was actually modified after our timestamp
-                        if ( fileExists( fullPath ) ) {
+                    // Check events
+                    var events = key.pollEvents()
+                    for ( var event in events ) {
+                        var changedFile = event.context().toString()
+
+                        // Only care about our specific file (ignore other changes in the same directory)
+                        if ( changedFile == fileName ) {
+                            // Debounce: ignore events within 500ms of last event
+                            var rightNow = now()
+                            if ( dateDiff( "s", lastEventTime, rightNow ) < 1 ) {
+                                continue
+                            }
+                            lastEventTime = rightNow
+
+                            // Check if file was actually modified after our timestamp
                             var fileInfo = getFileInfo( fullPath )
-                            if ( fileInfo.lastModified > lastModified ) {
+                            println( "[DEBUG Watcher] fileInfo.lastModified: #fileInfo.lastModified#" )
+                            println( "[DEBUG Watcher] Comparing: #fileInfo.lastModified# > #lastModified#" )
+
+                            if( dateCompare( fileInfo.lastModified, lastModified ) == 1 ) {
                                 // Real change detected! Return immediately
+                                println( "[DEBUG Watcher] REAL CHANGE DETECTED!" )
                                 key.reset()
-                                stop()
-                                return true
+                                // Set flag to exit loop, then close service cleanly
+                                fileChanged = true
+                                variables.watching = false
+                                break
+                            } else {
+                                println( "[DEBUG Watcher] File modified, but timestamp is older or same - ignoring" )
                             }
                         }
                     }
-                }
 
-                // Reset key
-                var valid = key.reset()
-                if ( !valid ) {
-                    break
+                    // Reset key
+                    var valid = key.reset()
+                    if ( !valid ) {
+                        break
+                    }
+                } catch( any loopError ) {
+                    // Handle interruption or other errors gracefully
+                    var errorString = loopError.toString()
+                    if ( errorString.findNoCase( "Interrupt" ) > 0 || errorString.findNoCase( "Closed" ) > 0 ) {
+                        println( "[DEBUG Watcher] Watch interrupted or closed - exiting gracefully" )
+                        break
+                    }
+                    // Re-throw unexpected errors
+                   rethrow
                 }
             }
 
-            // Timeout or stopped
-            stop()
-            return false
+            // Clean up watch service
+            println( "[DEBUG Watcher] Exiting watch loop,  fileChanged=#fileChanged#" )
+            closeWatchService()
 
+            // Return true if file changed, false if timeout or stopped
+            return fileChanged
         } catch( any e ) {
-            println( "⚠️  File watching error: #e.message#" )
-            println( "   Details: #e.detail#" )
-            stop()
+            closeWatchService()
+            println( "⚠️  File watching error: #e.toString()#" )
             return false
         }
     }
 
     /**
-     * Stop watching
+     * Stop watching (sets flag to exit loop gracefully)
      */
     function stop() {
+        println( "[DEBUG Watcher] stop() called - setting watching=false" )
         variables.watching = false
+    }
 
+    /**
+     * Close the watch service (internal cleanup)
+     */
+    private function closeWatchService() {
         if ( !isNull( variables.watchService ) ) {
             try {
+                println( "[DEBUG Watcher] Closing watch service..." )
                 variables.watchService.close()
+                variables.watchService = null
+                println( "[DEBUG Watcher] Watch service closed" )
             } catch( any e ) {
-                // Ignore
+                println( "[DEBUG Watcher] Error closing watch service: #e.message ?: 'unknown'#" )
+                // Ignore - best effort cleanup
             }
         }
     }
