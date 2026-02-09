@@ -1,10 +1,10 @@
 /**
  * Terminal - UI Utilities and Display Helpers
- * 
+ *
  * Handles terminal output, colors, and formatting with ANSI support
  */
 class {
-    
+
     // ANSI Color Codes
     property name="RESET";
     property name="BOLD";
@@ -15,9 +15,9 @@ class {
     property name="MAGENTA";
     property name="CYAN";
     property name="WHITE";
-    
+
     function init() {
-        // For now, disable ANSI colors - BoxLang chr() function not found
+        // For now, disable ANSI colors - BoxLang char() function not found
         variables.RESET = "";
         variables.BOLD = "";
         variables.RED = "";
@@ -29,13 +29,13 @@ class {
         variables.WHITE = "";
         return this;
     }
-    
+
     /**
      * Show welcome message with enhanced formatting
      */
     function showWelcome() {
         CLIClear();
-        
+
         printBoxed( [
             "       Welcome to...                      ",
             "                 _                        ",
@@ -45,23 +45,23 @@ class {
             " \___|\____/_/\_\|____|_|_| |_|\__, |___/ ",
             "                                |___/      "
         ] );
-        
+
         println( "" );
         printColor( "═══════════════════════════════════════════════════════════════", "cyan" );
         println( "" );
-        
+
         println( "Welcome to BoxLings! 🦀" );
         println( "" );
         println( "Learn BoxLang + Test-Driven Development through hands-on exercises." );
         println( "" );
-        
+
         printColor( "HOW IT WORKS:", "yellow" );
         println( "  📖 For exercises with tests → Read the test file FIRST" );
         println( "  💡 Tests tell you exactly what your code should do" );
         println( "  ✏️  Fix the exercise until tests pass" );
         println( "  🧪 Later, you'll write your own tests!" );
         println( "" );
-        
+
         printColor( "KEYBOARD SHORTCUTS:", "yellow" );
         println( "  n → Next exercise (after completing current)" );
         println( "  h → Show hint" );
@@ -70,15 +70,15 @@ class {
         println( "  r → Rerun current exercise" );
         println( "  q → Quit" );
         println( "" );
-        
+
         printColor( "═══════════════════════════════════════════════════════════════", "cyan" );
         println( "" );
         print( "Press ENTER to start learning... " );
-        
+
         CLIRead();
         CLIClear();
     }
-    
+
     /**
      * Print text in a box
      */
@@ -89,7 +89,7 @@ class {
                 maxLen = line.len();
             }
         });
-        
+
         println( "╔" & repeatString( "═", maxLen + 2 ) & "╗" );
         lines.each( line => {
             var padding = repeatString( " ", maxLen - line.len() );
@@ -97,7 +97,7 @@ class {
         });
         println( "╚" & repeatString( "═", maxLen + 2 ) & "╝" );
     }
-    
+
     /**
      * Show completion message
      */
@@ -111,13 +111,13 @@ class {
         println( "" );
         println( "🎉 ═══════════════════════════════════════════════════════════════" );
         println( "" );
-        
+
         if ( message != "" ) {
             println( message );
             println( "" );
         }
     }
-    
+
     /**
      * Show progress bar with color
      */
@@ -125,12 +125,12 @@ class {
         var percentage = total > 0 ? round( (completed / total) * 100 ) : 0;
         var barWidth = 40;
         var filledWidth = round( (percentage / 100) * barWidth );
-        
+
         var bar = "";
         for ( var i = 1; i <= barWidth; i++ ) {
             bar &= i <= filledWidth ? "█" : "░";
         }
-        
+
         // Color based on progress
         var color = "red";
         if ( percentage >= 75 ) {
@@ -140,19 +140,19 @@ class {
         } else if ( percentage >= 25 ) {
             color = "cyan";
         }
-        
+
         print( variables.BOLD );
         printColor( "[#bar#] #percentage#%", color );
         print( " (#completed#/#total# exercises)" & variables.RESET );
         println( "" );
     }
-    
+
     /**
      * Print with color
      */
     function printColor( required string text, string color = "default" ) {
         var colorCode = variables.RESET;
-        
+
         switch( color ) {
             case "red":
                 colorCode = variables.RED;
@@ -173,59 +173,59 @@ class {
                 colorCode = variables.CYAN;
                 break;
         }
-        
+
         println( colorCode & text & variables.RESET );
     }
-    
+
     /**
      * Print success message
      */
     function printSuccess( required string text ) {
         printColor( "✅ #text#", "green" );
     }
-    
+
     /**
      * Print error message
      */
     function printError( required string text ) {
         printColor( "❌ #text#", "red" );
     }
-    
+
     /**
      * Print info message
      */
     function printInfo( required string text ) {
         printColor( "ℹ️  #text#", "blue" );
     }
-    
+
     /**
      * Print warning message
      */
     function printWarning( required string text ) {
         printColor( "⚠️  #text#", "yellow" );
     }
-    
+
     /**
      * Print hint
      */
     function printHint( required string text ) {
         printColor( "💡 #text#", "cyan" );
     }
-    
+
     /**
      * Print test indicator
      */
     function printTest( required string text ) {
         printColor( "🧪 #text#", "magenta" );
     }
-    
+
     /**
      * Clear terminal
      */
     function clear() {
         CLIClear();
     }
-    
+
     /**
      * Print section header
      */
@@ -236,7 +236,7 @@ class {
         println( line );
         println( "" );
     }
-    
+
     /**
      * Print section divider
      */

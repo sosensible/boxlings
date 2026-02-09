@@ -4,7 +4,7 @@ class extends="testbox.system.BaseSpec" {
             it( "should create multi-line string", () => {
                 include "strings2.bxs";
                 expect( variables.poem ).toInclude( "Roses" );
-                expect( variables.poem ).toInclude( chr(10) ); // Contains newline
+                expect( variables.poem ).toInclude( char(10) ); // Contains newline
             });
         });
     }

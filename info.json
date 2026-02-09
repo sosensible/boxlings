@@ -16,7 +16,7 @@
       "dir": "00_intro",
       "path": "exercises/00_intro/intro2.bxs",
       "test": false,
-      "hint": "The compiler is telling you that the function name is wrong. Read the error message carefully - it suggests the correct function name!"
+      "hint": "The compiler is telling you that the function name is wrong. Read the error message carefully - or use the IDE to give you suggestions!"
     },
     {
       "name": "variables1",

@@ -1,20 +1,20 @@
 /**
  * Runner - Exercise Executor and Validator
- * 
+ *
  * Runs exercises, executes tests, and validates results
  */
 class {
-    
+
     /**
      * Run an exercise and return results
-     * 
+     *
      * @exercise The exercise to run
      * @verbose Whether to print output (default true)
      * @return Struct with success, output, errors
      */
     function runExercise( required exercise, boolean verbose = true ) {
         var terminal = new Terminal();
-        
+
         var result = {
             success: false,
             output: "",
@@ -23,10 +23,10 @@ class {
             executionSuccess: false,
             testSuccess: false
         };
-        
+
         try {
             var fullPath = expandPath( exercise.path );
-            
+
             // Check if exercise file exists
             if ( !fileExists( fullPath ) ) {
                 result.errors.append( "Exercise file not found: #exercise.path#" );
@@ -35,45 +35,45 @@ class {
                 }
                 return result;
             }
-            
+
             if ( verbose ) {
                 terminal.printColor( "Running: #exercise.getDisplayName()#", "cyan" );
                 terminal.printInfo( "File: #exercise.path#" );
-                
+
                 if ( exercise.test ) {
                     terminal.printTest( "This exercise has tests - read them first!" );
                     println( "   Test file: #exercise.test_path#" );
                 }
-                
+
                 println( "" );
             }
-            
+
             // Step 1: Try to compile/parse the exercise
             if ( verbose ) {
                 print( "Compiling... " );
             }
-            
+
             var compileResult = compileExercise( exercise );
             result.compilationSuccess = compileResult.success;
-            
+
             if ( !compileResult.success ) {
                 result.errors.append( compileResult.errors );
                 result.output = compileResult.output;
-                
+
                 if ( verbose ) {
                     terminal.printColor( "✗", "red" );
                     println( "" );
                     terminal.printColor( "Compilation errors:", "red" );
                     println( compileResult.output );
                 }
-                
+
                 return result;
             }
-            
+
             if ( verbose ) {
                 terminal.printColor( "✓", "green" );
             }
-            
+
             // Step 2: If exercise has tests, run them
             if ( exercise.test ) {
                 if ( verbose ) {
@@ -81,90 +81,90 @@ class {
                     terminal.printColor( "Running tests...", "magenta" );
                     println( "" );
                 }
-                
+
                 var testResult = runTests( exercise );
                 result.testSuccess = testResult.success;
                 result.output &= testResult.output;
-                
+
                 if ( !testResult.success ) {
                     result.errors.append( "Tests failed" );
-                    
+
                     if ( verbose ) {
                         println( testResult.output );
                         println( "" );
                         terminal.printError( "Tests failed!" );
                         terminal.printHint( "The test output shows what's expected vs actual." );
                     }
-                    
+
                     return result;
                 }
-                
+
                 if ( verbose ) {
                     println( testResult.output );
                 }
-                
+
                 result.success = true;
                 return result;
             }
-            
+
             // Step 3: For non-test exercises, just execute and check for errors
             if ( verbose ) {
                 print( "Executing... " );
             }
-            
+
             var execResult = executeExercise( exercise );
             result.executionSuccess = execResult.success;
             result.output = execResult.output;
-            
+
             if ( !execResult.success ) {
                 result.errors.append( execResult.errors );
-                
+
                 if ( verbose ) {
                     terminal.printColor( "✗", "red" );
                     println( "" );
                     terminal.printColor( "Runtime errors:", "red" );
                     println( execResult.output );
                 }
-                
+
                 return result;
             }
-            
+
             if ( verbose ) {
                 terminal.printColor( "✓", "green" );
-                
+
                 if ( execResult.output.trim() != "" ) {
                     println( "" );
                     terminal.printColor( "Output:", "blue" );
                     println( execResult.output );
                 }
             }
-            
+
             result.success = true;
             return result;
-            
+
         } catch( any e ) {
             result.errors.append( e.message );
-            
+
             if ( verbose ) {
                 println( "❌ Unexpected error: #e.message#" );
                 if ( e.detail ?: "" != "" ) {
                     println( "   #e.detail#" );
                 }
             }
-            
+
             return result;
         }
     }
-    
+
     /**
      * Format error output to be more student-friendly
      * Removes verbose stack traces, keeps relevant error messages
      */
     private function formatErrorOutput( required string output ) {
-        var lines = output.listToArray( chr(10) );
+        var lines = output.listToArray( char(10) );
         var cleanLines = [];
         var inStackTrace = false;
-        
+
         lines.each( line => {
             // Show ERROR lines
             if ( line.findNoCase( "[ERROR]" ) || line.findNoCase( "Exception:" ) ) {
@@ -186,22 +186,22 @@ class {
                 cleanLines.append( line );
             }
         });
-        
-        return cleanLines.toList( chr(10) );
+
+        return cleanLines.toList( char(10) );
     }
-    
+
     /**
      * Compile/parse an exercise
      */
     private function compileExercise( required exercise ) {
         try {
             var fullPath = expandPath( exercise.path );
-            
+
             // For BoxLang, we can try to parse/validate the file
             // This is a simplified check - actual compilation happens on execution
-            
+
             var content = fileRead( fullPath );
-            
+
             // Basic syntax validation
             if ( content.trim() == "" ) {
                 return {
@@ -210,15 +210,15 @@ class {
                     output: "Error: The exercise file is empty"
                 };
             }
-            
+
             // TODO: Add more sophisticated syntax checking if BoxLang provides APIs
-            
+
             return {
                 success: true,
                 errors: [],
                 output: ""
             };
-            
+
         } catch( any e ) {
             return {
                 success: false,
@@ -227,20 +227,20 @@ class {
             };
         }
     }
-    
+
     /**
      * Execute an exercise file
      */
     private function executeExercise( required exercise ) {
         try {
             var fullPath = expandPath( exercise.path );
-            
+
             var result = {
                 output: "",
                 errorOutput: "",
                 exitCode: 0
             };
-            
+
             // Execute the exercise file
             bx:execute
                 name="boxlang"
@@ -250,38 +250,38 @@ class {
                 returnVariable="result.exitCode"
                 timeout="30" {
             }
-            
+
             // Check for errors in output or errorOutput
             var hasErrors = false;
             var allOutput = (result.output ?: "") & (result.errorOutput ?: "");
-            
+
             // Check exit code
             if ( result.exitCode != 0 ) {
                 hasErrors = true;
             }
-            
+
             // Check for exceptions or errors in any output
             if ( allOutput.findNoCase( "[ERROR]" ) || allOutput.findNoCase( "Exception:" ) || allOutput.findNoCase( "ortus.boxlang.runtime" ) ) {
                 hasErrors = true;
             }
-            
+
             if ( hasErrors ) {
                 // Filter and format error output for students
                 var cleanOutput = formatErrorOutput( allOutput );
-                
+
                 return {
                     success: false,
                     errors: [ "Execution failed" ],
                     output: cleanOutput
                 };
             }
-            
+
             return {
                 success: true,
                 errors: [],
                 output: result.output ?: ""
             };
-            
+
         } catch( any e ) {
             return {
                 success: false,
@@ -290,13 +290,13 @@ class {
             };
         }
     }
-    
+
     /**
      * Run TestBox tests for an exercise
      */
     private function runTests( required exercise ) {
         var testFullPath = expandPath( exercise.test_path );
-        
+
         if ( !fileExists( testFullPath ) ) {
             return {
                 success: true,
@@ -304,11 +304,11 @@ class {
                 errors: []
             };
         }
-        
+
         try {
             var output = "";
             var exitCode = 0;
-            
+
             // Run TestBox via BoxLang CLI
             // TestBox will print results directly to console
             bx:execute
@@ -319,16 +319,16 @@ class {
                 returnVariable="exitCode"
                 timeout="30" {
             }
-            
+
             // Exit code 0 = all tests passed
             var success = exitCode == 0;
-            
+
             return {
                 success: success,
                 output: output ?: errorOutput,
                 errors: success ? [] : [ "Tests failed" ]
             };
-            
+
         } catch( any e ) {
             return {
                 success: false,
