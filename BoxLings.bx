@@ -344,7 +344,7 @@ class {
                 println( "│" )
                 println( "└────────────────────────────────────────────────────────────┘" )
                 println( "" )
-                print( "[n] Next  [h] Hint  [l] List  [q] Quit: " )
+                print( "[#terminal.BOLD & terminal.ansi256( 81 )#n#terminal.RESET#] Next  [#terminal.BOLD##terminal.ansi256(81)#h#terminal.RESET#] Hint  [#terminal.BOLD##terminal.ansi256(81)#l#terminal.RESET#] List  [#terminal.BOLD##terminal.ansi256(81)#q#terminal.RESET#] Quit: " )
                 var cmd = waitForCommandOrFileChange( exercise, lastModified )
 
                 // If file changed, auto-rerun
@@ -385,7 +385,7 @@ class {
                 println( "│" )
                 println( "└────────────────────────────────────────────────────────────┘" )
                 println( "" )
-                print( "[r/Enter] Rerun  [h] Hint  [t] Test  [l] List  [q] Quit: " )
+                print( "[#terminal.BOLD##terminal.ansi256(81)#r/Enter#terminal.RESET#] Rerun  [#terminal.BOLD##terminal.ansi256(81)#h#terminal.RESET#] Hint  [#terminal.BOLD##terminal.ansi256(81)#t#terminal.RESET#] Test  [#terminal.BOLD##terminal.ansi256(81)#l#terminal.RESET#] List  [#terminal.BOLD##terminal.ansi256(81)#q#terminal.RESET#] Quit: " )
 
                 var cmd = waitForCommandOrFileChange( exercise, lastModified )
 
