@@ -344,7 +344,7 @@ class {
                 println( "│" )
                 println( "└────────────────────────────────────────────────────────────┘" )
                 println( "" )
-                print( "n=Next  h=Hint  l=List  q=Quit → " )
+                print( "[n] Next  [h] Hint  [l] List  [q] Quit: " )
                 var cmd = waitForCommandOrFileChange( exercise, lastModified )
 
                 // If file changed, auto-rerun
@@ -385,7 +385,7 @@ class {
                 println( "│" )
                 println( "└────────────────────────────────────────────────────────────┘" )
                 println( "" )
-                print( "r=Rerun  h=Hint  t=Test  l=List  q=Quit  [Enter]=Rerun → " )
+                print( "[r/Enter] Rerun  [h] Hint  [t] Test  [l] List  [q] Quit: " )
 
                 var cmd = waitForCommandOrFileChange( exercise, lastModified )
 
