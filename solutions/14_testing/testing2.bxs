@@ -1,7 +1,7 @@
 // Implemented function for TDD practice
 
 function reverseString( value ) {
-    return value.reverse()
+    return reverse( value )
 }
 
 var result = reverseString( "boxlang" )

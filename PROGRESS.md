@@ -1,12 +1,12 @@
 # BoxLings - Implementation Progress (Updated)
 
-## Current Status: Phase 1 COMPLETE - Exercise Content & Watch Mode Done
+## Current Status: Phase 2 IN PROGRESS - Lessons 10-15 Added
 
 ---
 
 ## Summary
 
-BoxLings has completed **Phase 1 MVP** with 50 exercises across 10 topics, full watch mode implementation, and all infrastructure in place. The project is ready for testing and polish.
+BoxLings has completed **Phase 1 MVP** with 50 exercises across 10 topics and added **Phase 2 lessons 10-15** (31 new exercises). The project is ready for continued testing and polish.
 
 ---
 
@@ -15,6 +15,7 @@ BoxLings has completed **Phase 1 MVP** with 50 exercises across 10 topics, full 
 ### Phase 1: Core Infrastructure - COMPLETED
 
 #### Core CLI (BoxLings.bx) ✅
+
 - `main(args)` entry point using `CLIGetArgs()` (removed custom CLI.bx)
 - 8 commands: run, check-all, reset, hint, show-test, list, watch, help, version
 - Box character formatting (╔═╗, ┌─┐, └─)
@@ -23,6 +24,7 @@ BoxLings has completed **Phase 1 MVP** with 50 exercises across 10 topics, full 
 - CLIClear() on all commands
 
 #### File Watching System ✅
+
 - Background thread polling every 2 seconds
 - Auto-detects file changes
 - Auto-reruns exercises on save
@@ -30,12 +32,14 @@ BoxLings has completed **Phase 1 MVP** with 50 exercises across 10 topics, full 
 - Thread cleanup on exit
 
 #### Exercise System ✅
+
 - 50 exercises across 10 topics (00-09)
 - 31 TestBox test files
 - Complete solutions for all exercises
 - info.json with full metadata
 
 #### Watch Mode ✅
+
 - Interactive watch loop with keyboard shortcuts
 - Commands: n (next), h (hint), t (test), l (list), r (rerun), q (quit)
 - Auto-progress on success
@@ -96,8 +100,14 @@ boxlings/
 | 07_structs | 5 | 4 | ✅ Complete |
 | 08_strings | 6 | 4 | ✅ Complete |
 | 09_imports | 4 | 2 | ✅ Complete |
+| 10_structs_advanced | 4 | 4 | ✅ Complete |
+| 11_null_handling | 4 | 4 | ✅ Complete |
+| 12_error_handling | 6 | 6 | ✅ Complete |
+| 13_interfaces | 4 | 3 | ✅ Complete |
+| 14_testing | 5 | 5 | ✅ Complete |
+| 15_functional | 8 | 6 | ✅ Complete |
 
-**Total: 50 exercises, 31 tests (62% coverage)**
+**Total: 81 exercises, 59 tests (73% coverage)**
 
 ---
 
@@ -164,15 +174,18 @@ boxlings/
 ## 📝 Changes from Original Plan
 
 ### Removed
+
 - ~~src/CLI.bx~~ - Using `CLIGetArgs()` instead
 
 ### Added
+
 - Comprehensive file watching with thread polling
 - Box character formatting throughout
 - Word-wrapped hints
 - Filtered error output (no stack traces)
 
 ### Modified
+
 - Terminal.bx significantly expanded with box drawing utilities
 - Watch mode enhanced with keyboard shortcuts
 - Progress bar implementation
@@ -182,6 +195,7 @@ boxlings/
 ## 🎓 Learning Content Status
 
 ### Topics 00-09 (Fundamentals) - COMPLETE
+
 - [x] Variables and dynamic typing
 - [x] Functions, closures, lambdas
 - [x] Conditionals (if/else, ternary, switch)
@@ -190,17 +204,19 @@ boxlings/
 - [x] String manipulation and interpolation
 - [x] Import statements
 
-### Topics 10-17 (Intermediate) - PENDING
-- [ ] Structs advanced (merging, transformations)
-- [ ] Null handling (coalescing, safe navigation)
-- [ ] Error handling (try/catch, throw)
-- [ ] Interfaces
-- [ ] Testing (write your own tests!)
-- [ ] Functional programming (map, filter, reduce)
+### Topics 10-17 (Intermediate) - IN PROGRESS
+
+- [x] Structs advanced (merging, transformations)
+- [x] Null handling (coalescing, safe navigation)
+- [x] Error handling (try/catch, throw)
+- [x] Interfaces
+- [x] Testing (write your own tests!)
+- [x] Functional programming (map, filter, reduce)
 - [ ] Async programming (threads, futures)
 - [ ] Components (bx:http, bx:query)
 
 ### Topics 18-24 (Advanced) - PENDING
+
 - [ ] Casting and type conversions
 - [ ] Quizzes
 - [ ] Classes and OOP
@@ -214,6 +230,7 @@ boxlings/
 ## 🧪 Testing Summary
 
 ### Manual Testing Completed
+
 - [x] CLI help command
 - [x] Version display
 - [x] List command formatting
@@ -223,6 +240,7 @@ boxlings/
 - [x] File change detection
 
 ### Automated Testing Pending
+
 - [ ] Unit tests for Exercise model
 - [ ] Unit tests for InfoFile parser
 - [ ] Unit tests for AppState
@@ -233,12 +251,14 @@ boxlings/
 ## 💡 Key Code Snippets
 
 ### Using CLIGetArgs() (No CLI.bx)
+
 ```javascript
 var parsed = CLIGetArgs();
 var command = parsed.positionals.len() > 0 ? parsed.positionals[1] : "watch";
 ```
 
 ### File Watching
+
 ```javascript
 bx:thread action="run" name="filePoller" {
     while( checking ) {
@@ -251,6 +271,7 @@ bx:thread action="run" name="filePoller" {
 ```
 
 ### Box Drawing
+
 ```javascript
 println( "┌─ Exercise Complete ──────────────────────────────────────┐" );
 println( "│" );
