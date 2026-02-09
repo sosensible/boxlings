@@ -518,6 +518,7 @@ class {
     private function waitForCommandOrFileChange( required exercise, required lastModified ) {
         var watcher = new src.Watcher()
         var executor = executorNew( "boxlings", "cached" )
+        var asyncService = getBoxRuntime().getAsyncService()
 
         try {
             // Start watcher in background
@@ -569,6 +570,7 @@ class {
         } finally {
             watcher.stop()
             executor.shutdownNow()
+            asyncService.deleteExecutor( executor.name() )
         }
     }
 

@@ -118,15 +118,10 @@ class {
                     if ( !valid ) {
                         break
                     }
-                } catch( any loopError ) {
-                    // Handle interruption or other errors gracefully
-                    var errorString = loopError.toString()
-                    if ( errorString.findNoCase( "Interrupt" ) > 0 || errorString.findNoCase( "Closed" ) > 0 ) {
-                        println( "[DEBUG Watcher] Watch interrupted or closed - exiting gracefully" )
-                        break
-                    }
-                    // Re-throw unexpected errors
-                   rethrow
+                }
+                catch( InterruptedException ie ) {
+                    println( "[DEBUG Watcher] Watch interrupted - exiting gracefully" )
+                    break
                 }
             }
 
@@ -138,7 +133,8 @@ class {
             return fileChanged
         } catch( any e ) {
             closeWatchService()
-            println( "⚠️  File watching error: #e.toString()#" )
+            println( "⚠️  File watching error: #e.message & e.detail#" )
+            println( e.stackTrace )
             return false
         }
     }
