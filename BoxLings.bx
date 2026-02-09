@@ -517,21 +517,26 @@ class {
      */
     private function waitForCommandOrFileChange( required exercise, required lastModified ) {
         var watcher = new src.Watcher()
+        var executor = executorNew( "boxlings", "cached" )
 
         try {
             // Start watcher in background
             var watcherFuture = asyncRun( () => {
                 var changed = watcher.watch( exercise.path, lastModified, 300 )
                 return changed ? "FILE_CHANGED" : "TIMEOUT"
-            } )
+            }, executor )
 
             // Start user input in background too
             var inputFuture = asyncRun( () => {
                 return CLIRead().trim().lcase()
-            } )
+            }, executor )
 
             // Wait for whichever completes first
             var result = asyncAny( [ watcherFuture, inputFuture ] ).get()
+
+            if ( isStruct( result ) ) {
+                result = "ERROR"
+            }
 
             // DEBUG: Show what we got
             println( "[DEBUG] waitForCommandOrFileChange returned: #result.toString()#" )
@@ -559,12 +564,11 @@ class {
             }
 
         } catch( any e ) {
-            watcher.stop()
-            println( "⚠️  Watch error: #e.message#" )
-            println( "      #e.stackTrace#"  )
-            //sleep( 10000 )
-
+            println( "⚠️  Watch error: #e.toString()#" )
             return "ERROR"
+        } finally {
+            watcher.stop()
+            executor.shutdownNow()
         }
     }
 
