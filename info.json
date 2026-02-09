@@ -30,7 +30,7 @@
       "dir": "01_variables",
       "path": "exercises/01_variables/variables2.bxs",
       "test": false,
-      "hint": "BoxLang uses type inference - it can figure out the type from the value you assign. Try giving 'x' a value!"
+      "hint": "BoxLang automatically assigns null to variables without a value. Try assigning different values (42, 'hello', [1,2,3]) to see type inference in action!"
     },
     {
       "name": "variables3",
