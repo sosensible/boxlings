@@ -358,19 +358,11 @@ class {
                 println( "│" )
                 println( "└────────────────────────────────────────────────────────────┘" )
                 println( "" )
-                print( "[#terminal.BOLD & terminal.ansi256( 81 )#n#terminal.RESET#] Next  [#terminal.BOLD##terminal.ansi256(81)#h#terminal.RESET#] Hint  [#terminal.BOLD##terminal.ansi256(81)#l#terminal.RESET#] List  [#terminal.BOLD##terminal.ansi256(81)#q#terminal.RESET#] Quit: " )
-                var cmd = waitForCommandOrFileChange( exercise, lastModified )
-                println( "[DEBUG] Received command: [#cmd#]" )
+                var prompt = "[#terminal.BOLD & terminal.ansi256( 81 )#n#terminal.RESET#] Next  [#terminal.BOLD##terminal.ansi256(81)#h#terminal.RESET#] Hint  [#terminal.BOLD##terminal.ansi256(81)#l#terminal.RESET#] List  [#terminal.BOLD##terminal.ansi256(81)#q#terminal.RESET#] Quit: "
 
-                if ( cmd == "FILE_CHANGED" ) {
-                    // Exercise already succeeded - update timestamp and stay on success screen
-                    println( "" )
-                    println( "[DEBUG] FILE_CHANGED in success branch - updating timestamp" )
-                    lastModified = fileExists( fullPath ) ? getFileInfo( fullPath ).lastModified : now()
-                    println( "ℹ️  File changed, but exercise already complete. Press 'n' for next." )
-                    sleep( 2000 )
-                    continue
-                } else if ( cmd == "n" ) {
+                var cmd = promptForCommand( prompt, exercise, lastModified, false )
+
+                if ( cmd == "n" ) {
                     appState.markCurrentDone()
                     appState.moveToNext()
 
@@ -380,24 +372,16 @@ class {
                         running = false
                     }
                 } else if ( cmd == "h" ) {
-                    println( "" )
-                    terminal.printHint( exercise.hint )
-                    println( "" )
-                    print( "Press ENTER to continue..." )
-                    CLIRead()
+                    showHintAndWait( terminal, exercise )
                 } else if ( cmd == "l" ) {
-                    listCommand( appState )
-                    print( "Press ENTER to continue..." )
-                    CLIRead()
+                    showListAndWait( appState )
                 } else if ( cmd == "q" ) {
                     running = false
                 } else if ( cmd == "TIMEOUT" || cmd == "ERROR" ) {
-                    // Watcher timed out or errored - just loop back
                     println( "[DEBUG] TIMEOUT/ERROR in success branch - continuing" )
                     sleep( 1000 )
                     continue
                 } else {
-                    // Unexpected input - just loop back
                     println( "[DEBUG] Unexpected input in success branch: [#cmd#] - continuing" )
                     sleep( 1000 )
                     continue
@@ -411,26 +395,22 @@ class {
                 println( "│" )
                 println( "└────────────────────────────────────────────────────────┘" )
                 println( "" )
-                print( "[#terminal.BOLD##terminal.ansi256(81)#r/Enter#terminal.RESET#] Rerun  [#terminal.BOLD##terminal.ansi256(81)#h#terminal.RESET#] Hint  [#terminal.BOLD##terminal.ansi256(81)#t#terminal.RESET#] Test  [#terminal.BOLD##terminal.ansi256(81)#l#terminal.RESET#] List  [#terminal.BOLD##terminal.ansi256(81)#q#terminal.RESET#] Quit: " )
+                var prompt = "[#terminal.BOLD##terminal.ansi256(81)#r/Enter#terminal.RESET#] Rerun  [#terminal.BOLD##terminal.ansi256(81)#h#terminal.RESET#] Hint  [#terminal.BOLD##terminal.ansi256(81)#t#terminal.RESET#] Test  [#terminal.BOLD##terminal.ansi256(81)#l#terminal.RESET#] List  [#terminal.BOLD##terminal.ansi256(81)#q#terminal.RESET#] Quit: "
 
-                var cmd = waitForCommandOrFileChange( exercise, lastModified )
+                var cmd = promptForCommand( prompt, exercise, lastModified, true )
 
-                // If file changed, auto-rerun
                 if ( cmd == "FILE_CHANGED" ) {
                     println( "" )
                     println( "[DEBUG] FILE_CHANGED detected, updating timestamp and rerunning..." )
-                    // UPDATE THE TIMESTAMP so we don't detect the same change again!
                     lastModified = fileExists( fullPath ) ? getFileInfo( fullPath ).lastModified : now()
                     println( "[DEBUG] Updated lastModified to: #lastModified#" )
                     terminal.printSuccess( "File changed! Rerunning..." )
                     sleep( 1000 )
-                    // Small delay to ensure watcher cleanup completes
                     println( "[DEBUG] Waiting for watcher cleanup..." )
                     sleep( 500 )
                     continue
                 }
 
-                // Manual rerun
                 if ( cmd == "r" || cmd == "" ) {
                     println( "[DEBUG] Manual rerun (cmd=#cmd#)" )
                     sleep( 1000 )
@@ -438,37 +418,20 @@ class {
                 }
 
                 if ( cmd == "h" ) {
-                    terminal.clear()
-                    println( "┌─ Hint ─────────────────────────────────────────────────────┐" )
-                    println( "│" )
-
-                    var hintLines = wordWrap( exercise.hint, 58 )
-                    hintLines.each( line => {
-                        println( "│  #line#" )
-                    })
-
-                    println( "│" )
-                    println( "└────────────────────────────────────────────────────────────┘" )
-                    println( "" )
-                    print( "Press ENTER to continue..." )
-                    CLIRead()
+                    showHintAndWait( terminal, exercise )
                 } else if ( cmd == "t" && exercise.test ) {
                     showTestCommand( appState, { positionals: [] } )
                     print( "Press ENTER to continue..." )
                     CLIRead()
                 } else if ( cmd == "l" ) {
-                    listCommand( appState )
-                    print( "Press ENTER to continue..." )
-                    CLIRead()
+                    showListAndWait( appState )
                 } else if ( cmd == "q" ) {
                     running = false
                 } else if ( cmd == "TIMEOUT" || cmd == "ERROR" ) {
-                    // Watcher timed out or errored - just loop and rerun
                     println( "[DEBUG] TIMEOUT/ERROR in failure branch - continuing" )
                     sleep( 1000 )
                     continue
                 } else {
-                    // Any other input - just loop and rerun
                     println( "[DEBUG] Unexpected input in failure branch: [#cmd#] - continuing" )
                     sleep( 1000 )
                     continue
@@ -481,12 +444,12 @@ class {
         terminal.clear()
 
         println( "" )
-        println( "┌─ Thanks for Learning! ─────────────────────────────────────┐" )
+        println( "┌─ 👊 Thanks for Learning! ───────────────────────────────────┐" )
         println( "│" )
         println( "│  🚀 Keep practicing BoxLang!" )
         println( "│  🌏 Official Site: https://www.boxlang.io" )
         println( "│  📚 Docs: https://boxlang.ortusbooks.com" )
-        println( "│  💬 Join the community: https://community.ortussolutions.com" )
+        println( "│  💬 Community: https://community.ortussolutions.com" )
         println( "│" )
         println( "└────────────────────────────────────────────────────────────┘" )
         println( "" )
@@ -603,6 +566,32 @@ class {
 
             return "ERROR"
         }
+    }
+
+    private function readCommand( required exercise, required lastModified, boolean watchForChanges ) {
+        if ( watchForChanges ) {
+            return waitForCommandOrFileChange( exercise, lastModified )
+        }
+        return CLIRead().trim().lcase()
+    }
+
+    private function promptForCommand( required string prompt, required exercise, required lastModified, boolean watchForChanges ) {
+        print( prompt )
+        return readCommand( exercise, lastModified, watchForChanges )
+    }
+
+    private function showHintAndWait( required terminal, required exercise ) {
+        println( "" )
+        terminal.printHint( exercise.hint )
+        println( "" )
+        print( "Press ENTER to continue..." )
+        CLIRead()
+    }
+
+    private function showListAndWait( required appState ) {
+        listCommand( appState )
+        print( "Press ENTER to continue..." )
+        CLIRead()
     }
 
     /**
