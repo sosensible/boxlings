@@ -1,4 +1,4 @@
-# 🦀 BoxLings
+# 🥊BoxLings
 
 > Small exercises to get you used to reading and writing **BoxLang** code while learning **Test-Driven Development (TDD)**!
 
