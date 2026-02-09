@@ -3,10 +3,10 @@
 function main() {
     var x = 5
     println( "x is a number: #x#" )
-    
+
     x = "Hello"
     println( "x is now a string: #x#" )
-    
+
     x = true
     println( "x is now a boolean: #x#" )
 }
