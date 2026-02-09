@@ -1,9 +1,15 @@
-// BoxLang uses type inference - it can figure out the type from the value.
-// TODO: Complete this line to make the code compile!
+// BoxLang uses type inference - it figures out the type from the value!
+// Variables without a value are automatically assigned null.
+// TODO: Give x a meaningful value to see type inference in action!
 
 function main() {
-    var x;
-    println( "x has the value #x#" );
+    var x
+
+    // This works (x is null), but not very useful!
+    // Try: var x = 42; or var x = "hello"; or var x = [1,2,3];
+
+    println( "x has the value: #x#" )
+    println( "x is of type: #x.getClass().getName()#" )
 }
 
-main();
+main()
