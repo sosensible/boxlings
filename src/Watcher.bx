@@ -1,0 +1,90 @@
+/**
+ * Watcher - File Change Detection
+ * 
+ * Watches exercise files for changes and triggers re-runs
+ */
+import java:java.nio.file.FileSystems
+import java:java.nio.file.Path
+import java:java.nio.file.Paths
+import java:java.nio.file.StandardWatchEventKinds
+import java:java.nio.file.WatchEvent
+import java:java.nio.file.WatchKey
+import java:java.nio.file.WatchService
+
+class {
+    
+    property name="watchService";
+    property name="watching" type="boolean" default="false";
+    
+    /**
+     * Start watching a file for changes
+     */
+    function watch( required string filePath, required function callback ) {
+        try {
+            var fullPath = expandPath( filePath );
+            var javaPath = Paths.get( fullPath );
+            var directory = javaPath.getParent();
+            
+            // Create watch service
+            variables.watchService = FileSystems.getDefault().newWatchService();
+            
+            // Register directory for modification events
+            directory.register( 
+                variables.watchService,
+                [ StandardWatchEventKinds.ENTRY_MODIFY ]
+            );
+            
+            variables.watching = true;
+            var fileName = javaPath.getFileName().toString();
+            
+            // Watch loop
+            while ( variables.watching ) {
+                var key = variables.watchService.poll( 
+                    1, 
+                    createObject( "java", "java.util.concurrent.TimeUnit" ).SECONDS 
+                );
+                
+                if ( isNull( key ) ) {
+                    continue;
+                }
+                
+                // Check events
+                var events = key.pollEvents();
+                
+                for ( var event in events ) {
+                    var changedFile = event.context().toString();
+                    
+                    if ( changedFile == fileName ) {
+                        // File changed! Call callback
+                        callback();
+                    }
+                }
+                
+                // Reset key
+                var valid = key.reset();
+                if ( !valid ) {
+                    break;
+                }
+            }
+            
+        } catch( any e ) {
+            println( "⚠️  File watching error: #e.message#" );
+            println( "   Falling back to manual mode - press 'r' to rerun" );
+        }
+    }
+    
+    /**
+     * Stop watching
+     */
+    function stop() {
+        variables.watching = false;
+        
+        if ( !isNull( variables.watchService ) ) {
+            try {
+                variables.watchService.close();
+            } catch( any e ) {
+                // Ignore
+            }
+        }
+    }
+}

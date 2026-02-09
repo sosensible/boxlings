@@ -3,7 +3,7 @@
     "version": "1.0.0",
     "author": "Luis Majano <lmajano@ortussolutions.com>",
     "slug": "boxlings",
-    "type": "boxlang",
+    "type": "projects",
     "homepage": "https://github.com/ortus-boxlang/boxlings",
     "documentation": "https://github.com/ortus-boxlang/boxlings/blob/main/README.md",
     "repository": {
@@ -44,8 +44,5 @@
         "test:watch": "boxlang testbox run --watch",
         "test:verbose": "boxlang testbox run --verbose",
         "install": "box install"
-    },
-    "engines": {
-        "boxlang": ">=1.0.0"
     }
 }

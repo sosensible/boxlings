@@ -13,6 +13,7 @@
 ### Core Architecture (Based on Rustlings)
 
 **Rustlings Inspiration:**
+
 - 94 exercises across 24 topic directories
 - Built in Rust with CLI using Clap
 - Watch mode with file change detection
@@ -21,6 +22,7 @@
 - Solutions alongside exercises
 
 **BoxLings Implementation:**
+
 - Written **in BoxLang itself** (dogfooding!)
 - CLI app using BoxLang's native CLI capabilities
 - Watch mode using BoxLang's file monitoring
@@ -225,6 +227,7 @@ Each exercise is a BoxLang file with intentional errors or missing code. Student
 ### Three Testing Patterns
 
 **Pattern A: Script Files (.bxs) with Output Testing**
+
 ```javascript
 // exercises/01_variables/variables3.bxs
 // Student fixes this
@@ -252,6 +255,7 @@ class extends="testbox.system.BaseSpec" {
 ```
 
 **Pattern B: Class Files (.bx) with main()**
+
 ```javascript
 // exercises/20_classes/classes1.bx
 class {
@@ -291,6 +295,7 @@ class extends="testbox.system.BaseSpec" {
 ```
 
 **Pattern C: Template Files (.bxm)**
+
 ```xml
 <!-- exercises/22_templating/templating1.bxm -->
 <bx:set name="title" value="My Page">
@@ -339,6 +344,7 @@ class extends="testbox.system.BaseSpec" {
 ```
 
 **New Fields:**
+
 - `test_path` - Path to the visible test file
 - `test_mode` - "read" (read tests, fix code) or "write" (write tests yourself)
 
@@ -347,6 +353,7 @@ class extends="testbox.system.BaseSpec" {
 ## 🚀 Implementation Phases
 
 ### Phase 1: Core Infrastructure (Week 1-2)
+
 - [ ] Create main `BoxLings.bx` CLI entry point
 - [ ] Implement `InfoFile.bx` (parse info.json)
 - [ ] Implement `Exercise.bx` model
@@ -357,6 +364,7 @@ class extends="testbox.system.BaseSpec" {
 - [ ] Create box.json with TestBox devDependency
 
 ### Phase 2: Watch Mode & UI (Week 3)
+
 - [ ] Implement `Watcher.bx` (file change detection)
 - [ ] Implement `Terminal.bx` (colored output, progress bar)
 - [ ] Build interactive watch mode with keyboard input
@@ -365,6 +373,7 @@ class extends="testbox.system.BaseSpec" {
 - [ ] Add test output formatting
 
 ### Phase 3: Exercise Creation - Basics (Week 4-5)
+
 - [ ] **00_intro** (2 exercises)
 - [ ] **01_variables** (6 exercises + 2 test files)
 - [ ] **02_functions** (6 exercises + 3 test files)
@@ -374,6 +383,7 @@ class extends="testbox.system.BaseSpec" {
 - [ ] Write hints for each exercise
 
 ### Phase 4: Exercise Creation - Core (Week 6-7)
+
 - [ ] **05_arrays** (4 exercises + 3 test files)
 - [ ] **06_scopes** (5 exercises + 3 test files)
 - [ ] **07_structs** (5 exercises + 4 test files)
@@ -382,6 +392,7 @@ class extends="testbox.system.BaseSpec" {
 - [ ] Create solutions and hints
 
 ### Phase 5: Testing & Polish (Week 8)
+
 - [ ] Write comprehensive tests for BoxLings CLI
 - [ ] Test all exercises on multiple platforms
 - [ ] Create installation scripts
@@ -390,6 +401,7 @@ class extends="testbox.system.BaseSpec" {
 - [ ] Add LICENSE
 
 ### Phase 6: Documentation & Launch (Week 9)
+
 - [ ] Create GitHub repository
 - [ ] Set up CI/CD for testing
 - [ ] Create documentation
@@ -397,11 +409,13 @@ class extends="testbox.system.BaseSpec" {
 - [ ] Announce to BoxLang community
 
 ### Phase 7: Intermediate Topics (Week 10-12)
+
 - [ ] Topics 10-17 (40 exercises)
 - [ ] Focus on TDD/BDD learning in Topic 14
 - [ ] Create solutions and tests
 
 ### Phase 8: Advanced Topics (Week 13-15)
+
 - [ ] Topics 18-24 (36 exercises)
 - [ ] Include template exercises (.bxm)
 - [ ] Java interop exercises
@@ -437,23 +451,27 @@ class extends="testbox.system.BaseSpec" {
 ### TDD/BDD Learning Progression
 
 **Phase 1: Reading Tests (Topics 00-09)**
+
 - Students read TestBox specs
 - Understand test structure (describe, it, expect)
 - Use tests as documentation
 - Fix code to make tests pass
 
 **Phase 2: Understanding Patterns (Topics 10-13)**
+
 - See more complex test patterns
 - Multiple assertions
 - Setup/teardown (beforeEach, afterEach)
 - Edge cases and error handling
 
 **Phase 3: Writing Tests (Topic 14)**
+
 - Students write their own TestBox specs
 - Practice describe/it/expect syntax
 - Learn to think in tests-first
 
 **Phase 4: TDD Practice (Topics 15-24)**
+
 - Apply TDD to all exercises
 - Write test, watch it fail (RED)
 - Write code to pass (GREEN)
@@ -464,6 +482,7 @@ class extends="testbox.system.BaseSpec" {
 ## 🌟 Unique BoxLang Features to Highlight
 
 ### Language Features
+
 - Dynamic typing with type inference
 - Case-insensitive by default
 - Multiple file types (.bx, .bxs, .bxm)
@@ -474,6 +493,7 @@ class extends="testbox.system.BaseSpec" {
 - High-precision mathematics
 
 ### Runtime Features
+
 - Built-in functions (BIFs) and member functions
 - Component system (bx:http, bx:query, etc)
 - Java interoperability (java: prefix)
@@ -616,6 +636,7 @@ class {
 ## 🤝 Next Steps
 
 ### Immediate (Weeks 1-2)
+
 1. ✅ Create project structure
 2. ✅ Write planning documents
 3. ⏳ Implement core CLI (BoxLings.bx)
@@ -623,18 +644,21 @@ class {
 5. ⏳ Create box.json with TestBox
 
 ### Short-term (Weeks 3-5)
+
 1. Build watch mode
 2. Create first 20 exercises (00-02)
 3. Test on real users
 4. Iterate based on feedback
 
 ### Medium-term (Weeks 6-9)
+
 1. Complete Phase 1 MVP (50 exercises)
 2. Polish UI and error messages
 3. Create comprehensive README
 4. Launch to BoxLang community
 
 ### Long-term (Weeks 10-15)
+
 1. Build Phase 2 (intermediate topics)
 2. Build Phase 3 (advanced topics)
 3. Gather community contributions

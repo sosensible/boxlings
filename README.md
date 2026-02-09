@@ -38,13 +38,14 @@ git clone https://github.com/ortus-boxlang/boxlings.git
 cd boxlings
 ```
 
-### 2. Start Learning!
+### 2. Start Learning
 
 ```bash
 boxlang BoxLings.bx
 ```
 
 That's it! BoxLings will:
+
 - Show you a welcome message
 - Start **watch mode**
 - Display the first exercise
@@ -61,12 +62,14 @@ boxlang BoxLings.bx
 ```
 
 Watch mode automatically:
+
 - Shows current exercise
 - Watches for file changes
 - Reruns exercise on save
 - Shows test results (if exercise has tests)
 
 **Keyboard Shortcuts:**
+
 - `n` - Next exercise (after completing current)
 - `h` - Show hint
 - `t` - Show test file
@@ -164,12 +167,14 @@ BoxLings teaches you test-driven development alongside BoxLang:
 ### Step 1: Reading Tests (Topics 1-10)
 
 **You learn to:**
+
 - Read TestBox specs
 - Understand `describe()` and `it()` blocks
 - Interpret expectations: `expect().toBe()`, `expect().toInclude()`
 - Use tests as documentation
 
 **Example:**
+
 ```javascript
 // Read this test FIRST
 class extends="testbox.system.BaseSpec" {
@@ -187,6 +192,7 @@ class extends="testbox.system.BaseSpec" {
 ### Step 2: Understanding Patterns (Topics 11-14)
 
 **You see:**
+
 - Multiple assertions
 - Setup/teardown (`beforeEach`, `afterEach`)
 - Edge cases and error handling
@@ -195,6 +201,7 @@ class extends="testbox.system.BaseSpec" {
 ### Step 3: Writing Tests (Topic 14: Testing)
 
 **Now YOU write tests!**
+
 - Practice `describe` / `it` / `expect` syntax
 - Learn to think tests-first
 - Write your own TestBox specs
@@ -202,6 +209,7 @@ class extends="testbox.system.BaseSpec" {
 ### Step 4: TDD Practice (Topics 15-25)
 
 **Apply full TDD cycle:**
+
 - Write test (RED)
 - Write code to pass (GREEN)
 - Refactor (REFACTOR)
@@ -351,6 +359,7 @@ MIT License - see [LICENSE](LICENSE) file for details.
 ## 🎯 Goals
 
 BoxLings aims to:
+
 - ✅ Make learning BoxLang fun and interactive
 - ✅ Teach TDD/BDD as a core skill
 - ✅ Provide immediate feedback and guidance
@@ -362,6 +371,7 @@ BoxLings aims to:
 **Happy Learning! 🚀**
 
 Start your BoxLang journey:
+
 ```bash
 boxlang BoxLings.bx
 ```

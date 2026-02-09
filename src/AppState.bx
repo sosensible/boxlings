@@ -19,7 +19,22 @@ class {
         // Load saved state if exists
         loadState();
         
+        // Move to first pending exercise
+        moveToFirstPending();
+        
         return this;
+    }
+    
+    /**
+     * Move to the first pending (not done) exercise
+     */
+    private function moveToFirstPending() {
+        for ( var i = 1; i <= variables.exercises.len(); i++ ) {
+            if ( !variables.exercises[i].done ) {
+                variables.currentIndex = i;
+                return;
+            }
+        }
     }
     
     /**

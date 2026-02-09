@@ -13,6 +13,8 @@ class {
      * @return Struct with success, output, errors
      */
     function runExercise( required exercise, boolean verbose = true ) {
+        var terminal = new Terminal();
+        
         var result = {
             success: false,
             output: "",
@@ -29,22 +31,18 @@ class {
             if ( !fileExists( fullPath ) ) {
                 result.errors.append( "Exercise file not found: #exercise.path#" );
                 if ( verbose ) {
-                    println( "❌ Exercise file not found: #exercise.path#" );
+                    terminal.printError( "Exercise file not found: #exercise.path#" );
                 }
                 return result;
             }
             
             if ( verbose ) {
-                println( "Running exercise: #exercise.getDisplayName()#" );
-                println( "File: #exercise.path#" );
+                terminal.printColor( "Running: #exercise.getDisplayName()#", "cyan" );
+                terminal.printInfo( "File: #exercise.path#" );
                 
                 if ( exercise.test ) {
-                    println( "📝 This exercise has tests!" );
-                    if ( exercise.isReadMode() ) {
-                        println( "   Read the test first: #exercise.test_path#" );
-                    } else if ( exercise.isWriteMode() ) {
-                        println( "   Write your own tests in: #exercise.test_path#" );
-                    }
+                    terminal.printTest( "This exercise has tests - read them first!" );
+                    println( "   Test file: #exercise.test_path#" );
                 }
                 
                 println( "" );
@@ -63,9 +61,9 @@ class {
                 result.output = compileResult.output;
                 
                 if ( verbose ) {
-                    println( "❌" );
+                    terminal.printColor( "✗", "red" );
                     println( "" );
-                    println( "Compilation errors:" );
+                    terminal.printColor( "Compilation errors:", "red" );
                     println( compileResult.output );
                 }
                 
@@ -73,14 +71,14 @@ class {
             }
             
             if ( verbose ) {
-                println( "✓" );
+                terminal.printColor( "✓", "green" );
             }
             
             // Step 2: If exercise has tests, run them
             if ( exercise.test ) {
                 if ( verbose ) {
                     println( "" );
-                    println( "Running tests..." );
+                    terminal.printColor( "Running tests...", "magenta" );
                     println( "" );
                 }
                 
@@ -94,8 +92,8 @@ class {
                     if ( verbose ) {
                         println( testResult.output );
                         println( "" );
-                        println( "❌ Tests failed. Keep trying!" );
-                        println( "💡 Tip: The test output shows what's expected vs what you got." );
+                        terminal.printError( "Tests failed!" );
+                        terminal.printHint( "The test output shows what's expected vs actual." );
                     }
                     
                     return result;
@@ -122,9 +120,9 @@ class {
                 result.errors.append( execResult.errors );
                 
                 if ( verbose ) {
-                    println( "❌" );
+                    terminal.printColor( "✗", "red" );
                     println( "" );
-                    println( "Runtime errors:" );
+                    terminal.printColor( "Runtime errors:", "red" );
                     println( execResult.output );
                 }
                 
@@ -132,11 +130,11 @@ class {
             }
             
             if ( verbose ) {
-                println( "✓" );
+                terminal.printColor( "✓", "green" );
                 
                 if ( execResult.output.trim() != "" ) {
                     println( "" );
-                    println( "Output:" );
+                    terminal.printColor( "Output:", "blue" );
                     println( execResult.output );
                 }
             }
@@ -156,6 +154,40 @@ class {
             
             return result;
         }
+    }
+    
+    /**
+     * Format error output to be more student-friendly
+     * Removes verbose stack traces, keeps relevant error messages
+     */
+    private function formatErrorOutput( required string output ) {
+        var lines = output.listToArray( chr(10) );
+        var cleanLines = [];
+        var inStackTrace = false;
+        
+        lines.each( line => {
+            // Show ERROR lines
+            if ( line.findNoCase( "[ERROR]" ) || line.findNoCase( "Exception:" ) ) {
+                cleanLines.append( line );
+                inStackTrace = false;
+            }
+            // Show the main error message
+            else if ( line.findNoCase( "BoxRuntimeException:" ) || line.findNoCase( "ParseException:" ) ) {
+                cleanLines.append( line );
+                inStackTrace = true;
+            }
+            // Skip stack trace lines (start with 'at ')
+            else if ( line.trim().startsWith( "at " ) || line.trim().findNoCase( "ortus.boxlang" ) ) {
+                inStackTrace = true;
+                // Skip this line
+            }
+            // Show relevant context lines
+            else if ( !inStackTrace && line.trim() != "" ) {
+                cleanLines.append( line );
+            }
+        });
+        
+        return cleanLines.toList( chr(10) );
     }
     
     /**
@@ -234,10 +266,13 @@ class {
             }
             
             if ( hasErrors ) {
+                // Filter and format error output for students
+                var cleanOutput = formatErrorOutput( allOutput );
+                
                 return {
                     success: false,
                     errors: [ "Execution failed" ],
-                    output: allOutput
+                    output: cleanOutput
                 };
             }
             

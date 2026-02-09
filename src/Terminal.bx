@@ -1,46 +1,101 @@
 /**
  * Terminal - UI Utilities and Display Helpers
  * 
- * Handles terminal output, colors, and formatting
+ * Handles terminal output, colors, and formatting with ANSI support
  */
 class {
     
+    // ANSI Color Codes
+    property name="RESET";
+    property name="BOLD";
+    property name="RED";
+    property name="GREEN";
+    property name="YELLOW";
+    property name="BLUE";
+    property name="MAGENTA";
+    property name="CYAN";
+    property name="WHITE";
+    
+    function init() {
+        // For now, disable ANSI colors - BoxLang chr() function not found
+        variables.RESET = "";
+        variables.BOLD = "";
+        variables.RED = "";
+        variables.GREEN = "";
+        variables.YELLOW = "";
+        variables.BLUE = "";
+        variables.MAGENTA = "";
+        variables.CYAN = "";
+        variables.WHITE = "";
+        return this;
+    }
+    
     /**
-     * Show welcome message
+     * Show welcome message with enhanced formatting
      */
     function showWelcome() {
         CLIClear();
         
-        println( "       Welcome to...                      " );
-        println( "                 _                        " );
-        println( "  ___  _____  __| |   (_)_ __   __ _ ___  " );
-        println( " / _ \/ _  \ \/ /| |  | | '_ \ / _` / __| " );
-        println( "|  __/ (_) |>  < | |__| | | | | (_| \__ \ " );
-        println( " \___|\____/_/\_\|____|_|_| |_|\__, |___/ " );
-        println( "                                |___/      " );
+        printBoxed( [
+            "       Welcome to...                      ",
+            "                 _                        ",
+            "  ___  _____  __| |   (_)_ __   __ _ ___  ",
+            " / _ \/ _  \ \/ /| |  | | '_ \ / _` / __| ",
+            "|  __/ (_) |>  < | |__| | | | | (_| \__ \ ",
+            " \___|\____/_/\_\|____|_|_| |_|\__, |___/ ",
+            "                                |___/      "
+        ] );
+        
         println( "" );
-        println( "Welcome to BoxLings!" );
+        printColor( "═══════════════════════════════════════════════════════════════", "cyan" );
         println( "" );
-        println( "BoxLings will teach you BoxLang through small exercises with intentional errors." );
-        println( "But there's something special: we also teach you Test-Driven Development (TDD)!" );
+        
+        println( "Welcome to BoxLings! 🦀" );
         println( "" );
-        println( "HOW IT WORKS:" );
-        println( "1. For exercises with tests, READ THE TEST FILE FIRST" );
-        println( "2. The test tells you EXACTLY what your code should do" );
-        println( "3. Fix the exercise code until the tests pass" );
-        println( "4. Later, you'll write your own tests!" );
+        println( "Learn BoxLang + Test-Driven Development through hands-on exercises." );
         println( "" );
-        println( "WHY TESTS MATTER:" );
-        println( "- Tests are documentation that never gets out of date" );
-        println( "- Tests give you confidence your code works" );
-        println( "- Professional developers use tests every day" );
+        
+        printColor( "HOW IT WORKS:", "yellow" );
+        println( "  📖 For exercises with tests → Read the test file FIRST" );
+        println( "  💡 Tests tell you exactly what your code should do" );
+        println( "  ✏️  Fix the exercise until tests pass" );
+        println( "  🧪 Later, you'll write your own tests!" );
         println( "" );
-        println( "Let's get started!" );
+        
+        printColor( "KEYBOARD SHORTCUTS:", "yellow" );
+        println( "  n → Next exercise (after completing current)" );
+        println( "  h → Show hint" );
+        println( "  t → Show test file" );
+        println( "  l → List all exercises" );
+        println( "  r → Rerun current exercise" );
+        println( "  q → Quit" );
         println( "" );
-        println( "Press ENTER to continue..." );
+        
+        printColor( "═══════════════════════════════════════════════════════════════", "cyan" );
+        println( "" );
+        print( "Press ENTER to start learning... " );
         
         CLIRead();
         CLIClear();
+    }
+    
+    /**
+     * Print text in a box
+     */
+    function printBoxed( required array lines ) {
+        var maxLen = 0;
+        lines.each( line => {
+            if ( line.len() > maxLen ) {
+                maxLen = line.len();
+            }
+        });
+        
+        println( "╔" & repeatString( "═", maxLen + 2 ) & "╗" );
+        lines.each( line => {
+            var padding = repeatString( " ", maxLen - line.len() );
+            println( "║ #line##padding# ║" );
+        });
+        println( "╚" & repeatString( "═", maxLen + 2 ) & "╝" );
     }
     
     /**
@@ -64,7 +119,7 @@ class {
     }
     
     /**
-     * Show progress bar
+     * Show progress bar with color
      */
     function showProgress( required numeric completed, required numeric total ) {
         var percentage = total > 0 ? round( (completed / total) * 100 ) : 0;
@@ -76,58 +131,92 @@ class {
             bar &= i <= filledWidth ? "█" : "░";
         }
         
-        println( "[#bar#] #percentage#% (#completed#/#total#)" );
+        // Color based on progress
+        var color = "red";
+        if ( percentage >= 75 ) {
+            color = "green";
+        } else if ( percentage >= 50 ) {
+            color = "yellow";
+        } else if ( percentage >= 25 ) {
+            color = "cyan";
+        }
+        
+        print( variables.BOLD );
+        printColor( "[#bar#] #percentage#%", color );
+        print( " (#completed#/#total# exercises)" & variables.RESET );
+        println( "" );
     }
     
     /**
-     * Print with color (simplified - full ANSI support in future)
+     * Print with color
      */
     function printColor( required string text, string color = "default" ) {
-        // TODO: Add ANSI color codes
-        // For now, just print normally
-        println( text );
+        var colorCode = variables.RESET;
+        
+        switch( color ) {
+            case "red":
+                colorCode = variables.RED;
+                break;
+            case "green":
+                colorCode = variables.GREEN;
+                break;
+            case "yellow":
+                colorCode = variables.YELLOW;
+                break;
+            case "blue":
+                colorCode = variables.BLUE;
+                break;
+            case "magenta":
+                colorCode = variables.MAGENTA;
+                break;
+            case "cyan":
+                colorCode = variables.CYAN;
+                break;
+        }
+        
+        println( colorCode & text & variables.RESET );
     }
     
     /**
      * Print success message
      */
     function printSuccess( required string text ) {
-        println( "✅ #text#" );
+        printColor( "✅ #text#", "green" );
     }
     
     /**
      * Print error message
      */
     function printError( required string text ) {
-        println( "❌ #text#" );
+        printColor( "❌ #text#", "red" );
     }
     
     /**
      * Print info message
      */
     function printInfo( required string text ) {
-        println( "ℹ️  #text#" );
+        printColor( "ℹ️  #text#", "blue" );
     }
     
     /**
      * Print warning message
      */
     function printWarning( required string text ) {
-        println( "⚠️  #text#" );
+        printColor( "⚠️  #text#", "yellow" );
     }
     
     /**
      * Print hint
      */
     function printHint( required string text ) {
-        println( "💡 #text#" );
+        printColor( "💡 #text#", "cyan" );
     }
     
     /**
      * Print test indicator
      */
     function printTest( required string text ) {
-        println( "🧪 #text#" );
+        printColor( "🧪 #text#", "magenta" );
     }
     
     /**
