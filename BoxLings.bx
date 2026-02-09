@@ -295,6 +295,8 @@ class {
         // Show welcome message on first run
         if ( appState.getCurrentIndex() == 1 && !appState.getCurrent().done ) {
             terminal.showWelcome()
+        } else {
+            terminal.showBoxLangBanner()
         }
 
         var running = true
@@ -328,7 +330,7 @@ class {
             var exercise = appState.getCurrent()
 
             // Show current exercise in a box
-            println( "┌─ 👉 Current Exercise ─────────────────────────────────────────┐" )
+            println( "┌─ 👉 Current Exercise ──────────────────────────────────────┐" )
             println( "│" )
             println( "│  📝 #exercise.getDisplayName()#" )
             println( "│  📂 #exercise.path#" )
@@ -402,14 +404,12 @@ class {
                 }
             } else {
                 println( "" )
-                println( "┌─ Oopsy! ───────────────────────────────────────────────┐" )
-                println( "│" )
-                println( "│  ❌ Keep trying!" )
+                println( "┌─ ❌ Oops, keep trying! -───────────────────────────────┐" )
                 println( "│" )
                 println( "│  👀 Watching for file changes..." )
-                println( "│  💾 Save your file to auto-rerun" )
+                println( "│  💾 Save your file to auto-rerun or click [r/Enter]" )
                 println( "│" )
-                println( "└────────────────────────────────────────────────────────────┘" )
+                println( "└────────────────────────────────────────────────────────┘" )
                 println( "" )
                 print( "[#terminal.BOLD##terminal.ansi256(81)#r/Enter#terminal.RESET#] Rerun  [#terminal.BOLD##terminal.ansi256(81)#h#terminal.RESET#] Hint  [#terminal.BOLD##terminal.ansi256(81)#t#terminal.RESET#] Test  [#terminal.BOLD##terminal.ansi256(81)#l#terminal.RESET#] List  [#terminal.BOLD##terminal.ansi256(81)#q#terminal.RESET#] Quit: " )
 
