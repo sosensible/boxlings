@@ -347,11 +347,6 @@ class {
                 print( "[#terminal.BOLD & terminal.ansi256( 81 )#n#terminal.RESET#] Next  [#terminal.BOLD##terminal.ansi256(81)#h#terminal.RESET#] Hint  [#terminal.BOLD##terminal.ansi256(81)#l#terminal.RESET#] List  [#terminal.BOLD##terminal.ansi256(81)#q#terminal.RESET#] Quit: " )
                 var cmd = waitForCommandOrFileChange( exercise, lastModified )
 
-                // If file changed, auto-rerun
-                if ( cmd == "FILE_CHANGED" ) {
-                    continue
-                }
-
                 if ( cmd == "n" ) {
                     appState.markCurrentDone()
                     appState.moveToNext()
@@ -373,10 +368,13 @@ class {
                     CLIRead()
                 } else if ( cmd == "q" ) {
                     running = false
+                } else {
+                    // Timeout or unexpected input - just loop back
+                    continue
                 }
             } else {
                 println( "" )
-                println( "┌─ Not Quite! ───────────────────────────────────────────────┐" )
+                println( "┌─ Oopsy! ───────────────────────────────────────────────┐" )
                 println( "│" )
                 println( "│  ❌ Keep trying!" )
                 println( "│" )
@@ -391,6 +389,7 @@ class {
 
                 // If file changed, auto-rerun
                 if ( cmd == "FILE_CHANGED" ) {
+                    println( "" )
                     terminal.printSuccess( "File changed! Rerunning..." )
                     sleep( 1000 )
                     continue
@@ -426,12 +425,15 @@ class {
                     CLIRead()
                 } else if ( cmd == "q" ) {
                     running = false
+                } else {
+                    // Timeout or any other input - just loop and rerun
+                    continue
                 }
-                // 'r' or any other input will just loop and rerun
             }
         }
 
         terminal.clear()
+
         println( "" )
         println( "┌─ Thanks for Learning! ─────────────────────────────────────┐" )
         println( "│" )
@@ -507,14 +509,11 @@ class {
      */
     private function waitForCommandOrFileChange( required exercise, required lastModified ) {
         var watcher = new src.Watcher()
-        var fileChanged = { value: false }
 
         // Future for file watching using Watcher (Java WatchService - event-driven!)
         var fileFuture = asyncRun( () => {
-            watcher.watch( exercise.path, () => {
-                fileChanged.value = true
-            } )
-            return fileChanged.value ? "FILE_CHANGED" : "TIMEOUT"
+            var changed = watcher.watch( exercise.path, lastModified, 300 ) // 5 minute timeout
+            return changed ? "FILE_CHANGED" : "TIMEOUT"
         } )
 
         // Future for user input
@@ -564,7 +563,7 @@ class {
 
         println( "┌─ BoxLings Help ────────────────────────────────────────────┐" )
         println( "│" )
-        println( "│  � BoxLings - Interactive BoxLang Learning Tool" )
+        println( "│  🥊 BoxLings - Interactive BoxLang Learning Tool" )
         println( "│" )
         println( "│  USAGE:" )
         println( "│    boxlang BoxLings.bx [COMMAND] [OPTIONS]" )

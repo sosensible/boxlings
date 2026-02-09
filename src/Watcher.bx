@@ -31,8 +31,9 @@ class {
 
     /**
      * Start watching a file for changes
+     * Returns true when file changes after lastModified timestamp, false on timeout
      */
-    function watch( required string filePath, required function callback ) {
+    function watch( required string filePath, required date lastModified, numeric timeout = 300 ) {
         try {
             var fullPath = expandPath( filePath )
             var javaPath = Paths.get( fullPath )
@@ -49,13 +50,17 @@ class {
 
             variables.watching = true
             var fileName = javaPath.getFileName().toString()
+            var checksElapsed = 0
+            var lastEventTime = now()
 
             // Watch loop
-            while ( variables.watching ) {
+            while ( variables.watching && checksElapsed < timeout ) {
                 var key = variables.watchService.poll(
                     1,
                     TimeUnit.SECONDS
                 )
+
+                checksElapsed++
 
                 if ( isNull( key ) ) {
                     continue
@@ -68,8 +73,23 @@ class {
                     var changedFile = event.context().toString()
 
                     if ( changedFile == fileName ) {
-                        // File changed! Call callback
-                        callback()
+                        // Debounce: ignore events within 500ms of last event
+                        var now = now()
+                        if ( dateDiff( "s", lastEventTime, now ) < 1 ) {
+                            continue
+                        }
+                        lastEventTime = now
+
+                        // Check if file was actually modified after our timestamp
+                        if ( fileExists( fullPath ) ) {
+                            var fileInfo = getFileInfo( fullPath )
+                            if ( fileInfo.lastModified > lastModified ) {
+                                // Real change detected! Return immediately
+                                key.reset()
+                                stop()
+                                return true
+                            }
+                        }
                     }
                 }
 
@@ -80,9 +100,15 @@ class {
                 }
             }
 
+            // Timeout or stopped
+            stop()
+            return false
+
         } catch( any e ) {
             println( "⚠️  File watching error: #e.message#" )
-            println( "   Falling back to manual mode - press 'r' to rerun" )
+            println( "   Details: #e.detail#" )
+            stop()
+            return false
         }
     }
 
