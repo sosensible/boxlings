@@ -1,4 +1,5 @@
-// The `var` keyword is required to declare variables inside functions!
+// In BoxLang, variables inside functions are automatically local-scoped!
+// Using `var` is optional but recommended for clarity.
 
 function main() {
     var x = 5;

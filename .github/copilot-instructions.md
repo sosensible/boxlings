@@ -156,7 +156,8 @@ BoxLang's `CLIGetArgs()` returns:
 
 ## BoxLang Language Notes (for AI coding)
 
-- Dynamic typing, but `var` keyword required in function scope
+- Dynamic typing with automatic local scoping in functions
+- **var keyword**: Optional in functions (auto-scoped), but recommended for clarity
 - String interpolation: `"Hello #name#"` (not ${})
 - Struct literals: `{key: "value"}` (loose syntax)
 - Array/Struct member functions: `array.each()`, `struct.keyExists()`

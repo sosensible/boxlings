@@ -23,7 +23,7 @@
       "dir": "01_variables",
       "path": "exercises/01_variables/variables1.bxs",
       "test": false,
-      "hint": "In BoxLang, you need the 'var' keyword to declare variables inside functions."
+      "hint": "In BoxLang, variables inside functions are automatically local-scoped (unlike CFML). Using 'var' is optional but recommended for clarity."
     },
     {
       "name": "variables2",

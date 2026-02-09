@@ -1,9 +1,13 @@
-// In BoxLang, you need the `var` keyword to declare variables inside functions.
-// TODO: Add the missing keyword to make this code compile!
+// In BoxLang, variables inside functions are automatically local-scoped!
+// This is different from CFML where you need the `var` keyword.
+// However, using `var` is still a good practice for clarity.
+//
+// TODO: This code works as-is, but add `var` for better readability!
 
 function main() {
-    x = 5;
-    println( "x has the value #x#" );
+    var x = 5;
+    // x = 5;  // This works, but it's better to declare with `var` for clarity --- IGNORE ---
+    println( "local variable [x] has the value #x#" );
 }
 
 main();
