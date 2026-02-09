@@ -1,0 +1,12 @@
+// TODO: Provide a default when a key is missing
+
+function main() {
+    var data = {}
+
+    // TODO: return "missing" if key not found
+    var value = ???
+
+    return value
+}
+
+var result = main()

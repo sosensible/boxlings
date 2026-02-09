@@ -1,0 +1,11 @@
+// Safe access with a null check
+
+function main() {
+    var user = { profile: null }
+
+    var email = isNull( user.profile ) ? "unknown" : user.profile.email
+
+    return email
+}
+
+var result = main()

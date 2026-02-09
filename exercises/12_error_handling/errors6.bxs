@@ -1,0 +1,15 @@
+// TODO: Handle divide-by-zero safely
+
+function safeDivide( a, b ) {
+    try {
+        if ( b == 0 ) {
+            // TODO: throw an error here
+            ???
+        }
+        return a / b
+    } catch( any e ) {
+        return 0
+    }
+}
+
+var result = safeDivide( 10, 0 )

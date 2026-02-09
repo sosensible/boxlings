@@ -1,0 +1,14 @@
+/**
+ * TestBox Test for structs_advanced2
+ */
+class extends="testbox.system.BaseSpec" {
+    function run() {
+        describe( "Structs Advanced 2 - Deep Copy", () => {
+            it( "does not mutate original" , () => {
+                include "structs_advanced2.bxs"
+                expect( variables.result.original.tags.len() ).toBe( 2 )
+                expect( variables.result.copy.tags.len() ).toBe( 3 )
+            })
+        })
+    }
+}

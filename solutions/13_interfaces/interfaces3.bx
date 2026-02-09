@@ -1,0 +1,7 @@
+// Supplier implementation
+
+class implements="java.util.function.Supplier" {
+    function get() {
+        return "Hello BoxLang"
+    }
+}

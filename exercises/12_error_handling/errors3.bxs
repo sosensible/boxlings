@@ -1,0 +1,16 @@
+// TODO: Ensure cleanup runs in finally
+
+function main() {
+    var cleaned = false
+
+    try {
+        var x = 1
+    } finally {
+        // TODO: mark cleanup
+        cleaned = ???
+    }
+
+    return cleaned
+}
+
+var result = main()

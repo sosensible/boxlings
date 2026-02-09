@@ -1,0 +1,7 @@
+// Implemented function for TDD practice
+
+function isEven( value ) {
+    return value % 2 == 0
+}
+
+var result = isEven( 10 )

@@ -1,0 +1,13 @@
+/**
+ * TestBox Test for functional1
+ */
+class extends="testbox.system.BaseSpec" {
+    function run() {
+        describe( "Functional 1 - map", () => {
+            it( "doubles numbers", () => {
+                include "functional1.bxs"
+                expect( variables.result ).toBe( [ 2, 4, 6 ] )
+            })
+        })
+    }
+}

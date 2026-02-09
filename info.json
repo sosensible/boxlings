@@ -415,6 +415,279 @@
       "test_path": "exercises/09_imports/imports4Test.bx",
       "test_mode": "read",
       "hint": "After importing, create an instance with: new HashMap()"
+    },
+    {
+      "name": "structs_advanced1",
+      "dir": "10_structs_advanced",
+      "path": "exercises/10_structs_advanced/structs_advanced1.bxs",
+      "test": true,
+      "test_path": "exercises/10_structs_advanced/structs_advanced1Test.bx",
+      "test_mode": "read",
+      "hint": "Use structAppend( target, source, true ) to merge with overwrite."
+    },
+    {
+      "name": "structs_advanced2",
+      "dir": "10_structs_advanced",
+      "path": "exercises/10_structs_advanced/structs_advanced2.bxs",
+      "test": true,
+      "test_path": "exercises/10_structs_advanced/structs_advanced2Test.bx",
+      "test_mode": "read",
+      "hint": "Use duplicate() to create a deep copy."
+    },
+    {
+      "name": "structs_advanced3",
+      "dir": "10_structs_advanced",
+      "path": "exercises/10_structs_advanced/structs_advanced3.bxs",
+      "test": true,
+      "test_path": "exercises/10_structs_advanced/structs_advanced3Test.bx",
+      "test_mode": "read",
+      "hint": "Use scores.each( ( key, value ) => { doubled[ key ] = value * 2 } )"
+    },
+    {
+      "name": "structs_advanced4",
+      "dir": "10_structs_advanced",
+      "path": "exercises/10_structs_advanced/structs_advanced4.bxs",
+      "test": true,
+      "test_path": "exercises/10_structs_advanced/structs_advanced4Test.bx",
+      "test_mode": "read",
+      "hint": "Use structKeyArray() then arraySort( keys, \"text\" )."
+    },
+    {
+      "name": "nulls1",
+      "dir": "11_null_handling",
+      "path": "exercises/11_null_handling/nulls1.bxs",
+      "test": true,
+      "test_path": "exercises/11_null_handling/nulls1Test.bx",
+      "test_mode": "read",
+      "hint": "Use null coalescing: name ?: \"guest\""
+    },
+    {
+      "name": "nulls2",
+      "dir": "11_null_handling",
+      "path": "exercises/11_null_handling/nulls2.bxs",
+      "test": true,
+      "test_path": "exercises/11_null_handling/nulls2Test.bx",
+      "test_mode": "read",
+      "hint": "Check for null before accessing user.profile.email."
+    },
+    {
+      "name": "nulls3",
+      "dir": "11_null_handling",
+      "path": "exercises/11_null_handling/nulls3.bxs",
+      "test": true,
+      "test_path": "exercises/11_null_handling/nulls3Test.bx",
+      "test_mode": "read",
+      "hint": "Use data.keyExists( \"token\" ) to decide a default."
+    },
+    {
+      "name": "nulls4",
+      "dir": "11_null_handling",
+      "path": "exercises/11_null_handling/nulls4.bxs",
+      "test": true,
+      "test_path": "exercises/11_null_handling/nulls4Test.bx",
+      "test_mode": "read",
+      "hint": "Default to \"friend\" when name is null."
+    },
+    {
+      "name": "errors1",
+      "dir": "12_error_handling",
+      "path": "exercises/12_error_handling/errors1.bxs",
+      "test": true,
+      "test_path": "exercises/12_error_handling/errors1Test.bx",
+      "test_mode": "read",
+      "hint": "Set handled = true in the catch block."
+    },
+    {
+      "name": "errors2",
+      "dir": "12_error_handling",
+      "path": "exercises/12_error_handling/errors2.bxs",
+      "test": true,
+      "test_path": "exercises/12_error_handling/errors2Test.bx",
+      "test_mode": "read",
+      "hint": "Capture the custom exception type from e.type."
+    },
+    {
+      "name": "errors3",
+      "dir": "12_error_handling",
+      "path": "exercises/12_error_handling/errors3.bxs",
+      "test": true,
+      "test_path": "exercises/12_error_handling/errors3Test.bx",
+      "test_mode": "read",
+      "hint": "Finally always runs - set cleaned = true there."
+    },
+    {
+      "name": "errors4",
+      "dir": "12_error_handling",
+      "path": "exercises/12_error_handling/errors4.bxs",
+      "test": true,
+      "test_path": "exercises/12_error_handling/errors4Test.bx",
+      "test_mode": "read",
+      "hint": "Throw with message \"Amount cannot be negative\"."
+    },
+    {
+      "name": "errors5",
+      "dir": "12_error_handling",
+      "path": "exercises/12_error_handling/errors5.bxs",
+      "test": true,
+      "test_path": "exercises/12_error_handling/errors5Test.bx",
+      "test_mode": "read",
+      "hint": "Use e.detail to capture the detail string."
+    },
+    {
+      "name": "errors6",
+      "dir": "12_error_handling",
+      "path": "exercises/12_error_handling/errors6.bxs",
+      "test": true,
+      "test_path": "exercises/12_error_handling/errors6Test.bx",
+      "test_mode": "read",
+      "hint": "Throw an error when b == 0 to hit the catch."
+    },
+    {
+      "name": "interfaces1",
+      "dir": "13_interfaces",
+      "path": "exercises/13_interfaces/interfaces1.bx",
+      "test": true,
+      "test_path": "exercises/13_interfaces/interfaces1Test.bx",
+      "test_mode": "read",
+      "hint": "Implement run() and set variables.ran = true."
+    },
+    {
+      "name": "interfaces2",
+      "dir": "13_interfaces",
+      "path": "exercises/13_interfaces/interfaces2.bx",
+      "test": true,
+      "test_path": "exercises/13_interfaces/interfaces2Test.bx",
+      "test_mode": "read",
+      "hint": "Return -1, 0, or 1 based on comparing value with other.value."
+    },
+    {
+      "name": "interfaces3",
+      "dir": "13_interfaces",
+      "path": "exercises/13_interfaces/interfaces3.bx",
+      "test": true,
+      "test_path": "exercises/13_interfaces/interfaces3Test.bx",
+      "test_mode": "read",
+      "hint": "Supplier#get should return \"Hello BoxLang\"."
+    },
+    {
+      "name": "interfaces4",
+      "dir": "13_interfaces",
+      "path": "exercises/13_interfaces/interfaces4.bx",
+      "test": false,
+      "hint": "AutoCloseable requires a close() method."
+    },
+    {
+      "name": "testing1",
+      "dir": "14_testing",
+      "path": "exercises/14_testing/testing1.bxs",
+      "test": true,
+      "test_path": "exercises/14_testing/testing1Test.bx",
+      "test_mode": "write",
+      "hint": "Write tests that validate add( a, b )."
+    },
+    {
+      "name": "testing2",
+      "dir": "14_testing",
+      "path": "exercises/14_testing/testing2.bxs",
+      "test": true,
+      "test_path": "exercises/14_testing/testing2Test.bx",
+      "test_mode": "write",
+      "hint": "Write tests for reverseString()."
+    },
+    {
+      "name": "testing3",
+      "dir": "14_testing",
+      "path": "exercises/14_testing/testing3.bxs",
+      "test": true,
+      "test_path": "exercises/14_testing/testing3Test.bx",
+      "test_mode": "write",
+      "hint": "Write tests for buildUser( name, age )."
+    },
+    {
+      "name": "testing4",
+      "dir": "14_testing",
+      "path": "exercises/14_testing/testing4.bxs",
+      "test": true,
+      "test_path": "exercises/14_testing/testing4Test.bx",
+      "test_mode": "write",
+      "hint": "Write tests for sumArray()."
+    },
+    {
+      "name": "testing5",
+      "dir": "14_testing",
+      "path": "exercises/14_testing/testing5.bxs",
+      "test": true,
+      "test_path": "exercises/14_testing/testing5Test.bx",
+      "test_mode": "write",
+      "hint": "Write tests for isEven()."
+    },
+    {
+      "name": "functional1",
+      "dir": "15_functional",
+      "path": "exercises/15_functional/functional1.bxs",
+      "test": true,
+      "test_path": "exercises/15_functional/functional1Test.bx",
+      "test_mode": "read",
+      "hint": "Use map( ( n ) -> n * 2 )."
+    },
+    {
+      "name": "functional2",
+      "dir": "15_functional",
+      "path": "exercises/15_functional/functional2.bxs",
+      "test": true,
+      "test_path": "exercises/15_functional/functional2Test.bx",
+      "test_mode": "read",
+      "hint": "Filter even numbers with n % 2 == 0."
+    },
+    {
+      "name": "functional3",
+      "dir": "15_functional",
+      "path": "exercises/15_functional/functional3.bxs",
+      "test": true,
+      "test_path": "exercises/15_functional/functional3Test.bx",
+      "test_mode": "read",
+      "hint": "Use reduce( ( acc, n ) -> acc + n, 0 )."
+    },
+    {
+      "name": "functional4",
+      "dir": "15_functional",
+      "path": "exercises/15_functional/functional4.bxs",
+      "test": true,
+      "test_path": "exercises/15_functional/functional4Test.bx",
+      "test_mode": "read",
+      "hint": "Use each() with a closure to accumulate total."
+    },
+    {
+      "name": "functional5",
+      "dir": "15_functional",
+      "path": "exercises/15_functional/functional5.bxs",
+      "test": true,
+      "test_path": "exercises/15_functional/functional5Test.bx",
+      "test_mode": "read",
+      "hint": "Map words to their lengths with word.len()."
+    },
+    {
+      "name": "functional6",
+      "dir": "15_functional",
+      "path": "exercises/15_functional/functional6.bxs",
+      "test": true,
+      "test_path": "exercises/15_functional/functional6Test.bx",
+      "test_mode": "read",
+      "hint": "Filter evens, then map to n * 2."
+    },
+    {
+      "name": "functional7",
+      "dir": "15_functional",
+      "path": "exercises/15_functional/functional7.bxs",
+      "test": false,
+      "hint": "Use arrayFind( numbers, 3 )."
+    },
+    {
+      "name": "functional8",
+      "dir": "15_functional",
+      "path": "exercises/15_functional/functional8.bxs",
+      "test": false,
+      "hint": "Use reduce() to build a phrase, then trim()."
     }
   ]
 }

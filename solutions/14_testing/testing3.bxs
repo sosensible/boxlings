@@ -1,0 +1,7 @@
+// Implemented function for TDD practice
+
+function buildUser( name, age ) {
+    return { name: name, age: age }
+}
+
+var result = buildUser( "Luis", 40 )

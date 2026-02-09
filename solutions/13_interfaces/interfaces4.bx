@@ -1,0 +1,7 @@
+// AutoCloseable implementation
+
+class implements="java.lang.AutoCloseable" {
+    function close() {
+        // no-op
+    }
+}

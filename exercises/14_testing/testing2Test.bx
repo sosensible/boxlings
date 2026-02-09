@@ -1,0 +1,14 @@
+/**
+ * TODO: Write tests for reverseString()
+ */
+class extends="testbox.system.BaseSpec" {
+    function run() {
+        describe( "Testing 2 - reverseString()", () => {
+            it( "TODO: replace this with real expectations", () => {
+                include "testing2.bxs"
+                // TODO: Write real expectations for reverseString()
+                expect( true ).toBeFalse()
+            })
+        })
+    }
+}

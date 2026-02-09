@@ -1,0 +1,13 @@
+/**
+ * TestBox Test for errors5
+ */
+class extends="testbox.system.BaseSpec" {
+    function run() {
+        describe( "Error Handling 5 - Detail", () => {
+            it( "reads exception detail", () => {
+                include "errors5.bxs"
+                expect( variables.result ).toBe( "Something happened" )
+            })
+        })
+    }
+}

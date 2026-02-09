@@ -1,0 +1,5 @@
+// TODO: Implement AutoCloseable
+
+class implements="java.lang.AutoCloseable" {
+    // TODO: add close() method to satisfy the interface
+}

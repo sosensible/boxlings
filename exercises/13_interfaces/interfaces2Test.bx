@@ -1,0 +1,18 @@
+/**
+ * TestBox Test for interfaces2
+ */
+class extends="testbox.system.BaseSpec" {
+    function run() {
+        describe( "Interfaces 2 - Comparable", () => {
+            it( "compares values", () => {
+                var a = new interfaces2( 5 )
+                var b = new interfaces2( 7 )
+                var c = new interfaces2( 5 )
+
+                expect( a.compareTo( b ) ).toBeLT( 0 )
+                expect( b.compareTo( a ) ).toBeGT( 0 )
+                expect( a.compareTo( c ) ).toBe( 0 )
+            })
+        })
+    }
+}

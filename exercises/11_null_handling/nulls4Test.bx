@@ -1,0 +1,13 @@
+/**
+ * TestBox Test for nulls4
+ */
+class extends="testbox.system.BaseSpec" {
+    function run() {
+        describe( "Null Handling 4 - Defaults", () => {
+            it( "greets with default name", () => {
+                include "nulls4.bxs"
+                expect( variables.result ).toBe( "Hello friend" )
+            })
+        })
+    }
+}

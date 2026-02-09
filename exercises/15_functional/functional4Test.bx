@@ -1,0 +1,13 @@
+/**
+ * TestBox Test for functional4
+ */
+class extends="testbox.system.BaseSpec" {
+    function run() {
+        describe( "Functional 4 - each", () => {
+            it( "accumulates total", () => {
+                include "functional4.bxs"
+                expect( variables.result ).toBe( 6 )
+            })
+        })
+    }
+}

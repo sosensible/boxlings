@@ -1,0 +1,16 @@
+/**
+ * TestBox Test for structs_advanced1
+ */
+class extends="testbox.system.BaseSpec" {
+    function run() {
+        describe( "Structs Advanced 1 - Merge", () => {
+            it( "merges with overwrite", () => {
+                include "structs_advanced1.bxs"
+                expect( variables ).toHaveKey( "result" )
+                expect( variables.result.name ).toBe( "Luis" )
+                expect( variables.result.age ).toBe( 41 )
+                expect( variables.result.city ).toBe( "Miami" )
+            })
+        })
+    }
+}

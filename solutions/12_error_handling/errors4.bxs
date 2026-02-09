@@ -1,0 +1,22 @@
+// Throw when amount is negative
+
+function charge( amount ) {
+    if ( amount < 0 ) {
+        throw( message = "Amount cannot be negative" )
+    }
+    return "ok"
+}
+
+function main() {
+    var errorMessage = ""
+
+    try {
+        charge( -5 )
+    } catch( any e ) {
+        errorMessage = e.message
+    }
+
+    return errorMessage
+}
+
+var result = main()

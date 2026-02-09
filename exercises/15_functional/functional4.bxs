@@ -1,0 +1,8 @@
+// TODO: Use each() to sum values with a closure
+
+var numbers = [ 1, 2, 3 ]
+var total = 0
+
+numbers.each( ??? )
+
+var result = total

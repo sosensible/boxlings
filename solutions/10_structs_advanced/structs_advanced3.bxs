@@ -1,0 +1,14 @@
+// Transform values into a new struct
+
+function main() {
+    var scores = { alice: 10, bob: 12 }
+    var doubled = {}
+
+    scores.each( ( key, value ) => {
+        doubled[ key ] = value * 2
+    })
+
+    return doubled
+}
+
+var result = main()

@@ -1,0 +1,15 @@
+// Capture the custom error type
+
+function main() {
+    var errorType = ""
+
+    try {
+        throw( type = "ValidationError", message = "Invalid" )
+    } catch( any e ) {
+        errorType = e.type
+    }
+
+    return errorType
+}
+
+var result = main()

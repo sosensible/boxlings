@@ -1,0 +1,14 @@
+// Merge structs with overwrite
+
+function main() {
+    var profile = { name: "Luis", age: 40 }
+    var updates = { age: 41, city: "Miami" }
+
+    var merged = duplicate( profile )
+    structAppend( merged, updates, true )
+
+    println( "Name: #merged.name#, Age: #merged.age#, City: #merged.city#" )
+    return merged
+}
+
+var result = main()

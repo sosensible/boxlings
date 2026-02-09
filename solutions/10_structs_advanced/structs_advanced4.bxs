@@ -1,0 +1,12 @@
+// Sort struct keys alphabetically
+
+function main() {
+    var data = { c: 3, a: 1, b: 2 }
+    var keys = structKeyArray( data )
+
+    arraySort( keys, "text" )
+
+    return keys
+}
+
+var result = main()

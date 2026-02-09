@@ -1,0 +1,6 @@
+// Use reduce() to sum the numbers
+
+var numbers = [ 1, 2, 3, 4 ]
+var total = numbers.reduce( ( acc, n ) -> acc + n, 0 )
+
+var result = total

@@ -1,0 +1,13 @@
+/**
+ * TestBox Test for functional3
+ */
+class extends="testbox.system.BaseSpec" {
+    function run() {
+        describe( "Functional 3 - reduce", () => {
+            it( "sums numbers", () => {
+                include "functional3.bxs"
+                expect( variables.result ).toBe( 10 )
+            })
+        })
+    }
+}

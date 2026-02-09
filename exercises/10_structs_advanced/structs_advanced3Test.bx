@@ -1,0 +1,14 @@
+/**
+ * TestBox Test for structs_advanced3
+ */
+class extends="testbox.system.BaseSpec" {
+    function run() {
+        describe( "Structs Advanced 3 - Transform", () => {
+            it( "doubles values", () => {
+                include "structs_advanced3.bxs"
+                expect( variables.result.alice ).toBe( 20 )
+                expect( variables.result.bob ).toBe( 24 )
+            })
+        })
+    }
+}

@@ -1,0 +1,14 @@
+/**
+ * TODO: Write tests for add()
+ */
+class extends="testbox.system.BaseSpec" {
+    function run() {
+        describe( "Testing 1 - add()", () => {
+            it( "TODO: replace this with real expectations", () => {
+                include "testing1.bxs"
+                // TODO: Write real expectations for add()
+                expect( true ).toBeFalse()
+            })
+        })
+    }
+}

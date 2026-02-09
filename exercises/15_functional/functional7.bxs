@@ -1,0 +1,6 @@
+// TODO: Find the index of the value 3
+
+var numbers = [ 1, 2, 3, 4 ]
+var index = arrayFind( numbers, ??? )
+
+println( "Index: #index#" )

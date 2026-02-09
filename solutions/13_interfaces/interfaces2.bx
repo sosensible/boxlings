@@ -1,0 +1,20 @@
+// Comparable implementation
+
+class implements="java.lang.Comparable" {
+    property name="value" type="numeric"
+
+    function init( value ) {
+        variables.value = value
+        return this
+    }
+
+    function compareTo( other ) {
+        if ( variables.value < other.value ) {
+            return -1
+        }
+        if ( variables.value > other.value ) {
+            return 1
+        }
+        return 0
+    }
+}

@@ -1,0 +1,16 @@
+// TODO: Capture custom error type
+
+function main() {
+    var errorType = ""
+
+    try {
+        throw( type = "ValidationError", message = "Invalid" )
+    } catch( any e ) {
+        // TODO: capture error type
+        errorType = ???
+    }
+
+    return errorType
+}
+
+var result = main()

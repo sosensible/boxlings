@@ -1,0 +1,14 @@
+// TODO: Implement the Runnable interface
+
+class implements="java.lang.Runnable" {
+    property name="ran" type="boolean" default="false"
+
+    function run() {
+        // TODO: mark ran true
+        ???
+    }
+
+    function getRan() {
+        return variables.ran
+    }
+}

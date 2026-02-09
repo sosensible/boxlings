@@ -1,0 +1,13 @@
+// Runnable implementation
+
+class implements="java.lang.Runnable" {
+    property name="ran" type="boolean" default="false"
+
+    function run() {
+        variables.ran = true
+    }
+
+    function getRan() {
+        return variables.ran
+    }
+}

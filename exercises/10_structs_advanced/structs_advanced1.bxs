@@ -1,0 +1,15 @@
+// TODO: Merge the structs so updates override profile values
+// Hint: structAppend( target, source, true )
+
+function main() {
+    var profile = { name: "Luis", age: 40 }
+    var updates = { age: 41, city: "Miami" }
+
+    // TODO: merge profile and updates
+    var merged = ???
+
+    println( "Name: #merged.name#, Age: #merged.age#, City: #merged.city#" )
+    return merged
+}
+
+var result = main()

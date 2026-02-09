@@ -1,0 +1,13 @@
+/**
+ * TestBox Test for errors4
+ */
+class extends="testbox.system.BaseSpec" {
+    function run() {
+        describe( "Error Handling 4 - Throw", () => {
+            it( "captures throw message", () => {
+                include "errors4.bxs"
+                expect( variables.result ).toBe( "Amount cannot be negative" )
+            })
+        })
+    }
+}

@@ -1,0 +1,7 @@
+// Build a phrase using reduce()
+
+var words = [ "BoxLang", "is", "fun" ]
+
+var phrase = words.reduce( ( acc, word ) -> acc & " " & word, "" ).trim()
+
+println( phrase )

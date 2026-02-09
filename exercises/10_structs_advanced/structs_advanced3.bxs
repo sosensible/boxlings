@@ -1,0 +1,13 @@
+// TODO: Transform values into a new struct
+
+function main() {
+    var scores = { alice: 10, bob: 12 }
+    var doubled = {}
+
+    // TODO: fill doubled with values * 2
+    scores.each( ??? )
+
+    return doubled
+}
+
+var result = main()

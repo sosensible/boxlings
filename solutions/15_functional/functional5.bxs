@@ -1,0 +1,6 @@
+// Map words to their lengths
+
+var words = [ "box", "lang", "rocks" ]
+var lengths = words.map( ( word ) -> word.len() )
+
+var result = lengths

@@ -1,0 +1,7 @@
+// Implemented function for TDD practice
+
+function sumArray( numbers ) {
+    return numbers.reduce( ( total, value ) -> total + value, 0 )
+}
+
+var result = sumArray( [ 1, 2, 3, 4 ] )

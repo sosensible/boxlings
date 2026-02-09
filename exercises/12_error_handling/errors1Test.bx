@@ -1,0 +1,13 @@
+/**
+ * TestBox Test for errors1
+ */
+class extends="testbox.system.BaseSpec" {
+    function run() {
+        describe( "Error Handling 1 - Try/Catch", () => {
+            it( "marks handled when exception occurs", () => {
+                include "errors1.bxs"
+                expect( variables.result ).toBeTrue()
+            })
+        })
+    }
+}

@@ -1,0 +1,15 @@
+// Read exception detail
+
+function main() {
+    var detail = ""
+
+    try {
+        throw( type = "AppError", message = "Boom", detail = "Something happened" )
+    } catch( any e ) {
+        detail = e.detail
+    }
+
+    return detail
+}
+
+var result = main()

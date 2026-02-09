@@ -1,0 +1,13 @@
+/**
+ * TestBox Test for errors2
+ */
+class extends="testbox.system.BaseSpec" {
+    function run() {
+        describe( "Error Handling 2 - Error Type", () => {
+            it( "captures custom type", () => {
+                include "errors2.bxs"
+                expect( variables.result ).toBe( "ValidationError" )
+            })
+        })
+    }
+}

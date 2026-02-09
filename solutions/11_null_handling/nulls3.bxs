@@ -1,0 +1,11 @@
+// Default when key is missing
+
+function main() {
+    var data = {}
+
+    var value = data.keyExists( "token" ) ? data.token : "missing"
+
+    return value
+}
+
+var result = main()

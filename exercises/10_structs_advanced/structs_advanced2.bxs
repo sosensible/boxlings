@@ -1,0 +1,15 @@
+// TODO: Create a deep copy of the struct
+// Hint: duplicate() makes a deep copy
+
+function main() {
+    var original = { tags: [ "a", "b" ] }
+
+    // TODO: deep copy original
+    var copy = ???
+
+    copy.tags.append( "c" )
+
+    return { original: original, copy: copy }
+}
+
+var result = main()

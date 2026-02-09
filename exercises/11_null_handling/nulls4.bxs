@@ -1,0 +1,9 @@
+// TODO: Handle null parameter values
+
+function greet( name ) {
+    // TODO: default to "friend" when name is null
+    var safeName = ???
+    return "Hello " & safeName
+}
+
+var result = greet( null )

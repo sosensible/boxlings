@@ -1,0 +1,12 @@
+// TODO: Avoid null access when profile is missing
+
+function main() {
+    var user = { profile: null }
+
+    // TODO: if profile is null, use "unknown"
+    var email = ???
+
+    return email
+}
+
+var result = main()

@@ -1,0 +1,12 @@
+// TODO: Provide a default value when name is null
+
+function main() {
+    var name = null
+
+    // TODO: use null coalescing / default
+    var display = ???
+
+    return display
+}
+
+var result = main()

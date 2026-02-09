@@ -1,0 +1,15 @@
+// TODO: Implement Comparable for NumberBox
+
+class implements="java.lang.Comparable" {
+    property name="value" type="numeric"
+
+    function init( value ) {
+        variables.value = value
+        return this
+    }
+
+    function compareTo( other ) {
+        // TODO: return -1, 0, or 1 based on value
+        return ???
+    }
+}

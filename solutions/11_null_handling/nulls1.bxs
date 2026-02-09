@@ -1,0 +1,11 @@
+// Default value with null coalescing
+
+function main() {
+    var name = null
+
+    var display = name ?: "guest"
+
+    return display
+}
+
+var result = main()

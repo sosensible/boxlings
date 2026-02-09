@@ -1,0 +1,16 @@
+// TODO: Add error handling
+
+function main() {
+    var handled = false
+
+    try {
+        throw( message = "Boom" )
+    } catch( any e ) {
+        // TODO: mark as handled
+        handled = ???
+    }
+
+    return handled
+}
+
+var result = main()

@@ -1,0 +1,14 @@
+/**
+ * TODO: Write tests for isEven()
+ */
+class extends="testbox.system.BaseSpec" {
+    function run() {
+        describe( "Testing 5 - isEven()", () => {
+            it( "TODO: replace this with real expectations", () => {
+                include "testing5.bxs"
+                // TODO: Write real expectations for isEven()
+                expect( true ).toBeFalse()
+            })
+        })
+    }
+}

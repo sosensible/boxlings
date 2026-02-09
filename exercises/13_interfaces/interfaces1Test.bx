@@ -1,0 +1,14 @@
+/**
+ * TestBox Test for interfaces1
+ */
+class extends="testbox.system.BaseSpec" {
+    function run() {
+        describe( "Interfaces 1 - Runnable", () => {
+            it( "implements run()", () => {
+                var obj = new interfaces1()
+                obj.run()
+                expect( obj.getRan() ).toBeTrue()
+            })
+        })
+    }
+}

@@ -1,0 +1,8 @@
+// Default parameter handling
+
+function greet( name ) {
+    var safeName = name ?: "friend"
+    return "Hello " & safeName
+}
+
+var result = greet( null )

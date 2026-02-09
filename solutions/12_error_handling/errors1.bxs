@@ -1,0 +1,15 @@
+// Try/catch to mark handled
+
+function main() {
+    var handled = false
+
+    try {
+        throw( message = "Boom" )
+    } catch( any e ) {
+        handled = true
+    }
+
+    return handled
+}
+
+var result = main()

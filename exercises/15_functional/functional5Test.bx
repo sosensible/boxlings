@@ -1,0 +1,13 @@
+/**
+ * TestBox Test for functional5
+ */
+class extends="testbox.system.BaseSpec" {
+    function run() {
+        describe( "Functional 5 - map lengths", () => {
+            it( "returns word lengths", () => {
+                include "functional5.bxs"
+                expect( variables.result ).toBe( [ 3, 4, 5 ] )
+            })
+        })
+    }
+}

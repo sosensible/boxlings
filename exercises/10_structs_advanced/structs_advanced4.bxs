@@ -1,0 +1,14 @@
+// TODO: Sort struct keys alphabetically
+// Hint: structKeyArray() + arraySort()
+
+function main() {
+    var data = { c: 3, a: 1, b: 2 }
+    var keys = structKeyArray( data )
+
+    // TODO: sort keys alphabetically
+    ???
+
+    return keys
+}
+
+var result = main()

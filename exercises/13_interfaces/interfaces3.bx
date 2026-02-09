@@ -1,0 +1,8 @@
+// TODO: Implement Supplier#get
+
+class implements="java.util.function.Supplier" {
+    function get() {
+        // TODO: return the greeting
+        return ???
+    }
+}

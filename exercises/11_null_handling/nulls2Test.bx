@@ -1,0 +1,13 @@
+/**
+ * TestBox Test for nulls2
+ */
+class extends="testbox.system.BaseSpec" {
+    function run() {
+        describe( "Null Handling 2 - Safe Access", () => {
+            it( "returns unknown for null profile", () => {
+                include "nulls2.bxs"
+                expect( variables.result ).toBe( "unknown" )
+            })
+        })
+    }
+}

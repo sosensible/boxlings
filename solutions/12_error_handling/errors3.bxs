@@ -1,0 +1,15 @@
+// Finally always runs
+
+function main() {
+    var cleaned = false
+
+    try {
+        var x = 1
+    } finally {
+        cleaned = true
+    }
+
+    return cleaned
+}
+
+var result = main()

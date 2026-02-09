@@ -1,0 +1,13 @@
+/**
+ * TestBox Test for interfaces3
+ */
+class extends="testbox.system.BaseSpec" {
+    function run() {
+        describe( "Interfaces 3 - Supplier", () => {
+            it( "returns a greeting", () => {
+                var obj = new interfaces3()
+                expect( obj.get() ).toBe( "Hello BoxLang" )
+            })
+        })
+    }
+}

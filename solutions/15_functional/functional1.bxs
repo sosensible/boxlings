@@ -1,0 +1,6 @@
+// Use map() to double the numbers
+
+var numbers = [ 1, 2, 3 ]
+var doubled = numbers.map( ( n ) -> n * 2 )
+
+var result = doubled

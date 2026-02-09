@@ -1,0 +1,13 @@
+// Deep copy with duplicate()
+
+function main() {
+    var original = { tags: [ "a", "b" ] }
+
+    var copy = duplicate( original )
+
+    copy.tags.append( "c" )
+
+    return { original: original, copy: copy }
+}
+
+var result = main()
