@@ -1,6 +1,18 @@
 /**
  * BoxLings - Interactive BoxLang Learning Tool
  *
+ * Licensed under the Apache License, Version 2.0 (the "License")
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *     http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ *
  * Main CLI entry point with main() convention
  * Inspired by rustlings
  */
@@ -14,66 +26,66 @@ class {
     function main( args = [] ) {
         try {
             // BoxLang automatically parses CLI arguments!
-            var parsed = CLIGetArgs();
+            var parsed = CLIGetArgs()
 
             // Show version
             if ( parsed.options.keyExists( "version" ) && parsed.options.version ) {
-                printVersion();
-                return;
+                printVersion()
+                return
             }
 
             // Show help
             if ( parsed.options.keyExists( "help" ) && parsed.options.help ) {
-                printHelp();
-                return;
+                printHelp()
+                return
             }
 
             // Load exercise info
-            var infoFile = new src.InfoFile();
-            var exercises = infoFile.loadExercises();
+            var infoFile = new src.InfoFile()
+            var exercises = infoFile.loadExercises()
 
             if ( exercises.isEmpty() ) {
-                println( "❌ No exercises found! Check info.json" );
-                cliExit( 1 );
+                println( "❌ No exercises found! Check info.json" )
+                cliExit( 1 )
             }
 
             // Initialize app state
-            var appState = new src.AppState( exercises );
+            var appState = new src.AppState( exercises )
 
             // Route to command (positionals is already an array)
-            var command = parsed.positionals.len() > 0 ? parsed.positionals[1] : "watch";
+            var command = parsed.positionals.len() > 0 ? parsed.positionals[1] : "watch"
 
             switch( command ) {
                 case "run":
-                    runCommand( appState, parsed );
-                    break;
+                    runCommand( appState, parsed )
+                    break
                 case "check-all":
-                    checkAllCommand( appState );
-                    break;
+                    checkAllCommand( appState )
+                    break
                 case "reset":
-                    resetCommand( appState, parsed );
-                    break;
+                    resetCommand( appState, parsed )
+                    break
                 case "hint":
-                    hintCommand( appState, parsed );
-                    break;
+                    hintCommand( appState, parsed )
+                    break
                 case "show-test":
-                    showTestCommand( appState, parsed );
-                    break;
+                    showTestCommand( appState, parsed )
+                    break
                 case "list":
-                    listCommand( appState );
-                    break;
+                    listCommand( appState )
+                    break
                 case "watch":
                 default:
-                    watchCommand( appState );
-                    break;
+                    watchCommand( appState )
+                    break
             }
 
         } catch( any e ) {
-            println( "❌ Error: #e.message#" );
+            println( "❌ Error: #e.message#" )
             if ( e.detail ?: "" != "" ) {
-                println( "   #e.detail#" );
+                println( "   #e.detail#" )
             }
-            cliExit( 1 );
+            cliExit( 1 )
         }
     }
 
@@ -81,23 +93,23 @@ class {
      * Run a specific exercise or the next pending one
      */
     private function runCommand( required appState, required parsed ) {
-        CLIClear();
+        CLIClear()
 
-        var exerciseName = parsed.positionals.len() > 1 ? parsed.positionals[2] : "";
+        var exerciseName = parsed.positionals.len() > 1 ? parsed.positionals[2] : ""
 
         if ( exerciseName != "" ) {
-            appState.setCurrentByName( exerciseName );
+            appState.setCurrentByName( exerciseName )
         }
 
-        var runner = new src.Runner();
-        var result = runner.runExercise( appState.getCurrent() );
+        var runner = new src.Runner()
+        var result = runner.runExercise( appState.getCurrent() )
 
         if ( result.success ) {
-            println( "✅ Exercise complete!" );
-            appState.markCurrentDone();
+            println( "✅ Exercise complete!" )
+            appState.markCurrentDone()
         } else {
-            println( "❌ Exercise failed. Keep trying!" );
-            cliExit( 1 );
+            println( "❌ Exercise failed. Keep trying!" )
+            cliExit( 1 )
         }
     }
 
@@ -105,41 +117,41 @@ class {
      * Check all exercises
      */
     private function checkAllCommand( required appState ) {
-        CLIClear();
+        CLIClear()
 
-        println( "Checking all exercises..." );
-        println( "" );
+        println( "Checking all exercises..." )
+        println( "" )
 
-        var runner = new src.Runner();
-        var total = appState.getExercises().len();
-        var passed = 0;
+        var runner = new src.Runner()
+        var total = appState.getExercises().len()
+        var passed = 0
 
         appState.getExercises().each( function( exercise, index ) {
-            print( "[#index#/#total#] #exercise.name#... " );
+            print( "[#index#/#total#] #exercise.name#... " )
 
-            var result = runner.runExercise( exercise, false ); // silent mode
+            var result = runner.runExercise( exercise, false ) // silent mode
 
             if ( result.success ) {
-                println( "✓" );
-                passed++;
-                exercise.done = true;
+                println( "✓" )
+                passed++
+                exercise.done = true
             } else {
-                println( "✗" );
-                exercise.done = false;
+                println( "✗" )
+                exercise.done = false
             }
-        });
+        })
 
-        appState.save();
+        appState.save()
 
-        println( "" );
-        println( "Results: #passed#/#total# exercises passing" );
+        println( "" )
+        println( "Results: #passed#/#total# exercises passing" )
 
         if ( passed < total ) {
-            var pending = total - passed;
-            println( "❌ #pending# exercise#pending == 1 ? '' : 's'# still need work" );
-            cliExit( 1 );
+            var pending = total - passed
+            println( "❌ #pending# exercise#pending == 1 ? '' : 's'# still need work" )
+            cliExit( 1 )
         } else {
-            println( "🎉 All exercises complete!" );
+            println( "🎉 All exercises complete!" )
         }
     }
 
@@ -147,463 +159,452 @@ class {
      * Reset an exercise to original state
      */
     private function resetCommand( required appState, required parsed ) {
-        CLIClear();
+        CLIClear()
 
         if ( parsed.positionals.len() < 2 ) {
-            println( "❌ Usage: boxlang BoxLings.bx reset <exercise_name>" );
-            cliExit( 1 );
+            println( "❌ Usage: boxlang BoxLings.bx reset <exercise_name>" )
+            cliExit( 1 )
         }
 
-        var exerciseName = parsed.positionals[2];
-        appState.setCurrentByName( exerciseName );
+        var exerciseName = parsed.positionals[2]
+        appState.setCurrentByName( exerciseName )
 
-        var exercise = appState.getCurrent();
-        var sourcePath = "solutions/#exercise.dir#/#exercise.name##exercise.extension#";
+        var exercise = appState.getCurrent()
+        var sourcePath = "solutions/#exercise.dir#/#exercise.name##exercise.extension#"
 
         if ( !fileExists( sourcePath ) ) {
-            println( "❌ Solution file not found: #sourcePath#" );
-            cliExit( 1 );
+            println( "❌ Solution file not found: #sourcePath#" )
+            cliExit( 1 )
         }
 
-        fileCopy( sourcePath, exercise.path );
-        println( "✅ Exercise reset: #exercise.path#" );
+        fileCopy( sourcePath, exercise.path )
+        println( "✅ Exercise reset: #exercise.path#" )
     }
 
     /**
      * Show hint for exercise
      */
     private function hintCommand( required appState, required parsed ) {
-        CLIClear();
+        CLIClear()
 
-        var exerciseName = parsed.positionals.len() > 1 ? parsed.positionals[2] : "";
+        var exerciseName = parsed.positionals.len() > 1 ? parsed.positionals[2] : ""
 
         if ( exerciseName != "" ) {
-            appState.setCurrentByName( exerciseName );
+            appState.setCurrentByName( exerciseName )
         }
 
-        var exercise = appState.getCurrent();
-        var terminal = new src.Terminal();
+        var exercise = appState.getCurrent()
+        var terminal = new src.Terminal()
 
-        println( "┌─ Hint for #exercise.name# ─────────────────────────────────────┐" );
-        println( "│" );
+        println( "┌─ Hint for #exercise.name# ─────────────────────────────────────┐" )
+        println( "│" )
 
-        var hintLines = wordWrap( exercise.hint, 58 );
+        var hintLines = wordWrap( exercise.hint, 58 )
         hintLines.each( line => {
-            println( "│  #line#" );
-        });
+            println( "│  #line#" )
+        })
 
-        println( "│" );
-        println( "└────────────────────────────────────────────────────────────┘" );
+        println( "│" )
+        println( "└────────────────────────────────────────────────────────────┘" )
     }
 
     /**
      * Show test file for exercise
      */
     private function showTestCommand( required appState, required parsed ) {
-        CLIClear();
+        CLIClear()
 
-        var exerciseName = parsed.positionals.len() > 1 ? parsed.positionals[2] : "";
+        var exerciseName = parsed.positionals.len() > 1 ? parsed.positionals[2] : ""
 
         if ( exerciseName != "" ) {
-            appState.setCurrentByName( exerciseName );
+            appState.setCurrentByName( exerciseName )
         }
 
-        var exercise = appState.getCurrent();
+        var exercise = appState.getCurrent()
 
         if ( !exercise.test ) {
-            println( "ℹ️  Exercise #exercise.name# has no tests" );
-            return;
+            println( "ℹ️  Exercise #exercise.name# has no tests" )
+            return
         }
 
-        println( "┌─ Test File: #exercise.test_path# ──────────────────────────┐" );
-        println( "" );
+        println( "┌─ Test File: #exercise.test_path# ──────────────────────────┐" )
+        println( "" )
 
-        var fullPath = expandPath( exercise.test_path );
+        var fullPath = expandPath( exercise.test_path )
         if ( fileExists( fullPath ) ) {
-            var content = fileRead( fullPath );
-            println( content );
+            var content = fileRead( fullPath )
+            println( content )
         } else {
-            println( "❌ Test file not found: #exercise.test_path#" );
+            println( "❌ Test file not found: #exercise.test_path#" )
         }
 
-        println( "" );
-        println( "└────────────────────────────────────────────────────────────┘" );
+        println( "" )
+        println( "└────────────────────────────────────────────────────────────┘" )
     }
 
     /**
      * List all exercises with enhanced formatting
      */
     private function listCommand( required appState ) {
-        var terminal = new src.Terminal();
+        var terminal = new src.Terminal()
 
-        terminal.clear();
+        terminal.clear()
 
-        println( "┌─ BoxLings Exercises ───────────────────────────────────────┐" );
-        println( "│" );
+        println( "┌─ BoxLings Exercises ───────────────────────────────────────┐" )
+        println( "│" )
 
-        var currentTopic = "";
-        var topicCount = 0;
+        var currentTopic = ""
+        var topicCount = 0
 
         appState.getExercises().each( function( exercise, index ) {
             // Print topic header
             if ( exercise.dir != currentTopic ) {
                 if ( currentTopic != "" ) {
-                    println( "│" );
+                    println( "│" )
                 }
-                currentTopic = exercise.dir;
-                topicCount++;
-                println( "│  📚 #currentTopic#" );
+                currentTopic = exercise.dir
+                topicCount++
+                println( "│  📚 #currentTopic#" )
             }
 
-            var status = exercise.done ? "✅" : "⭐";
-            var current = appState.getCurrentIndex() == index ? "→" : " ";
-            var testIndicator = exercise.test ? "🧪" : "  ";
+            var status = exercise.done ? "✅" : "⭐"
+            var current = appState.getCurrentIndex() == index ? "→" : " "
+            var testIndicator = exercise.test ? "🧪" : "  "
 
-            println( "│  #current# #status# #testIndicator# #exercise.name#" );
-        });
+            println( "│  #current# #status# #testIndicator# #exercise.name#" )
+        })
 
-        println( "│" );
-        println( "└────────────────────────────────────────────────────────────┘" );
-        println( "" );
+        println( "│" )
+        println( "└────────────────────────────────────────────────────────────┘" )
+        println( "" )
 
-        var progress = appState.getProgress();
-        terminal.showProgress( progress.completed, progress.total );
+        var progress = appState.getProgress()
+        terminal.showProgress( progress.completed, progress.total )
 
-        println( "" );
-        println( "Legend: ✅ Done  ⭐ Pending  🧪 Has tests  → Current" );
+        println( "" )
+        println( "Legend: ✅ Done  ⭐ Pending  🧪 Has tests  → Current" )
     }
 
     /**
      * Watch mode - interactive learning with file monitoring
      */
     private function watchCommand( required appState ) {
-        var terminal = new src.Terminal();
-        var runner = new src.Runner();
+        var terminal = new src.Terminal()
+        var runner = new src.Runner()
 
         // Show welcome message on first run
         if ( appState.getCurrentIndex() == 1 && !appState.getCurrent().done ) {
-            terminal.showWelcome();
+            terminal.showWelcome()
         }
 
-        var running = true;
+        var running = true
 
         while ( running ) {
-            terminal.clear();
+            terminal.clear()
 
             // Show header with box
             terminal.printBoxed( [
-                "🦀 BoxLings - Interactive BoxLang Learning",
-                "",
+                "🥊 BoxLings - Interactive BoxLang Learning",
                 "Learn BoxLang + TDD through hands-on exercises"
-            ] );
-            println( "" );
+            ] )
+            println( "" )
 
-            var progress = appState.getProgress();
-            terminal.showProgress( progress.completed, progress.total );
-            println( "" );
+            var progress = appState.getProgress()
+            terminal.showProgress( progress.completed, progress.total )
+            println( "" )
 
-            var exercise = appState.getCurrent();
+            var exercise = appState.getCurrent()
 
             // Show current exercise in a box
-            println( "┌─ Current Exercise ─────────────────────────────────────────┐" );
-            println( "│" );
-            println( "│  📝 #exercise.getDisplayName()#" );
-            println( "│  📂 #exercise.path#" );
+            println( "┌─ Current Exercise ─────────────────────────────────────────┐" )
+            println( "│" )
+            println( "│  📝 #exercise.getDisplayName()#" )
+            println( "│  📂 #exercise.path#" )
             if ( exercise.test ) {
-                println( "│  🧪 #exercise.test_path#" );
-                println( "│" );
-                println( "│  💡 Read the test file first to understand requirements!" );
+                println( "│  🧪 #exercise.test_path#" )
+                println( "│" )
+                println( "│  💡 Read the test file first to understand requirements!" )
             }
-            println( "│" );
-            println( "└────────────────────────────────────────────────────────────┘" );
-            println( "" );
+            println( "│" )
+            println( "└────────────────────────────────────────────────────────────┘" )
+            println( "" )
 
             // Get initial file timestamp
-            var fullPath = expandPath( exercise.path );
-            var lastModified = fileExists( fullPath ) ? getFileInfo( fullPath ).lastModified : 0;
+            var fullPath = expandPath( exercise.path )
+            var lastModified = fileExists( fullPath ) ? getFileInfo( fullPath ).lastModified : now()
 
             // Run the exercise
-            var result = runner.runExercise( exercise );
+            var result = runner.runExercise( exercise )
 
-            println( "" );
-            println( "══════════════════════════════════════════════════════════════" );
+            println( "" )
+            println( "══════════════════════════════════════════════════════════════" )
 
             if ( result.success ) {
-                println( "" );
-                println( "┌─ Success! ─────────────────────────────────────────────────┐" );
-                println( "│" );
-                println( "│  ✅ Exercise complete!" );
-                println( "│" );
-                println( "│  Commands:" );
-                println( "│    n → Next exercise" );
-                println( "│    h → Show hint" );
-                println( "│    l → List all exercises" );
-                println( "│    q → Quit" );
-                println( "│" );
-                println( "└────────────────────────────────────────────────────────────┘" );
-                println( "" );
-                print( "→ " );
-                var cmd = waitForCommandOrFileChange( exercise, lastModified );
+                println( "" )
+                println( "┌─ Success! ─────────────────────────────────────────────────┐" )
+                println( "│" )
+                println( "│  ✅ Exercise complete!" )
+                println( "│" )
+                println( "│  Commands:" )
+                println( "│    n → Next exercise" )
+                println( "│    h → Show hint" )
+                println( "│    l → List all exercises" )
+                println( "│    q → Quit" )
+                println( "│" )
+                println( "└────────────────────────────────────────────────────────────┘" )
+                println( "" )
+                print( "→ " )
+                var cmd = waitForCommandOrFileChange( exercise, lastModified )
 
                 // If file changed, auto-rerun
                 if ( cmd == "FILE_CHANGED" ) {
-                    continue;
+                    continue
                 }
 
                 if ( cmd == "n" ) {
-                    appState.markCurrentDone();
-                    appState.moveToNext();
+                    appState.markCurrentDone()
+                    appState.moveToNext()
 
                     if ( appState.isComplete() ) {
-                        terminal.clear();
-                        terminal.showCompletion( "You've completed all BoxLings exercises!" );
-                        running = false;
+                        terminal.clear()
+                        terminal.showCompletion( "You've completed all BoxLings exercises!" )
+                        running = false
                     }
                 } else if ( cmd == "h" ) {
-                    println( "" );
-                    terminal.printHint( exercise.hint );
-                    println( "" );
-                    print( "Press ENTER to continue..." );
-                    CLIRead();
+                    println( "" )
+                    terminal.printHint( exercise.hint )
+                    println( "" )
+                    print( "Press ENTER to continue..." )
+                    CLIRead()
                 } else if ( cmd == "l" ) {
-                    listCommand( appState );
-                    print( "Press ENTER to continue..." );
-                    CLIRead();
+                    listCommand( appState )
+                    print( "Press ENTER to continue..." )
+                    CLIRead()
                 } else if ( cmd == "q" ) {
-                    running = false;
+                    running = false
                 }
             } else {
-                println( "" );
-                println( "┌─ Not Quite! ───────────────────────────────────────────────┐" );
-                println( "│" );
-                println( "│  ❌ Keep trying!" );
-                println( "│" );
-                println( "│  👀 Watching for file changes..." );
-                println( "│  💾 Save your file to auto-rerun" );
-                println( "│" );
-                println( "│  Commands:" );
-                println( "│    r → Rerun now" );
-                println( "│    h → Show hint" );
-                println( "│    t → Show test file (if available)" );
-                println( "│    l → List all exercises" );
-                println( "│    q → Quit" );
-                println( "│" );
-                println( "└────────────────────────────────────────────────────────────┘" );
-                println( "" );
-                terminal.printInfo( "👀 Watching for changes... (checking every 2 seconds)" );
-                println( "" );
-                print( "Press ENTER to manually rerun, or edit file: " );
+                println( "" )
+                println( "┌─ Oopsy! ───────────────────────────────────────────────┐" )
+                println( "│" )
+                println( "│  ❌ Keep trying!" )
+                println( "│" )
+                println( "│  👀 Watching for file changes..." )
+                println( "│  💾 Save your file to auto-rerun" )
+                println( "│" )
+                println( "│  Commands:" )
+                println( "│    r → Rerun now" )
+                println( "│    h → Show hint" )
+                println( "│    t → Show test file (if available)" )
+                println( "│    l → List all exercises" )
+                println( "│    q → Quit" )
+                println( "│" )
+                println( "└────────────────────────────────────────────────────────────┘" )
+                println( "" )
+                terminal.printInfo( "👀 Watching for changes..." )
+                println( "" )
+                print( "Press ENTER to manually rerun, or edit file: " )
 
-                var cmd = waitForCommandOrFileChange( exercise, lastModified );
+                var cmd = waitForCommandOrFileChange( exercise, lastModified )
 
                 // If file changed, auto-rerun
                 if ( cmd == "FILE_CHANGED" ) {
-                    terminal.printSuccess( "File changed! Rerunning..." );
-                    sleep( 1000 );
-                    continue;
+                    terminal.printSuccess( "File changed! Rerunning..." )
+                    sleep( 1000 )
+                    continue
                 }
 
                 // Manual rerun
                 if ( cmd == "r" || cmd == "" ) {
-                    continue;
+                    continue
                 }
 
                 if ( cmd == "h" ) {
-                    terminal.clear();
-                    println( "┌─ Hint ─────────────────────────────────────────────────────┐" );
-                    println( "│" );
+                    terminal.clear()
+                    println( "┌─ Hint ─────────────────────────────────────────────────────┐" )
+                    println( "│" )
 
-                    var hintLines = wordWrap( exercise.hint, 58 );
+                    var hintLines = wordWrap( exercise.hint, 58 )
                     hintLines.each( line => {
-                        println( "│  #line#" );
-                    });
+                        println( "│  #line#" )
+                    })
 
-                    println( "│" );
-                    println( "└────────────────────────────────────────────────────────────┘" );
-                    println( "" );
-                    print( "Press ENTER to continue..." );
-                    CLIRead();
+                    println( "│" )
+                    println( "└────────────────────────────────────────────────────────────┘" )
+                    println( "" )
+                    print( "Press ENTER to continue..." )
+                    CLIRead()
                 } else if ( cmd == "t" && exercise.test ) {
-                    showTestCommand( appState, { positionals: [] } );
-                    print( "Press ENTER to continue..." );
-                    CLIRead();
+                    showTestCommand( appState, { positionals: [] } )
+                    print( "Press ENTER to continue..." )
+                    CLIRead()
                 } else if ( cmd == "l" ) {
-                    listCommand( appState );
-                    print( "Press ENTER to continue..." );
-                    CLIRead();
+                    listCommand( appState )
+                    print( "Press ENTER to continue..." )
+                    CLIRead()
                 } else if ( cmd == "q" ) {
-                    running = false;
+                    running = false
                 }
                 // 'r' or any other input will just loop and rerun
             }
         }
 
-        terminal.clear();
-        println( "" );
-        println( "┌─ Thanks for Learning! ─────────────────────────────────────┐" );
-        println( "│" );
-        println( "│  🚀 Keep practicing BoxLang!" );
-        println( "│  📚 Check out: https://boxlang.ortusbooks.com" );
-        println( "│  💬 Join the community: https://community.ortussolutions.com" );
-        println( "│" );
-        println( "└────────────────────────────────────────────────────────────┘" );
-        println( "" );
+        terminal.clear()
+        println( "" )
+        println( "┌─ Thanks for Learning! ─────────────────────────────────────┐" )
+        println( "│" )
+        println( "│  🚀 Keep practicing BoxLang!" )
+        println( "│  🌏 Official Site: https://www.boxlang.io" )
+        println( "│  📚 Docs: https://boxlang.ortusbooks.com" )
+        println( "│  💬 Join the community: https://community.ortussolutions.com" )
+        println( "│" )
+        println( "└────────────────────────────────────────────────────────────┘" )
+        println( "" )
     }
 
     /**
      * Show keyboard shortcuts help
      */
     private function showKeyboardHelp( required terminal ) {
-        terminal.clear();
-        println( "┌─ Keyboard Shortcuts ───────────────────────────────────────┐" );
-        println( "│" );
-        println( "│  NAVIGATION:" );
-        println( "│    n → Next exercise (after completing current)" );
-        println( "│    l → List all exercises with status" );
-        println( "│" );
-        println( "│  HELP:" );
-        println( "│    h → Show hint for current exercise" );
-        println( "│    t → Show test file (if exercise has tests)" );
-        println( "│    ? → Show this help screen" );
-        println( "│" );
-        println( "│  ACTIONS:" );
-        println( "│    r → Rerun current exercise manually" );
-        println( "│    q → Quit BoxLings" );
-        println( "│" );
-        println( "│  TIP: After fixing an exercise, press 'r' to rerun!" );
-        println( "│" );
-        println( "└────────────────────────────────────────────────────────────┘" );
-        println( "" );
+        terminal.clear()
+        println( "┌─ Keyboard Shortcuts ───────────────────────────────────────┐" )
+        println( "│" )
+        println( "│  NAVIGATION:" )
+        println( "│    n → Next exercise (after completing current)" )
+        println( "│    l → List all exercises with status" )
+        println( "│" )
+        println( "│  HELP:" )
+        println( "│    h → Show hint for current exercise" )
+        println( "│    t → Show test file (if exercise has tests)" )
+        println( "│    ? → Show this help screen" )
+        println( "│" )
+        println( "│  ACTIONS:" )
+        println( "│    r → Rerun current exercise manually" )
+        println( "│    q → Quit BoxLings" )
+        println( "│" )
+        println( "│  TIP: After fixing an exercise, press 'r' to rerun!" )
+        println( "│" )
+        println( "└────────────────────────────────────────────────────────────┘" )
+        println( "" )
     }
 
     /**
      * Word wrap text to specified width
      */
     private function wordWrap( required string text, numeric width = 60 ) {
-        var words = text.listToArray( " " );
-        var lines = [];
-        var currentLine = "";
+        var words = text.listToArray( " " )
+        var lines = []
+        var currentLine = ""
 
         words.each( word => {
             if ( currentLine.len() + word.len() + 1 > width ) {
                 if ( currentLine != "" ) {
-                    lines.append( currentLine );
+                    lines.append( currentLine )
                 }
-                currentLine = word;
+                currentLine = word
             } else {
-                currentLine &= (currentLine == "" ? "" : " ") & word;
+                currentLine &= (currentLine == "" ? "" : " ") & word
             }
-        });
+        })
 
         if ( currentLine != "" ) {
-            lines.append( currentLine );
+            lines.append( currentLine )
         }
 
-        return lines;
+        return lines
     }
 
     /**
-     * Wait for keyboard input or detect file changes
-     * Polls file in background while CLI is waiting
+     * Wait for keyboard input or detect file changes using BoxFutures + Watcher
+     * Races between user input and file watching - whichever happens first wins
+     * Uses Java WatchService for efficient event-driven file monitoring (no polling!)
      *
      * @exercise The current exercise
      * @lastModified The last known modification time
      * @return Command string or "FILE_CHANGED"
      */
-    private function waitForCommandOrFileChange( required exercise, required numeric lastModified ) {
-        var fullPath = expandPath( exercise.path );
+    private function waitForCommandOrFileChange( required exercise, required lastModified ) {
+        var watcher = new src.Watcher()
+        var fileChanged = { value: false }
 
-        // Use thread to poll for file changes while waiting for input
-        var changed = { value: false };
+        // Future for file watching using Watcher (Java WatchService - event-driven!)
+        var fileFuture = asyncRun( () => {
+            watcher.watch( exercise.path, () => {
+                fileChanged.value = true
+            } )
+            return fileChanged.value ? "FILE_CHANGED" : "TIMEOUT"
+        } )
 
-        bx:thread action="run" name="filePoller" changed="#changed#" fullPath="#fullPath#" lastModified="#lastModified#" {
-            var maxChecks = 600; // 5 minutes
-            var checkCount = 0;
+        // Future for user input
+        var inputFuture = asyncRun( () => {
+            return CLIRead().trim().lcase()
+        } )
 
-            while( checkCount < maxChecks && !changed.value ) {
-                sleep( 2000 ); // Check every 2 seconds
+        // Race: whichever completes first wins!
+        var result = asyncAny( [ fileFuture, inputFuture ] ).get()
 
-                if ( fileExists( fullPath ) ) {
-                    var info = getFileInfo( fullPath );
-                    if ( info.lastModified > lastModified ) {
-                        changed.value = true;
-                        break;
-                    }
-                }
+        // Clean up - stop watcher and cancel losing future
+        watcher.stop()
 
-                checkCount++;
-            }
+        if ( result == "FILE_CHANGED" || result == "TIMEOUT" ) {
+            inputFuture.cancel( true )
+        } else {
+            fileFuture.cancel( true )
         }
 
-        // Wait for user input (blocking)
-        var input = CLIRead().trim().lcase();
-
-        // Stop the polling thread
-        changed.value = true; // Signal thread to stop
-
-        bx:thread action="join" name="filePoller" timeout="1000" {}
-
-        // Check if file was changed
-        if ( fileExists( fullPath ) ) {
-            var currentInfo = getFileInfo( fullPath );
-            if ( currentInfo.lastModified > lastModified ) {
-                return "FILE_CHANGED";
-            }
-        }
-
-        return input;
+        return result
     }
 
     /**
      * Print version information
      */
     private function printVersion() {
-        CLIClear();
+        CLIClear()
 
-        println( "┌─ BoxLings ─────────────────────────────────────────────────┐" );
-        println( "│" );
-        println( "│  🦀 BoxLings v1.0.0" );
-        println( "│  Interactive BoxLang learning tool with TDD" );
-        println( "│" );
-        println( "│  📚 50 exercises across 10 topics" );
-        println( "│  🧪 31 exercises with TestBox tests" );
-        println( "│" );
-        println( "│  Made with ❤️  for the BoxLang community" );
-        println( "│" );
-        println( "└────────────────────────────────────────────────────────────┘" );
+        println( "┌─ BoxLings ─────────────────────────────────────────────────┐" )
+        println( "│" )
+        println( "│  🥊 BoxLings v1.0.0" )
+        println( "│  Interactive BoxLang learning tool with TDD" )
+        println( "│" )
+        println( "│  📚 50 exercises across 10 topics" )
+        println( "│  🧪 31 exercises with TestBox tests" )
+        println( "│" )
+        println( "│  Made with ❤️  for the BoxLang community" )
+        println( "│" )
+        println( "└────────────────────────────────────────────────────────────┘" )
     }
 
     /**
      * Print help message
      */
     private function printHelp() {
-        CLIClear();
+        CLIClear()
 
-        println( "┌─ BoxLings Help ────────────────────────────────────────────┐" );
-        println( "│" );
-        println( "│  🦀 BoxLings - Interactive BoxLang Learning Tool" );
-        println( "│" );
-        println( "│  USAGE:" );
-        println( "│    boxlang BoxLings.bx [COMMAND] [OPTIONS]" );
-        println( "│" );
-        println( "│  COMMANDS:" );
-        println( "│    (default)        Start interactive watch mode" );
-        println( "│    run [name]       Run specific exercise" );
-        println( "│    check-all        Check all exercises" );
-        println( "│    reset <name>     Reset exercise to original" );
-        println( "│    hint [name]      Show hint" );
-        println( "│    show-test [name] Display test file" );
-        println( "│    list             List all exercises" );
-        println( "│" );
-        println( "│  OPTIONS:" );
-        println( "│    --help           Show this help" );
-        println( "│    --version        Show version" );
-        println( "│" );
-        println( "│  EXAMPLES:" );
-        println( "│    boxlang BoxLings.bx" );
-        println( "│    boxlang BoxLings.bx run variables1" );
-        println( "│    boxlang BoxLings.bx hint intro2" );
-        println( "│" );
-        println( "└────────────────────────────────────────────────────────────┘" );
+        println( "┌─ BoxLings Help ────────────────────────────────────────────┐" )
+        println( "│" )
+        println( "│  � BoxLings - Interactive BoxLang Learning Tool" )
+        println( "│" )
+        println( "│  USAGE:" )
+        println( "│    boxlang BoxLings.bx [COMMAND] [OPTIONS]" )
+        println( "│" )
+        println( "│  COMMANDS:" )
+        println( "│    (default)        Start interactive watch mode" )
+        println( "│    run [name]       Run specific exercise" )
+        println( "│    check-all        Check all exercises" )
+        println( "│    reset <name>     Reset exercise to original" )
+        println( "│    hint [name]      Show hint" )
+        println( "│    show-test [name] Display test file" )
+        println( "│    list             List all exercises" )
+        println( "│" )
+        println( "│  OPTIONS:" )
+        println( "│    --help           Show this help" )
+        println( "│    --version        Show version" )
+        println( "│" )
+        println( "│  EXAMPLES:" )
+        println( "│    boxlang BoxLings.bx" )
+        println( "│    boxlang BoxLings.bx run variables1" )
+        println( "│    boxlang BoxLings.bx hint intro2" )
+        println( "│" )
+        println( "└────────────────────────────────────────────────────────────┘" )
     }
 }

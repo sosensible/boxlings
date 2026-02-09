@@ -1,6 +1,18 @@
 /**
  * Runner - Exercise Executor and Validator
  *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *     http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ *
  * Runs exercises, executes tests, and validates results
  */
 class {
@@ -9,11 +21,11 @@ class {
      * Run an exercise and return results
      *
      * @exercise The exercise to run
-     * @verbose Whether to print output (default true)
+     *
      * @return Struct with success, output, errors
      */
-    function runExercise( required exercise, boolean verbose = true ) {
-        var terminal = new Terminal();
+    function runExercise( required exercise ) {
+        var terminal = new Terminal()
 
         var result = {
             success: false,
@@ -22,7 +34,7 @@ class {
             compilationSuccess: false,
             executionSuccess: false,
             testSuccess: false
-        };
+        }
 
         try {
             var fullPath = expandPath( exercise.path );
@@ -30,28 +42,17 @@ class {
             // Check if exercise file exists
             if ( !fileExists( fullPath ) ) {
                 result.errors.append( "Exercise file not found: #exercise.path#" );
-                if ( verbose ) {
-                    terminal.printError( "Exercise file not found: #exercise.path#" );
-                }
                 return result;
             }
 
-            if ( verbose ) {
-                terminal.printColor( "Running: #exercise.getDisplayName()#", "cyan" );
-                terminal.printInfo( "File: #exercise.path#" );
-
-                if ( exercise.test ) {
-                    terminal.printTest( "This exercise has tests - read them first!" );
-                    println( "   Test file: #exercise.test_path#" );
-                }
-
-                println( "" );
+            // Check if exercise has tests and if test file exists
+            if ( exercise.test ) {
+                terminal.printTest( "🧪 This exercise has tests - read them first!" );
+                println( "   Test file: #exercise.test_path#" );
             }
 
             // Step 1: Try to compile/parse the exercise
-            if ( verbose ) {
-                print( "Compiling... " );
-            }
+            print( "🎛️  Compiling... " );
 
             var compileResult = compileExercise( exercise );
             result.compilationSuccess = compileResult.success;
@@ -59,28 +60,20 @@ class {
             if ( !compileResult.success ) {
                 result.errors.append( compileResult.errors );
                 result.output = compileResult.output;
-
-                if ( verbose ) {
-                    terminal.printColor( "✗", "red" );
-                    println( "" );
-                    terminal.printColor( "Compilation errors:", "red" );
-                    println( compileResult.output );
-                }
-
+                terminal.printColor( "✗", "red" );
+                println( "" );
+                terminal.printColor( "Compilation errors:", "red" );
+                println( compileResult.output );
                 return result;
             }
 
-            if ( verbose ) {
-                terminal.printColor( "✓", "green" );
-            }
+            terminal.printColor( "✓", "green" );
 
             // Step 2: If exercise has tests, run them
             if ( exercise.test ) {
-                if ( verbose ) {
-                    println( "" );
-                    terminal.printColor( "Running tests...", "magenta" );
-                    println( "" );
-                }
+                println( "" );
+                terminal.printColor( "🧪 Running tests...", "magenta" );
+                println( "" );
 
                 var testResult = runTests( exercise );
                 result.testSuccess = testResult.success;
@@ -89,28 +82,21 @@ class {
                 if ( !testResult.success ) {
                     result.errors.append( "Tests failed" );
 
-                    if ( verbose ) {
-                        println( testResult.output );
-                        println( "" );
-                        terminal.printError( "Tests failed!" );
-                        terminal.printHint( "The test output shows what's expected vs actual." );
-                    }
+                    println( testResult.output );
+                    println( "" );
+                    terminal.printError( "Tests failed!" );
+                    terminal.printHint( "The test output shows what's expected vs actual." );
 
                     return result;
                 }
 
-                if ( verbose ) {
-                    println( testResult.output );
-                }
-
+                println( testResult.output );
                 result.success = true;
                 return result;
             }
 
             // Step 3: For non-test exercises, just execute and check for errors
-            if ( verbose ) {
-                print( "Executing... " );
-            }
+            print( "🏃 Executing... " );
 
             var execResult = executeExercise( exercise );
             result.executionSuccess = execResult.success;
@@ -118,25 +104,18 @@ class {
 
             if ( !execResult.success ) {
                 result.errors.append( execResult.errors );
-
-                if ( verbose ) {
-                    terminal.printColor( "✗", "red" );
-                    println( "" );
-                    terminal.printColor( "Runtime errors:", "red" );
-                    println( execResult.output );
-                }
-
+                terminal.printColor( "✗", "red" );
+                println( "" );
+                terminal.printColor( "Runtime errors:", "red" );
+                println( execResult.output );
                 return result;
             }
 
-            if ( verbose ) {
-                terminal.printColor( "✓", "green" );
+            terminal.printColor( "✓", "green" );
 
-                if ( execResult.output.trim() != "" ) {
-                    println( "" );
-                    terminal.printColor( "Output:", "blue" );
-                    println( execResult.output );
-                }
+            if ( execResult.output.trim() != "" ) {
+                terminal.printColor( "🖥️  Output:", "blue" );
+                println( execResult.output );
             }
 
             result.success = true;
@@ -144,16 +123,10 @@ class {
 
         } catch( any e ) {
             result.errors.append( e.message );
-
-            if ( verbose ) {
-                println( "❌ Unexpected error: #e.message#" );
-                if ( e.detail ?: "" != "" ) {
-                    println( "   #e.detail#" );
-                }
-            }
-
-            return result;
+            println( "❌ Unexpected error: #e.message & e.detail#" );
         }
+
+         return result;
     }
 
     /**

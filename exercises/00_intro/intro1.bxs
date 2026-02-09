@@ -1,19 +1,13 @@
 // Welcome to BoxLings! This is the first exercise to verify your setup.
-// 
+//
 // This exercise compiles successfully and demonstrates the basics.
 // The remaining exercises contain intentional errors for you to fix!
 //
 // When you're ready, enter 'n' in watch mode or run:
 // boxlang BoxLings.bx run intro2
 
-println( "       Welcome to...                      " );
-println( "                 _                        " );
-println( "  ___  _____  __| |   (_)_ __   __ _ ___  " );
-println( " / _ \\/ _  \\ \\/ /| |  | | '_ \\ / _` / __| " );
-println( "|  __/ (_) |>  < | |__| | | | | (_| \\__ \\ " );
-println( " \\___|\\____/_/\\_\\|____|_|_| |_|\\__, |___/ " );
-println( "                                |___/      " );
-println( "" );
+println( "       Welcome to BoxLings                    " );
+println( "==========================================================" );
 println( "This exercise compiles successfully. The remaining exercises contain" );
 println( "intentional errors. It's your job to find and fix them!" );
 println( "" );

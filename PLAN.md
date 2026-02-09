@@ -49,7 +49,6 @@ boxlings/
 ├── EXERCISES.md             # Complete exercise breakdown
 │
 ├── src/                     # BoxLings source code
-│   ├── CLI.bx              # CLI argument parser
 │   ├── AppState.bx         # Progress tracking & state management
 │   ├── Exercise.bx         # Exercise model
 │   ├── InfoFile.bx         # Parses info.json
@@ -85,7 +84,7 @@ boxlings/
 │   │   └── ...
 │   └── ...
 │
-├── tests/                   
+├── tests/
 │   └── specs/              # TestBox specs for BoxLings itself
 │       ├── CLITest.bx
 │       ├── AppStateTest.bx
@@ -261,17 +260,17 @@ class extends="testbox.system.BaseSpec" {
 class {
     property name;
     property age;
-    
+
     function init( required string name, required numeric age ) {
         variables.name = arguments.name;
         variables.age = arguments.age;
         return this;
     }
-    
+
     function getInfo() {
         return "Name: #variables.name#, Age: #variables.age#";
     }
-    
+
     function main( args = [] ) {
         var person = new classes1( "BoxLang", 1 );
         println( person.getInfo() );
@@ -521,54 +520,54 @@ class extends="testbox.system.BaseSpec" {
 
 ```javascript
 class {
-    
+
     function checkExercise( required exercise ) {
         var result = {
             success: false,
             output: "",
             errors: []
         };
-        
+
         try {
             // 1. Compile check
             var compiled = compileBoxLangFile( exercise.path );
-            
+
             // 2. If has tests, show test location and run
             if ( exercise.test ) {
                 println( "📝 Read the test first: #exercise.test_path#" );
                 println( "" );
                 println( "Running tests..." );
-                
+
                 var testResult = runTestBoxTests( exercise );
                 result.output = testResult.output;
                 result.success = testResult.success;
-                
+
                 if ( !testResult.success ) {
                     println( "" );
                     println( "💡 The test output shows what's expected vs actual." );
                 }
-                
+
                 return result;
             }
-            
+
             // 3. For non-test exercises, execute and check output
             var output = executeBoxLangFile( exercise.path );
             result.output = output;
             result.success = true;
-            
+
         } catch( any e ) {
             result.errors.append( e.message );
         }
-        
+
         return result;
     }
-    
+
     private function runTestBoxTests( required exercise ) {
         var testPath = exercise.test_path;
         var result = { output: "", exitCode: 0 };
-        
+
         // Run TestBox via CLI - it prints results to console
-        bx:execute 
+        bx:execute
             name="boxlang"
             arguments="testbox run --bundles=#testPath#"
             variable="result.output"
@@ -576,7 +575,7 @@ class {
             returnVariable="result.exitCode"
             timeout="30" {
         }
-        
+
         return {
             success: result.exitCode == 0,
             output: result.output ?: result.errorOutput,
@@ -593,12 +592,12 @@ class {
     property name="exercises" type="array";
     property name="currentIndex" type="numeric" default="0";
     property name="statePath" type="string" default=".boxlings/state.json";
-    
+
     function init() {
         loadState();
         return this;
     }
-    
+
     function loadState() {
         if ( fileExists( variables.statePath ) ) {
             var stateData = deserializeJSON( fileRead( variables.statePath ) );
@@ -606,7 +605,7 @@ class {
             // Load done/pending status for each exercise
         }
     }
-    
+
     function saveState() {
         var stateData = {
             currentIndex: variables.currentIndex,
@@ -614,16 +613,16 @@ class {
                 return { name: e.name, done: e.done };
             })
         };
-        
+
         directoryCreate( getDirectoryFromPath( variables.statePath ), true, true );
         fileWrite( variables.statePath, serializeJSON( stateData ) );
     }
-    
+
     function markCurrentDone() {
         variables.exercises[ variables.currentIndex ].done = true;
         saveState();
     }
-    
+
     function moveToNext() {
         variables.currentIndex++;
         saveState();
@@ -686,6 +685,6 @@ class {
 
 ---
 
-**Version:** 1.0.0  
-**Last Updated:** February 7, 2026  
+**Version:** 1.0.0
+**Last Updated:** February 7, 2026
 **Status:** Planning Complete - Ready for Implementation

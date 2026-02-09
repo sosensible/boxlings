@@ -1,6 +1,18 @@
 /**
  * Terminal - UI Utilities and Display Helpers
  *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *     http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ *
  * Handles terminal output, colors, and formatting with ANSI support
  */
 class {
@@ -17,17 +29,143 @@ class {
     property name="WHITE";
 
     function init() {
-        // For now, disable ANSI colors - BoxLang char() function not found
-        variables.RESET = "";
-        variables.BOLD = "";
-        variables.RED = "";
-        variables.GREEN = "";
-        variables.YELLOW = "";
-        variables.BLUE = "";
-        variables.MAGENTA = "";
-        variables.CYAN = "";
-        variables.WHITE = "";
+        // ANSI escape codes
+        variables.ESC = char(27);
+        variables.RESET = variables.ESC & "[0m";
+        variables.BOLD = variables.ESC & "[1m";
+        variables.RED = variables.ESC & "[31m";
+        variables.GREEN = variables.ESC & "[32m";
+        variables.YELLOW = variables.ESC & "[33m";
+        variables.BLUE = variables.ESC & "[34m";
+        variables.MAGENTA = variables.ESC & "[35m";
+        variables.CYAN = variables.ESC & "[36m";
+        variables.WHITE = variables.ESC & "[37m";
         return this;
+    }
+
+    /**
+     * Get ANSI 256-color code
+     * @param colorCode The color code (0-255)
+     * @return ANSI escape sequence for the color
+     */
+    function ansi256( required numeric colorCode ) {
+        return variables.ESC & "[38;5;" & colorCode & "m";
+    }
+
+    /**
+     * Get ANSI 256-color code by name (CommandBox style)
+     * @param colorName The color name (e.g., "color81", "color196")
+     * @return ANSI escape sequence for the color
+     */
+    function getColorCode( required string colorName ) {
+        // Extract number from "colorXXX" format
+        var colorNum = replaceNoCase( colorName, "color", "" );
+        if ( isNumeric( colorNum ) ) {
+            return ansi256( colorNum );
+        }
+        return variables.RESET;
+    }
+
+    /**
+     * Print text with 256-color support
+     * @param text The text to print
+     * @param colorCode The color code (0-255) or color name (e.g., "color81")
+     */
+    function printLine( required string text = "", any color = "" ) {
+        if ( color != "" ) {
+            var colorCode = isNumeric( color ) ? ansi256( color ) : getColorCode( color );
+            println( colorCode & text & variables.RESET );
+        } else {
+            println( text );
+        }
+    }
+
+    /**
+     * Display the BoxLang ASCII art banner with random gradient colors
+     */
+    function showBoxLangBanner() {
+        var lines = [
+            "██████╗  ██████╗ ██╗  ██╗██╗      █████╗ ███╗   ██╗ ██████╗ ",
+            "██╔══██╗██╔═══██╗╚██╗██╔╝██║     ██╔══██╗████╗  ██║██╔════╝ ",
+            "██████╔╝██║   ██║ ╚███╔╝ ██║     ███████║██╔██╗ ██║██║  ███╗",
+            "██╔══██╗██║   ██║ ██╔██╗ ██║     ██╔══██║██║╚██╗██║██║   ██║",
+            "██████╔╝╚██████╔╝██╔╝ ██╗███████╗██║  ██║██║ ╚████║╚██████╔╝",
+            "╚═════╝  ╚═════╝ ╚═╝  ╚═╝╚══════╝╚═╝  ╚═╝╚═╝  ╚═══╝ ╚═════╝ "
+        ];
+
+        var gradients = {
+            "Ocean" : [
+                "color81",
+                "color75",
+                "color69",
+                "color63",
+                "color57",
+                "color21"
+            ],
+            "Fire" : [
+                "color196",
+                "color160",
+                "color124",
+                "color88",
+                "color52",
+                "color88"
+            ],
+            "Sunset" : [
+                "color214",
+                "color208",
+                "color202",
+                "color196",
+                "color160",
+                "color124"
+            ],
+            "Purple" : [
+                "color213",
+                "color177",
+                "color141",
+                "color105",
+                "color69",
+                "color39"
+            ],
+            "Mint" : [
+                "color158",
+                "color122",
+                "color86",
+                "color50",
+                "color44",
+                "color38"
+            ],
+            "Gray" : [
+                "color250",
+                "color248",
+                "color245",
+                "color243",
+                "color240",
+                "color238"
+            ],
+            "Electric" : [
+                "color226",
+                "color220",
+                "color214",
+                "color208",
+                "color202",
+                "color196"
+            ]
+        };
+
+        // Randomly select a gradient theme
+        var themeNames = structKeyArray( gradients );
+        var themeName  = themeNames[ randRange( 1, arrayLen( themeNames ) ) ];
+        var gradient   = gradients[ themeName ];
+
+        println( "" );
+
+        for ( var i = 1; i <= arrayLen( lines ); i++ ) {
+            printLine( lines[ i ], gradient[ i ] );
+        }
+
+        println( "" );
+        printLine( "         A Modern Dynamic JVM Language", "color248" );
+        println( "" );
     }
 
     /**
@@ -36,33 +174,24 @@ class {
     function showWelcome() {
         CLIClear();
 
-        printBoxed( [
-            "       Welcome to...                      ",
-            "                 _                        ",
-            "  ___  _____  __| |   (_)_ __   __ _ ___  ",
-            " / _ \/ _  \ \/ /| |  | | '_ \ / _` / __| ",
-            "|  __/ (_) |>  < | |__| | | | | (_| \__ \ ",
-            " \___|\____/_/\_\|____|_|_| |_|\__, |___/ ",
-            "                                |___/      "
-        ] );
+        showBoxLangBanner();
 
-        println( "" );
-        printColor( "═══════════════════════════════════════════════════════════════", "cyan" );
+        printColoredDivider( "═", 64, "color81" );
         println( "" );
 
-        println( "Welcome to BoxLings! 🦀" );
+        printBold( "Welcome to BoxLings! 🥊" );
         println( "" );
         println( "Learn BoxLang + Test-Driven Development through hands-on exercises." );
         println( "" );
 
-        printColor( "HOW IT WORKS:", "yellow" );
+        printLine( "HOW IT WORKS:", "color226" );
         println( "  📖 For exercises with tests → Read the test file FIRST" );
         println( "  💡 Tests tell you exactly what your code should do" );
         println( "  ✏️  Fix the exercise until tests pass" );
         println( "  🧪 Later, you'll write your own tests!" );
         println( "" );
 
-        printColor( "KEYBOARD SHORTCUTS:", "yellow" );
+        printLine( "KEYBOARD SHORTCUTS:", "color226" );
         println( "  n → Next exercise (after completing current)" );
         println( "  h → Show hint" );
         println( "  t → Show test file" );
@@ -71,7 +200,7 @@ class {
         println( "  q → Quit" );
         println( "" );
 
-        printColor( "═══════════════════════════════════════════════════════════════", "cyan" );
+        printColoredDivider( "═", 64, "color81" );
         println( "" );
         print( "Press ENTER to start learning... " );
 
@@ -103,13 +232,13 @@ class {
      */
     function showCompletion( required string message ) {
         println( "" );
-        println( "🎉 ═══════════════════════════════════════════════════════════════" );
+        printRainbowDivider( 64 );
         println( "" );
-        println( "                    CONGRATULATIONS!" );
+        printLine( "                    CONGRATULATIONS!", "color226" );
         println( "" );
-        println( "         You've completed all BoxLings exercises!" );
+        printLine( "         You've completed all BoxLings exercises!", "color46" );
         println( "" );
-        println( "🎉 ═══════════════════════════════════════════════════════════════" );
+        printRainbowDivider( 64 );
         println( "" );
 
         if ( message != "" ) {
@@ -242,5 +371,163 @@ class {
      */
     function printDivider() {
         println( "────────────────────────────────────────────────────────────────" );
+    }
+
+    /**
+     * Print a colored divider
+     * @param char The character to use for the divider
+     * @param length The length of the divider
+     * @param color The color code or name
+     */
+    function printColoredDivider( string char = "═", numeric length = 64, any color = "color248" ) {
+        printLine( repeatString( char, length ), color );
+    }
+
+    /**
+     * Print text with gradient effect
+     * @param text The text to print
+     * @param colors Array of color codes or names
+     */
+    function printGradient( required string text, required array colors ) {
+        var chars = listToArray( text, "" );
+        var colorCount = arrayLen( colors );
+        var output = "";
+
+        for ( var i = 1; i <= arrayLen( chars ); i++ ) {
+            var colorIndex = ceiling( (i / arrayLen( chars )) * colorCount );
+            colorIndex = min( colorIndex, colorCount );
+            var colorCode = isNumeric( colors[ colorIndex ] ) ? ansi256( colors[ colorIndex ] ) : getColorCode( colors[ colorIndex ] );
+            output &= colorCode & chars[ i ];
+        }
+
+        println( output & variables.RESET );
+    }
+
+    /**
+     * Print a rainbow divider
+     * @param length The length of the divider
+     */
+    function printRainbowDivider( numeric length = 64 ) {
+        var rainbowColors = [ 196, 208, 226, 46, 21, 93 ]; // Red, Orange, Yellow, Green, Blue, Purple
+        var output = "";
+        var colorCount = arrayLen( rainbowColors );
+
+        for ( var i = 1; i <= length; i++ ) {
+            var colorIndex = ((i - 1) % colorCount) + 1;
+            output &= ansi256( rainbowColors[ colorIndex ] ) & "═";
+        }
+
+        println( output & variables.RESET );
+    }
+
+    /**
+     * Print a banner with border and colors
+     * @param text The text to display
+     * @param borderColor The border color
+     * @param textColor The text color
+     */
+    function printBanner( required string text, any borderColor = "color248", any textColor = "color226" ) {
+        var length = text.len() + 4;
+        var borderColorCode = isNumeric( borderColor ) ? ansi256( borderColor ) : getColorCode( borderColor );
+        var textColorCode = isNumeric( textColor ) ? ansi256( textColor ) : getColorCode( textColor );
+
+        printLine( "╔" & repeatString( "═", length ) & "╗", borderColor );
+        println( borderColorCode & "║  " & textColorCode & text & borderColorCode & "  ║" & variables.RESET );
+        printLine( "╚" & repeatString( "═", length ) & "╝", borderColor );
+    }
+
+    /**
+     * Print text with bold effect
+     * @param text The text to print
+     */
+    function printBold( required string text ) {
+        println( variables.BOLD & text & variables.RESET );
+    }
+
+    /**
+     * Print a spinner character (for loading animations)
+     * @param step The current step (0-3)
+     * @return The spinner character
+     */
+    function getSpinner( numeric step = 0 ) {
+        var spinners = [ "⠋", "⠙", "⠹", "⠸", "⠼", "⠴", "⠦", "⠧", "⠇", "⠏" ];
+        return spinners[ (step % arrayLen( spinners )) + 1 ];
+    }
+
+    /**
+     * Print a status line with icon
+     * @param status The status (success, error, warning, info)
+     * @param text The text to display
+     */
+    function printStatus( required string status, required string text ) {
+        switch( status ) {
+            case "success":
+                printSuccess( text );
+                break;
+            case "error":
+                printError( text );
+                break;
+            case "warning":
+                printWarning( text );
+                break;
+            case "info":
+                printInfo( text );
+                break;
+            default:
+                println( text );
+        }
+    }
+
+    /**
+     * Print a table header
+     * @param columns Array of column names
+     * @param widths Array of column widths
+     * @param colors Optional array of colors for each column (color codes or names)
+     */
+    function printTableHeader( required array columns, required array widths, array colors = [] ) {
+        var hasColors = arrayLen( colors ) > 0;
+        var header = "";
+
+        for ( var i = 1; i <= arrayLen( columns ); i++ ) {
+            var col = columns[ i ];
+            var width = widths[ i ];
+            var padding = repeatString( " ", width - col.len() );
+
+            if ( hasColors && i <= arrayLen( colors ) ) {
+                var colorCode = isNumeric( colors[ i ] ) ? ansi256( colors[ i ] ) : getColorCode( colors[ i ] );
+                header &= variables.BOLD & colorCode & col & padding & variables.RESET & " │ ";
+            } else {
+                header &= variables.BOLD & col & padding & variables.RESET & " │ ";
+            }
+        }
+
+        println( header );
+        printDivider();
+    }
+
+    /**
+     * Print a table row
+     * @param values Array of cell values
+     * @param widths Array of column widths
+     * @param colors Optional array of colors for each column (color codes or names)
+     */
+    function printTableRow( required array values, required array widths, array colors = [] ) {
+        var hasColors = arrayLen( colors ) > 0;
+        var row = "";
+
+        for ( var i = 1; i <= arrayLen( values ); i++ ) {
+            var val = values[ i ];
+            var width = widths[ i ];
+            var padding = repeatString( " ", width - val.len() );
+
+            if ( hasColors && i <= arrayLen( colors ) ) {
+                var colorCode = isNumeric( colors[ i ] ) ? ansi256( colors[ i ] ) : getColorCode( colors[ i ] );
+                row &= colorCode & val & padding & variables.RESET & " │ ";
+            } else {
+                row &= val & padding & " │ ";
+            }
+        }
+
+        println( row );
     }
 }
