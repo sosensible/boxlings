@@ -20,10 +20,8 @@ class {
 
     /**
      * Main entry point for BoxLings CLI
-     *
-     * @args Array of command line arguments
      */
-    function main( args = [] ) {
+    function main() {
         try {
             // BoxLang automatically parses CLI arguments!
             var parsed = CLIGetArgs()
@@ -58,29 +56,29 @@ class {
             switch( command ) {
                 case "run":
                     runCommand( appState, parsed )
-                    break
+                    break;
                 case "check-all":
                     checkAllCommand( appState )
-                    break
+                    break;
                 case "reset":
                     resetCommand( appState, parsed )
-                    break
+                    break;
                 case "reset-all":
                     resetAllCommand( appState )
-                    break
+                    break;
                 case "hint":
                     hintCommand( appState, parsed )
-                    break
+                    break;
                 case "show-test":
                     showTestCommand( appState, parsed )
-                    break
+                    break;
                 case "list":
                     listCommand( appState )
-                    break
+                    break;
                 case "watch":
                 default:
                     watchCommand( appState )
-                    break
+                    break;
             }
 
         } catch( any e ) {
@@ -478,6 +476,7 @@ class {
         println( "│  🌏 Official Site: https://www.boxlang.io" )
         println( "│  📚 Docs: https://boxlang.ortusbooks.com" )
         println( "│  💬 Community: https://community.ortussolutions.com" )
+        println( "│  🆘 Support: https://boxlang.io/plans" )
         println( "│" )
         println( "└────────────────────────────────────────────────────────────┘" )
         println( "" )
@@ -490,16 +489,16 @@ class {
         terminal.clear()
         println( "┌─ Keyboard Shortcuts ───────────────────────────────────────┐" )
         println( "│" )
-        println( "│  NAVIGATION:" )
+        println( "│  🧭 NAVIGATION:" )
         println( "│    n → Next exercise (after completing current)" )
         println( "│    l → List all exercises with status" )
         println( "│" )
-        println( "│  HELP:" )
+        println( "│  🆘 HELP:" )
         println( "│    h → Show hint for current exercise" )
         println( "│    t → Show test file (if exercise has tests)" )
         println( "│    ? → Show this help screen" )
         println( "│" )
-        println( "│  ACTIONS:" )
+        println( "│  ⚡ ACTIONS:" )
         println( "│    r → Rerun current exercise manually" )
         println( "│    q → Quit BoxLings" )
         println( "│" )
@@ -617,6 +616,9 @@ class {
         }
     }
 
+    /**
+     * Read command with optional file watching
+     */
     private function readCommand( required exercise, required lastModified, boolean watchForChanges ) {
         if ( watchForChanges ) {
             return waitForCommandOrFileChange( exercise, lastModified )
@@ -624,11 +626,17 @@ class {
         return CLIRead().trim().lcase()
     }
 
+    /**
+     * Prompt user for command with file watching
+     */
     private function promptForCommand( required string prompt, required exercise, required lastModified, boolean watchForChanges ) {
         print( prompt )
         return readCommand( exercise, lastModified, watchForChanges )
     }
 
+    /**
+     * Show hint and wait for user to press ENTER
+     */
     private function showHintAndWait( required terminal, required exercise ) {
         println( "" )
         terminal.printHint( exercise.hint )
@@ -637,6 +645,9 @@ class {
         CLIRead()
     }
 
+    /**
+     * Show exercise list and wait for user to press ENTER
+     */
     private function showListAndWait( required appState ) {
         listCommand( appState )
         print( "Press ENTER to continue..." )
@@ -647,8 +658,6 @@ class {
      * Print version information
      */
     private function printVersion() {
-        CLIClear()
-
         println( "┌─ BoxLings ─────────────────────────────────────────────────┐" )
         println( "│" )
         println( "│  🥊 BoxLings v1.0.0" )
@@ -666,8 +675,6 @@ class {
      * Print help message
      */
     private function printHelp() {
-        CLIClear()
-
         println( "┌─ BoxLings Help ────────────────────────────────────────────┐" )
         println( "│" )
         println( "│  🥊 BoxLings - Interactive BoxLang Learning Tool" )
