@@ -228,6 +228,49 @@ class {
     }
 
     /**
+     * Print text in a colored box
+     *
+     * @param lines  Array of strings OR a single multi-line string to display inside the box
+     * @param color  Border color: named ("blue", "green", etc.) or 256-color number/name
+     */
+    function printBoxedColor( required any content, any color = "blue" ) {
+        // Normalise to array of lines
+        var lines = isArray( content )
+            ? content
+            : content.listToArray( char( 10 ) );
+
+        // Determine the ANSI color code
+        var colorCode = variables.RESET;
+        if ( isNumeric( color ) ) {
+            colorCode = ansi256( color );
+        } else {
+            switch ( color ) {
+                case "red":     colorCode = variables.RED;     break;
+                case "green":   colorCode = variables.GREEN;   break;
+                case "yellow":  colorCode = variables.YELLOW;  break;
+                case "blue":    colorCode = variables.BLUE;    break;
+                case "magenta": colorCode = variables.MAGENTA; break;
+                case "cyan":    colorCode = variables.CYAN;    break;
+                default:
+                    // Try to resolve as a 256-color name like "color81"
+                    colorCode = getColorCode( color );
+            }
+        }
+
+        var maxLen = 0;
+        lines.each( line => {
+            if ( line.len() > maxLen ) maxLen = line.len();
+        });
+
+        println( colorCode & "╔" & repeatString( "═", maxLen + 2 ) & "╗" & variables.RESET );
+        lines.each( line => {
+            var padding = repeatString( " ", maxLen - line.len() );
+            println( colorCode & "║" & variables.RESET & " #line##padding# " & colorCode & "║" & variables.RESET );
+        });
+        println( colorCode & "╚" & repeatString( "═", maxLen + 2 ) & "╝" & variables.RESET );
+    }
+
+    /**
      * Show completion message
      */
     function showCompletion( required string message ) {

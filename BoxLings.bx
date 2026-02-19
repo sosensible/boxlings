@@ -531,9 +531,9 @@ class {
         if ( result.success ) {
             var promptText = "[#b##c#n#r#] Next  [#b##c#h#r#] Hint  [#b##c#l#r#] List  [#b##c#q#r#] Quit: "
             println( "" )
-            println( "┌─ ✅ Exercise Passed! ───────────────────────────────────────┐" )
+            println( "┌─ ✅ Exercise Passed! ──────────────────────────────────────┐" )
             println( "│" )
-            println( "│  Great work — fix accepted!" )
+            println( "│  Great work!" )
             println( "│" )
             println( "└────────────────────────────────────────────────────────────┘" )
             println( "" )
