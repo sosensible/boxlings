@@ -1,9 +1,7 @@
 # BoxLings User State
 .boxlings/
+excercises/**
 *.log
-
-# TestBox
-testbox/
 
 # CommandBox
 .commandbox/
