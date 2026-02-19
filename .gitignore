@@ -1,6 +1,6 @@
-# BoxLings User State
-.boxlings/
-excercises/**
+# BoxLings User State (generated at runtime, not committed)
+/.boxlings/
+/exercises/
 *.log
 
 # CommandBox

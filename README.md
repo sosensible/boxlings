@@ -38,7 +38,15 @@ git clone https://github.com/ortus-boxlang/boxlings.git
 cd boxlings
 ```
 
-### 2. Start Learning
+### 2. Initialize Your Exercises
+
+```bash
+boxlang BoxLings.bx init
+```
+
+This creates your personal `exercises/` folder (git-ignored) from the templates stored in `src/exercises/`. You only need to run this once — or again if you want a completely fresh start.
+
+### 3. Start Learning
 
 ```bash
 boxlang BoxLings.bx
@@ -46,7 +54,7 @@ boxlang BoxLings.bx
 
 That's it! BoxLings will:
 
-- Show you a welcome message
+- Show you the first exercise
 - Start **watch mode**
 - Display the first exercise
 - Auto-rerun when you save changes
@@ -92,9 +100,19 @@ boxlang BoxLings.bx check-all
 
 ### Reset an Exercise
 
+Restores the exercise back to its **original broken state** (from the repository source):
+
 ```bash
 boxlang BoxLings.bx reset variables3
 ```
+
+### View the Solution
+
+```bash
+boxlang BoxLings.bx solution variables3
+```
+
+If you haven't solved the exercise yet, BoxLings will warn you and ask for confirmation before showing the answer.
 
 ### Show Hint
 

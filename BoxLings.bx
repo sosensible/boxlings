@@ -40,6 +40,37 @@ class {
                 return
             }
 
+            // Determine command early — init must run before exercises are expected to exist
+            var command = parsed.positionals.len() > 0 ? parsed.positionals.first() : "watch"
+
+            // Init command: set up the exercises folder; no exercise loading needed
+            if ( command == "init" ) {
+                initCommand()
+                return
+            }
+
+            // Auto-init: first-time users won't have an exercises/ folder yet
+            if ( !directoryExists( expandPath( "exercises" ) ) ) {
+                println( "" )
+                println( "┌─ 👋 Welcome to BoxLings! ───────────────────────────────────┐" )
+                println( "│" )
+                println( "│  It looks like this is your first time running BoxLings." )
+                println( "│  Your personal exercises folder needs to be created." )
+                println( "│" )
+                println( "│  This will copy the exercises into: exercises/" )
+                println( "│" )
+                println( "└────────────────────────────────────────────────────────────┘" )
+                println( "" )
+                print( "Ready to set up your exercises? (y/n): " )
+                var answer = CLIRead().trim().lcase()
+                if ( answer != "y" ) {
+                    println( "No problem! Run `boxlang BoxLings.bx init` whenever you're ready." )
+                    return
+                }
+                initCommand( silent: true )
+                println( "" )
+            }
+
             // Load exercise info
             var infoFile = new src.InfoFile()
             var exercises = infoFile.loadExercises()
@@ -51,9 +82,6 @@ class {
 
             // Initialize app state
             var appState = new src.AppState( exercises )
-
-            // Route to command (positionals is already an array), else default to "watch" mode
-            var command = parsed.positionals.len() > 0 ? parsed.positionals.first() : "watch"
 
             switch( command ) {
                 case "run":
@@ -67,6 +95,9 @@ class {
                     break;
                 case "reset-all":
                     resetAllCommand( appState )
+                    break;
+                case "solution":
+                    solutionCommand( appState, parsed )
                     break;
                 case "hint":
                     hintCommand( appState, parsed )
@@ -157,7 +188,65 @@ class {
     }
 
     /**
-     * Reset an exercise to original state
+     * Initialize BoxLings: copy src/exercises/ → exercises/ at the project root.
+     * Also ensures the .boxlings/ state directory exists.
+     *
+     * @silent  When true, suppress the intro prompt (used by auto-init on first run).
+     */
+    private function initCommand( boolean silent = false ) {
+        var srcDir  = expandPath( "src/exercises" )
+        var destDir = expandPath( "exercises" )
+
+        if ( !silent ) {
+            CLIClear()
+        }
+
+        // Guard: already initialised?
+        if ( directoryExists( destDir ) ) {
+            println( "⚠️  An exercises/ folder already exists." )
+            print( "Overwrite it with a fresh copy? All your changes will be lost! (y/n): " )
+            var answer = CLIRead().trim().lcase()
+            if ( answer != "y" ) {
+                println( "Aborted. Your exercises are untouched." )
+                return
+            }
+            directoryDelete( destDir, true )
+        }
+
+        // Verify the source template is present
+        if ( !directoryExists( srcDir ) ) {
+            println( "❌ Source exercises not found at: src/exercises/" )
+            println( "   Make sure you cloned the full BoxLings repository." )
+            cliExit( 1 )
+        }
+
+        // Copy the whole exercises tree
+        directoryCopy( srcDir, destDir, true )
+
+        // Ensure state directory exists
+        var stateDir = expandPath( ".boxlings" )
+        if ( !directoryExists( stateDir ) ) {
+            directoryCreate( stateDir, true, true )
+        }
+
+        println( "┌─ ✅ BoxLings Ready! ────────────────────────────────────────┐" )
+        println( "│" )
+        println( "│  🎉 Your exercises have been set up in: exercises/" )
+        println( "│" )
+        println( "│  NEXT STEPS:" )
+        println( "│    boxlang BoxLings.bx          → Start learning (watch mode)" )
+        println( "│    boxlang BoxLings.bx list      → See all exercises" )
+        println( "│    boxlang BoxLings.bx --help    → Show all commands" )
+        println( "│" )
+        println( "│  💡 Edit files in exercises/ to fix the broken code." )
+        println( "│  💡 Save your file — BoxLings auto-reruns on save." )
+        println( "│" )
+        println( "└────────────────────────────────────────────────────────────┘" )
+        println( "" )
+    }
+
+    /**
+     * Reset an exercise to its original broken state (from src/exercises/)
      */
     private function resetCommand( required appState, required parsed ) {
         CLIClear()
@@ -170,16 +259,28 @@ class {
         var exerciseName = parsed.positionals[2]
         appState.setCurrentByName( exerciseName )
 
-        var exercise = appState.getCurrent()
-        var sourcePath = "solutions/#exercise.dir#/#exercise.name##exercise.extension#"
+        var exercise   = appState.getCurrent()
+        var sourcePath = "src/exercises/#exercise.dir#/#exercise.name##exercise.getExtension()#"
 
         if ( !fileExists( sourcePath ) ) {
-            println( "❌ Solution file not found: #sourcePath#" )
+            println( "❌ Original exercise file not found: #sourcePath#" )
             cliExit( 1 )
         }
 
         fileCopy( sourcePath, exercise.path )
-        println( "✅ Exercise reset: #exercise.path#" )
+
+        // Also reset the test file if this exercise has one
+        if ( exercise.test && exercise.test_path != "" ) {
+            var testFileName   = listLast( exercise.test_path, "/" )
+            var testSourcePath = "src/exercises/#exercise.dir#/#testFileName#"
+            if ( fileExists( testSourcePath ) ) {
+                fileCopy( testSourcePath, exercise.test_path )
+            }
+        }
+
+        exercise.markPending()
+        appState.save()
+        println( "✅ Exercise reset to original broken state: #exercise.path#" )
     }
 
     /**
@@ -192,11 +293,20 @@ class {
         var resetCount = 0
 
         appState.getExercises().each( ( exercise ) =>  {
-            var sourcePath = "solutions/#exercise.dir#/#exercise.name##exercise.getExtension()#"
+            var sourcePath = "src/exercises/#exercise.dir#/#exercise.name##exercise.getExtension()#"
 
             if ( fileExists( sourcePath ) ) {
                 fileCopy( sourcePath, exercise.path )
                 resetCount++
+            }
+
+            // Also reset the test file if this exercise has one
+            if ( exercise.test && exercise.test_path != "" ) {
+                var testFileName   = listLast( exercise.test_path, "/" )
+                var testSourcePath = "src/exercises/#exercise.dir#/#testFileName#"
+                if ( fileExists( testSourcePath ) ) {
+                    fileCopy( testSourcePath, exercise.test_path )
+                }
             }
 
             exercise.markPending()
@@ -207,6 +317,52 @@ class {
 
         println( "✅ Reset complete. Exercises restored: #resetCount#/#total#" )
         println( "ℹ️  Progress cleared. Ready for a new student." )
+    }
+
+    /**
+     * Show the solution for an exercise.
+     * Warns and requires confirmation if the exercise hasn't been completed yet.
+     */
+    private function solutionCommand( required appState, required parsed ) {
+        CLIClear()
+
+        var exerciseName = parsed.positionals.len() > 1 ? parsed.positionals[2] : ""
+        if ( exerciseName != "" ) {
+            appState.setCurrentByName( exerciseName )
+        }
+
+        var exercise   = appState.getCurrent()
+        var sourcePath = "src/solutions/#exercise.dir#/#exercise.name##exercise.getExtension()#"
+
+        if ( !fileExists( sourcePath ) ) {
+            println( "❌ Solution not found for: #exercise.name#" )
+            cliExit( 1 )
+        }
+
+        // Gate: warn if not yet solved
+        if ( !exercise.done ) {
+            println( "┌─ ⚠️  Spoiler Warning! ──────────────────────────────────────┐" )
+            println( "│" )
+            println( "│  You haven't solved #exercise.name# yet." )
+            println( "│  Looking at the solution before solving it defeats the purpose." )
+            println( "│" )
+            println( "└────────────────────────────────────────────────────────────┘" )
+            println( "" )
+            print( "Show the solution anyway? (y/n): " )
+            var answer = CLIRead().trim().lcase()
+            if ( answer != "y" ) {
+                println( "Good choice! Keep working on it. Use `hint` if you're stuck." )
+                return
+            }
+            println( "" )
+        }
+
+        println( "┌─ 💡 Solution: #exercise.name# ─────────────────────────────────┐" )
+        println( "" )
+        var content = fileRead( expandPath( sourcePath ) )
+        println( content )
+        println( "" )
+        println( "└────────────────────────────────────────────────────────────┘" )
     }
 
     /**
@@ -654,23 +810,30 @@ class {
         println( "│    boxlang BoxLings.bx [COMMAND] [OPTIONS]" )
         println( "│" )
         println( "│  COMMANDS:" )
-        println( "│    (default)        Start interactive watch mode" )
-        println( "│    run [name]       Run specific exercise" )
-        println( "│    check-all        Check all exercises" )
-        println( "│    reset <name>     Reset exercise to original" )
-        println( "│    reset-all        Reset all exercises and progress" )
-        println( "│    hint [name]      Show hint" )
-        println( "│    show-test [name] Display test file" )
-        println( "│    list             List all exercises" )
+        println( "│    (default)            Start interactive watch mode" )
+        println( "│    init                 Set up your exercises folder (first time!)" )
+        println( "│    run [name]           Run specific exercise" )
+        println( "│    check-all            Check all exercises" )
+        println( "│    reset <name>         Reset exercise to original broken state" )
+        println( "│    reset-all            Reset all exercises and progress" )
+        println( "│    solution [name]      Show the solution for an exercise" )
+        println( "│    hint [name]          Show hint" )
+        println( "│    show-test [name]     Display test file" )
+        println( "│    list                 List all exercises" )
         println( "│" )
         println( "│  OPTIONS:" )
-        println( "│    --help           Show this help" )
-        println( "│    --version        Show version" )
+        println( "│    --help               Show this help" )
+        println( "│    --version            Show version" )
+        println( "│" )
+        println( "│  GETTING STARTED:" )
+        println( "│    git clone <repo>" )
+        println( "│    boxlang BoxLings.bx init" )
+        println( "│    boxlang BoxLings.bx" )
         println( "│" )
         println( "│  EXAMPLES:" )
-        println( "│    boxlang BoxLings.bx" )
         println( "│    boxlang BoxLings.bx run variables1" )
         println( "│    boxlang BoxLings.bx hint intro2" )
+        println( "│    boxlang BoxLings.bx solution variables3" )
         println( "│" )
         println( "└────────────────────────────────────────────────────────────┘" )
     }
