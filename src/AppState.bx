@@ -17,16 +17,36 @@
  */
 class {
 
+    /**
+     * The list of exercises with their state
+     * Each exercise is expected to have at least:
+     * - name (string)
+     * - dir (string, topic/directory)
+     * - done (boolean)
+     */
     property name="exercises" type="array";
+
+    /**
+     * Current exercise index (1-based)
+     */
     property name="currentIndex" type="numeric" default="1";
+
+    /**
+     * Path to save state JSON file
+     */
     property name="statePath" type="string" default=".boxlings/state.json";
 
     /**
      * Constructor
+     *
+     * @exercises Array of exercise objects to manage
      */
     function init( required array exercises ) {
         variables.exercises = arguments.exercises
         variables.currentIndex = 1
+
+        // Store statePath expanded for later use
+        variables.statePath = expandPath( variables.statePath )
 
         // Load saved state if exists
         loadState()
@@ -41,11 +61,9 @@ class {
      * Move to the first pending (not done) exercise
      */
     private function moveToFirstPending() {
-        for ( var i = 1; i <= variables.exercises.len(); i++ ) {
-            if ( !variables.exercises[i].done ) {
-                variables.currentIndex = i
-                return
-            }
+        var idx = exercises.find( e -> !e.done )
+        if ( idx > 0 ) {
+            variables.currentIndex = idx
         }
     }
 
@@ -53,15 +71,12 @@ class {
      * Load state from JSON file
      */
     function loadState() {
-        var fullPath = expandPath( variables.statePath )
-
-        if ( !fileExists( fullPath ) ) {
+        if ( !fileExists( variables.statePath ) ) {
             return
         }
 
         try {
-            var content = fileRead( fullPath )
-            var state = JSONDeserialize( content )
+            var state = JSONDeserialize( fileRead( variables.statePath ) )
 
             // Restore current index
             if ( state.keyExists( "currentIndex" ) ) {
@@ -91,7 +106,7 @@ class {
         var state = {
             currentIndex: variables.currentIndex,
             lastUpdated: now(),
-            exercises: variables.exercises.map( function( exercise ) {
+            exercises: variables.exercises.map( ( exercise ) => {
                 return {
                     name: exercise.name,
                     done: exercise.done
@@ -99,15 +114,13 @@ class {
             })
         }
 
-        var fullPath = expandPath( variables.statePath )
-
         // Ensure directory exists
-        var dir = getDirectoryFromPath( fullPath )
+        var dir = getDirectoryFromPath( variables.statePath )
         if ( !directoryExists( dir ) ) {
             directoryCreate( dir, true, true )
         }
 
-        fileWrite( fullPath, JSONSerialize( state ) )
+        fileWrite( variables.statePath, JSONSerialize( data: state, pretty: true ) )
     }
 
     /**
@@ -137,7 +150,7 @@ class {
     function setCurrentByName( required string name ) {
         var found = false
 
-        variables.exercises.each( function( exercise, index ) {
+        variables.exercises.each( ( exercise, index ) => {
             if ( exercise.name == name ) {
                 variables.currentIndex = index
                 found = true
@@ -205,9 +218,7 @@ class {
      * Get progress statistics
      */
     function getProgress() {
-        var completed = variables.exercises.filter( function( exercise ) {
-            return exercise.done
-        }).len()
+        var completed = variables.exercises.filter( exercise -> exercise.done ).len()
 
         var total = variables.exercises.len()
         var percentage = total > 0 ? round( (completed / total) * 100 ) : 0
@@ -224,9 +235,7 @@ class {
      * Get next pending exercise
      */
     function getNextPending() {
-        var found = variables.exercises.filter( function( exercise ) {
-            return !exercise.done
-        })
+        var found = variables.exercises.filter( exercise -> !exercise.done )
 
         return found.len() > 0 ? found[1] : null
     }
@@ -242,9 +251,7 @@ class {
      * Reset all progress
      */
     function reset() {
-        variables.exercises.each( function( exercise ) {
-            exercise.markPending()
-        })
+        variables.exercises.each( exercise -> exercise.markPending() )
 
         variables.currentIndex = 1
         save()
@@ -254,8 +261,6 @@ class {
      * Get exercises by topic/directory
      */
     function getExercisesByTopic( required string topic ) {
-        return variables.exercises.filter( function( exercise ) {
-            return exercise.dir == topic
-        })
+        return variables.exercises.filter( exercise -> exercise.dir == topic )
     }
 }

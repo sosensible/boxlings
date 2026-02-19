@@ -330,7 +330,6 @@ class {
 
         while ( running ) {
             loopCount++
-            println( "[DEBUG] === Loop iteration #loopCount# ===" )
 
             // SAFETY: Prevent infinite loops during debugging
             if ( loopCount > 10 ) {
