@@ -16,44 +16,56 @@
  * Loads and parses exercise metadata from info.json
  */
 class {
-    
-    property name="infoPath" type="string" default="info.json";
+
+    /**
+     * Exercise struct - represents a single exercise loaded from info.json
+     */
+    property name="infoPath" type="string";
+
+    /**
+     * Info file metadata
+     */
     property name="formatVersion" type="numeric" default="1";
+
+    /**
+     * Messages to display to the user
+     */
     property name="welcomeMessage" type="string" default="";
+
+    /**
+     * Messages to display to the user
+     */
     property name="finalMessage" type="string" default="";
-    
+
     /**
      * Constructor
      */
     function init( string infoPath = "info.json" ) {
-        variables.infoPath = arguments.infoPath;
-        return this;
+        variables.infoPath = expandPath( arguments.infoPath )
+        return this
     }
-    
+
     /**
      * Load exercises from info.json
-     * 
+     *
      * @return Array of Exercise objects
      */
     function loadExercises() {
-        var fullPath = expandPath( variables.infoPath );
-        
-        if ( !fileExists( fullPath ) ) {
+        if ( !fileExists( variables.infoPath ) ) {
             throw(
                 type = "InfoFileNotFound",
                 message = "info.json file not found",
-                detail = "Expected to find info.json at: #fullPath#"
+                detail = "Expected to find info.json at: #variables.infoPath#"
             );
         }
-        
+
         try {
-            var content = fileRead( fullPath );
-            var data = JSONDeserialize( content );
-            
+            var data = JSONDeserialize( fileRead( variables.infoPath ) )
+
             // Validate format version
             if ( data.keyExists( "format_version" ) ) {
                 variables.formatVersion = data.format_version;
-                
+
                 if ( variables.formatVersion > 1 ) {
                     throw(
                         type = "UnsupportedFormatVersion",
@@ -62,16 +74,16 @@ class {
                     );
                 }
             }
-            
+
             // Store messages
             if ( data.keyExists( "welcome_message" ) ) {
                 variables.welcomeMessage = data.welcome_message;
             }
-            
+
             if ( data.keyExists( "final_message" ) ) {
                 variables.finalMessage = data.final_message;
             }
-            
+
             // Parse exercises
             if ( !data.keyExists( "exercises" ) || !isArray( data.exercises ) ) {
                 throw(
@@ -79,20 +91,20 @@ class {
                     message = "info.json missing 'exercises' array"
                 );
             }
-            
+
             var exercises = [];
-            
-            data.exercises.each( function( exerciseData ) {
-                exercises.append( parseExercise( exerciseData ) );
-            });
-            
+
+            data
+            .exercises
+            .each( exerciseData => exercises.append( parseExercise( exerciseData ) ) )
+
             return exercises;
-            
+
         } catch( any e ) {
             if ( e.type == "InfoFileNotFound" || e.type == "UnsupportedFormatVersion" || e.type == "InvalidInfoFile" ) {
                 rethrow;
             }
-            
+
             throw(
                 type = "InfoFileParseError",
                 message = "Failed to parse info.json",
@@ -100,24 +112,26 @@ class {
             );
         }
     }
-    
+
     /**
      * Parse a single exercise from JSON data
+     *
+     * @data Struct containing exercise data from info.json
      */
     private function parseExercise( required struct data ) {
         // Validate required fields
         if ( !data.keyExists( "name" ) ) {
             throw( type = "InvalidExercise", message = "Exercise missing 'name' field" );
         }
-        
+
         if ( !data.keyExists( "dir" ) ) {
             throw( type = "InvalidExercise", message = "Exercise '#data.name#' missing 'dir' field" );
         }
-        
+
         if ( !data.keyExists( "path" ) ) {
             throw( type = "InvalidExercise", message = "Exercise '#data.name#' missing 'path' field" );
         }
-        
+
         // Create Exercise object
         return new Exercise(
             name = data.name,
@@ -131,25 +145,5 @@ class {
             skip_check_unsolved = data.skip_check_unsolved ?: false
         );
     }
-    
-    /**
-     * Get welcome message
-     */
-    function getWelcomeMessage() {
-        return variables.welcomeMessage;
-    }
-    
-    /**
-     * Get final message
-     */
-    function getFinalMessage() {
-        return variables.finalMessage;
-    }
-    
-    /**
-     * Get format version
-     */
-    function getFormatVersion() {
-        return variables.formatVersion;
-    }
+
 }
