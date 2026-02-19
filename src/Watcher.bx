@@ -1,0 +1,155 @@
+/**
+ * Watcher - Event-driven file change detector
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License")
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *     http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ *
+ * Uses Java NIO WatchService to detect file modifications and posts
+ * { type: "FILE_CHANGED", path: string } events to a shared LinkedBlockingQueue.
+ *
+ * Designed as a single long-lived background thread. Call updatePath() to switch
+ * the monitored file (e.g. when advancing to the next exercise) and stop() to
+ * shut down cleanly.
+ *
+ * Architecture:
+ *  - start(path) runs the outer loop: register WatchService → inner poll loop.
+ *  - updatePath(newPath) atomically replaces the target path and closes the active
+ *    WatchService, which wakes up the inner poll loop and causes the outer loop to
+ *    re-register with the new directory.
+ *  - stop() sets the running flag to false and closes the WatchService so the
+ *    poll() call returns immediately.
+ */
+import java.util.concurrent.atomic.AtomicBoolean
+import java.util.concurrent.atomic.AtomicReference
+import java.nio.file.FileSystems
+import java.nio.file.Paths
+import java.nio.file.StandardWatchEventKinds
+import java.util.concurrent.TimeUnit
+class {
+
+    /**
+     * The shared event queue (java.util.concurrent.LinkedBlockingQueue)
+     * Controller thread reads from this queue via queue.take()
+     */
+    property name="queue";
+
+    /**
+     * Constructor
+     *
+     * @queue A java.util.concurrent.LinkedBlockingQueue shared with the controller thread
+     */
+    function init( required queue ) {
+        variables.queue = arguments.queue
+
+        // AtomicBoolean controls the outer while loop in start()
+        variables.running = new AtomicBoolean( false )
+
+        // AtomicReference<String> - the file path we are currently watching
+        variables.currentPath = new AtomicReference( "" )
+
+        // AtomicReference<WatchService> - the active WatchService instance (may be null)
+        variables.currentWatchService = new AtomicReference( null )
+    }
+
+    /**
+     * Start the watcher loop. Blocks until stop() is called.
+     * Should be run on a background thread via asyncRun().
+     *
+     * @path Absolute or workspace-relative path to the file to watch
+     */
+    function start( required string path ) {
+        variables.running.set( true )
+        variables.currentPath.set( arguments.path )
+
+        // Outer loop: re-runs whenever the watched path changes
+        while ( variables.running.get() ) {
+            var watchedPath  = variables.currentPath.get()
+            var watchService = null
+
+            try {
+                watchService = FileSystems.getDefault().newWatchService()
+                variables.currentWatchService.set( watchService )
+
+                var filePath = Paths.get( expandPath( watchedPath ) )
+                var dirPath  = filePath.getParent()
+                var fileName = filePath.getFileName().toString()
+
+                dirPath.register( watchService, [ StandardWatchEventKinds.ENTRY_MODIFY ] )
+
+                // Inner poll loop: runs until path changes or stop() is called
+                while ( variables.running.get() && variables.currentPath.get() == watchedPath ) {
+                    // poll() blocks up to 1 second, then returns null if no events.
+                    // This lets the inner loop check running/currentPath every second.
+                    var watchKey = watchService.poll( 1, TimeUnit.SECONDS )
+
+                    if ( !isNull( watchKey ) ) {
+                        watchKey.pollEvents().each( function( event ) {
+                            if ( event.context().toString() == fileName ) {
+                                variables.queue.put( { type: "FILE_CHANGED", path: watchedPath } )
+                            }
+                        } )
+                        // Reset the key so future events are received
+                        watchKey.reset()
+                    }
+                }
+
+            } catch ( any e ) {
+                // ClosedWatchServiceException  → thrown when updatePath() or stop() closes
+                //   the WatchService mid-poll. Safe to swallow; outer loop handles it.
+                // Any other IOException        → log and let the outer loop retry.
+                if ( variables.running.get() && e.type != "java.nio.file.ClosedWatchServiceException" ) {
+                    // Pause briefly before retrying to avoid a tight error loop
+                    sleep( 500 )
+                }
+
+            } finally {
+                if ( !isNull( watchService ) ) {
+                    try { watchService.close() } catch ( any e ) {}
+                }
+                variables.currentWatchService.set( null )
+            }
+
+        } // outer while
+    }
+
+    /**
+     * Switch the file being watched (e.g. when the user advances to the next exercise).
+     *
+     * Atomically sets the new path, then closes the active WatchService so the inner
+     * poll() returns immediately. The outer loop re-registers the new directory.
+     *
+     * @path The new file path to watch
+     */
+    function updatePath( required string path ) {
+        variables.currentPath.set( arguments.path )
+
+        // Wake up the inner poll loop by closing the current WatchService
+        var ws = variables.currentWatchService.get()
+        if ( !isNull( ws ) ) {
+            try { ws.close() } catch ( any e ) {}
+        }
+    }
+
+    /**
+     * Stop the watcher. Sets running=false and closes the active WatchService
+     * so poll() returns immediately rather than waiting up to 1 second.
+     */
+    function stop() {
+        variables.running.set( false )
+
+        var ws = variables.currentWatchService.get()
+        if ( !isNull( ws ) ) {
+            try { ws.close() } catch ( any e ) {}
+        }
+    }
+
+}
