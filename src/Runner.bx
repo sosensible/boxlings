@@ -96,7 +96,7 @@ class {
             }
 
             // Step 3: For non-test exercises, just execute and check for errors
-            print( "🏃  Executing... " )
+            print( "🏃 Executing... " )
 
             var execResult = executeExercise( exercise )
             result.executionSuccess = execResult.success
