@@ -359,11 +359,10 @@ class {
 
         // ── Controller state ───────────────────────────────────────────────────
         var running          = true
-        // trigger exercise run on the first iteration
-        var needsRerun       = true
+        var needsRerun       = true   // trigger exercise run on the first iteration
         var lastResult       = { success: false, output: "", errors: [] }
-        // an overlay (hint / list / test) is showing
-        var awaitingContinue = false
+        var currentPrompt    = ""     // last prompt string printed by renderWatchPrompt()
+        var awaitingContinue = false  // an overlay (hint / list / test) is showing
 
         // ── Main event loop ────────────────────────────────────────────────────
         while ( running ) {
@@ -400,8 +399,8 @@ class {
                 println( "" )
 
                 // Run and display result + prompt
-                lastResult = runner.runExercise( exercise )
-                renderWatchPrompt( terminal, lastResult, exercise )
+                lastResult    = runner.runExercise( exercise )
+                currentPrompt = renderWatchPrompt( terminal, lastResult, exercise )
             }
 
             // Block until an event arrives (no CPU spinning)
@@ -452,6 +451,9 @@ class {
                                 watcher.updatePath( appState.getCurrent().path )
                                 needsRerun = true
                             }
+                        } else {
+                            // n is not valid when exercise is failing — erase and re-prompt
+                            reprintPrompt( currentPrompt )
                         }
                         break;
 
@@ -471,6 +473,8 @@ class {
                             println( "" )
                             println( "Press any key to return..." )
                             awaitingContinue = true
+                        } else {
+                            reprintPrompt( currentPrompt )
                         }
                         break;
 
@@ -482,10 +486,10 @@ class {
                         awaitingContinue = true
                         break;
 
-                    // Unknown input — ignore
+                    // Unknown input — erase the typed line and re-show the prompt
                     default:
-                        // Unknown input — ignore
-                        break
+                        reprintPrompt( currentPrompt )
+                        break;
 
                 } // switch
             } // INPUT EVENT END
@@ -512,8 +516,8 @@ class {
     }
 
     /**
-     * Render the result box and command prompt after an exercise run.
-     * Called once per needsRerun cycle, after runner.runExercise().
+     * Render the result box and prompt, then return the plain-text prompt string
+     * (without ANSI codes) so the controller can reprint it via reprintPrompt().
      *
      * @terminal  src.Terminal instance
      * @result    Struct returned by Runner.runExercise()
@@ -525,6 +529,7 @@ class {
         var r = terminal.RESET
 
         if ( result.success ) {
+            var promptText = "[#b##c#n#r#] Next  [#b##c#h#r#] Hint  [#b##c#l#r#] List  [#b##c#q#r#] Quit: "
             println( "" )
             println( "┌─ ✅ Exercise Passed! ───────────────────────────────────────┐" )
             println( "│" )
@@ -532,8 +537,10 @@ class {
             println( "│" )
             println( "└────────────────────────────────────────────────────────────┘" )
             println( "" )
-            print( "[#b##c#n#r#] Next  [#b##c#h#r#] Hint  [#b##c#l#r#] List  [#b##c#q#r#] Quit: " )
+            print( promptText )
         } else {
+            var testKeyAnsi  = exercise.test ? "  [#b##c#t#r#] Test" : ""
+            var promptText   = "[#b##c#r/Enter#r#] Rerun  [#b##c#h#r#] Hint#testKeyAnsi#  [#b##c#l#r#] List  [#b##c#q#r#] Quit: "
             println( "" )
             println( "┌─ ❌ Keep Trying! ───────────────────────────────────────────┐" )
             println( "│" )
@@ -542,9 +549,28 @@ class {
             println( "│" )
             println( "└────────────────────────────────────────────────────────────┘" )
             println( "" )
-            var testKey = exercise.test ? "  [#b##c#t#r#] Test" : ""
-            print( "[#b##c#r/Enter#r#] Rerun  [#b##c#h#r#] Hint#testKey#  [#b##c#l#r#] List  [#b##c#q#r#] Quit: " )
+            print( promptText )
         }
+
+        return promptText
+    }
+
+    /**
+     * Erase the line the user just typed (which echoed to the terminal) and
+     * reprint the prompt so invalid input doesn't accumulate on screen.
+     *
+     * After CLIRead() returns and the controller calls this:
+     *   - the typed text + newline were already echoed by the terminal
+     *   - cursor is on the line BELOW the prompt line
+     * So we move up one line, jump to column 0, clear the line, then reprint.
+     *
+     * ANSI sequences used:
+     *   ESC[1A  – cursor up 1 line
+     *   \r      – carriage return (column 0)
+     *   ESC[2K  – erase entire line
+     */
+    private function reprintPrompt( required string promptText ) {
+        print( char( 27 ) & "[1A" & char( 13 ) & char( 27 ) & "[2K" & promptText )
     }
 
     /**
