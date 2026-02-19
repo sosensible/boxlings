@@ -1,0 +1,8 @@
+var sb = createObject( "java", "java.lang.StringBuilder" ).init()
+
+sb.append( "Hello" )
+sb.append( ", " )
+sb.append( "BoxLang" )
+sb.append( "!" )
+
+var result = sb.toString()

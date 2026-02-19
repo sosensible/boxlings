@@ -1,0 +1,5 @@
+var result = asyncRun( () => {
+    return "Hello from the future!"
+} ).get()
+
+println( result )

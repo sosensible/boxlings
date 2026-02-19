@@ -1,0 +1,4 @@
+var result = asyncRun( () => 10 )
+    .then( val => val * 2 )
+    .then( val => val + 5 )
+    .get()

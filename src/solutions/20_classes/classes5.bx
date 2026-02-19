@@ -1,0 +1,21 @@
+class {
+
+    property name="name"      type="string"
+    property name="createdAt" type="date"
+
+    variables.createdAt = now()
+
+    function init( required string name ) {
+        variables.name = arguments.name
+        return this
+    }
+
+    function getTimestamp() {
+        return variables.createdAt
+    }
+
+    function main( args = [] ) {
+        var obj = new classes5( "Widget" )
+        println( "Created at: #obj.getTimestamp()#" )
+    }
+}

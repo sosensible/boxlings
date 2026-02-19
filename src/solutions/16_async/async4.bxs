@@ -1,0 +1,15 @@
+var futures = [
+    asyncRun( () => {
+        sleep( 100 )
+        return "slow"
+    }),
+    asyncRun( () => {
+        return "fast"
+    }),
+    asyncRun( () => {
+        sleep( 50 )
+        return "medium"
+    })
+]
+
+var winner = asyncAny( futures ).get()

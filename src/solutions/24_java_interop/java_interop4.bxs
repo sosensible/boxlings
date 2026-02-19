@@ -1,0 +1,6 @@
+import java:java.lang.Math as JMath
+
+var pi        = JMath.PI
+var maxVal    = JMath.max( javaCast( "int", 100 ), javaCast( "int", 200 ) )
+var sqrtOf144 = JMath.sqrt( javaCast( "double", 144 ) )
+var absVal    = JMath.abs( javaCast( "long", -99 ) )

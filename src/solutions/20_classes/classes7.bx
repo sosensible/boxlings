@@ -1,0 +1,17 @@
+class {
+
+    property name="value" type="string"
+
+    function init( required string value ) {
+        variables.value = arguments.value
+        return this
+    }
+
+    function getClassName() {
+        return this.$bx.meta.name
+    }
+
+    function getPropertyCount() {
+        return this.$bx.meta.properties.len()
+    }
+}

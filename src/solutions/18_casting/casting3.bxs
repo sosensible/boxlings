@@ -1,0 +1,6 @@
+var asInt = javaCast( "int", 42 )
+
+var asDouble = javaCast( "double", 3.14 )
+
+var jMath = createObject( "java", "java.lang.Math" )
+var maxVal = jMath.max( javaCast( "int", 10 ), javaCast( "int", 20 ) )

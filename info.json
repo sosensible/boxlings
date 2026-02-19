@@ -688,6 +688,383 @@
       "path": "exercises/15_functional/functional8.bxs",
       "test": false,
       "hint": "Use reduce() to build a phrase, then trim()."
+    },
+    {
+      "name": "async1",
+      "dir": "16_async",
+      "path": "exercises/16_async/async1.bxs",
+      "test": false,
+      "hint": "asyncRun() accepts a closure and returns a BoxFuture. Call .get() to retrieve the result synchronously."
+    },
+    {
+      "name": "async2",
+      "dir": "16_async",
+      "path": "exercises/16_async/async2.bxs",
+      "test": true,
+      "test_path": "exercises/16_async/async2Test.bx",
+      "test_mode": "read",
+      "hint": "asyncRun( () => number * 2 ) creates the future. .get() waits for and returns the computed value."
+    },
+    {
+      "name": "async3",
+      "dir": "16_async",
+      "path": "exercises/16_async/async3.bxs",
+      "test": true,
+      "test_path": "exercises/16_async/async3Test.bx",
+      "test_mode": "read",
+      "hint": "asyncAll() takes an array of closures/futures and executes them in parallel. The BIF name is asyncAll()."
+    },
+    {
+      "name": "async4",
+      "dir": "16_async",
+      "path": "exercises/16_async/async4.bxs",
+      "test": true,
+      "test_path": "exercises/16_async/async4Test.bx",
+      "test_mode": "read",
+      "hint": "asyncAny() races all given futures and returns the first one to complete. Use asyncAny( futures ).get()."
+    },
+    {
+      "name": "async5",
+      "dir": "16_async",
+      "path": "exercises/16_async/async5.bxs",
+      "test": true,
+      "test_path": "exercises/16_async/async5Test.bx",
+      "test_mode": "read",
+      "hint": "BoxFuture supports .then( callback ) for chaining. Each .then() returns a new future with the transformed value."
+    },
+    {
+      "name": "async6",
+      "dir": "16_async",
+      "path": "exercises/16_async/async6.bxs",
+      "test": false,
+      "hint": ".exceptionally( err => fallback ) catches errors from the future. Return -1 as the fallback value."
+    },
+    {
+      "name": "components1",
+      "dir": "17_components",
+      "path": "exercises/17_components/components1.bxs",
+      "test": false,
+      "hint": "The bx:http component makes HTTP requests. Set url=\"https://httpbin.org/get\" and method=\"get\"."
+    },
+    {
+      "name": "components2",
+      "dir": "17_components",
+      "path": "exercises/17_components/components2.bxs",
+      "test": true,
+      "test_path": "exercises/17_components/components2Test.bx",
+      "test_mode": "read",
+      "hint": "Use queryExecute() with dbtype=\"query\" to query an in-memory query object. The SQL filter should be: age > 25."
+    },
+    {
+      "name": "components3",
+      "dir": "17_components",
+      "path": "exercises/17_components/components3.bxs",
+      "test": true,
+      "test_path": "exercises/17_components/components3Test.bx",
+      "test_mode": "read",
+      "hint": "bx:loop syntax: bx:loop array=\"#fruits#\" item=\"fruit\" { ... }. Use the item variable name to access each element."
+    },
+    {
+      "name": "casting1",
+      "dir": "18_casting",
+      "path": "exercises/18_casting/casting1.bxs",
+      "test": true,
+      "test_path": "exercises/18_casting/casting1Test.bx",
+      "test_mode": "read",
+      "hint": "The castAs operator: value castAs type. Use int, double, and boolean as the type names."
+    },
+    {
+      "name": "casting2",
+      "dir": "18_casting",
+      "path": "exercises/18_casting/casting2.bxs",
+      "test": true,
+      "test_path": "exercises/18_casting/casting2Test.bx",
+      "test_mode": "read",
+      "hint": "Use castAs String and castAs String[] (note: String[] for array casting)."
+    },
+    {
+      "name": "casting3",
+      "dir": "18_casting",
+      "path": "exercises/18_casting/casting3.bxs",
+      "test": true,
+      "test_path": "exercises/18_casting/casting3Test.bx",
+      "test_mode": "read",
+      "hint": "javaCast( type, value ) — types are lowercase Java primitive names: \"int\", \"double\", \"long\", \"string\"."
+    },
+    {
+      "name": "casting4",
+      "dir": "18_casting",
+      "path": "exercises/18_casting/casting4.bxs",
+      "test": true,
+      "test_path": "exercises/18_casting/casting4Test.bx",
+      "test_mode": "read",
+      "hint": "instanceOf checks the Java type. Strings are \"java.lang.String\", numbers are \"java.lang.Number\", booleans are \"java.lang.Boolean\"."
+    },
+    {
+      "name": "casting5",
+      "dir": "18_casting",
+      "path": "exercises/18_casting/casting5.bxs",
+      "test": false,
+      "hint": "val() converts a string to a number. toString() converts a value to string. int() truncates a decimal to integer."
+    },
+    {
+      "name": "quiz1",
+      "dir": "19_quizzes",
+      "path": "exercises/19_quizzes/quiz1.bxs",
+      "test": true,
+      "test_path": "exercises/19_quizzes/quiz1Test.bx",
+      "test_mode": "read",
+      "hint": "1) Use #name# in the string literal. 2) ?: is null-coalescing. 3) The closure captures 'factor' from the outer scope. 4) ?. is safe navigation."
+    },
+    {
+      "name": "quiz2",
+      "dir": "19_quizzes",
+      "path": "exercises/19_quizzes/quiz2.bxs",
+      "test": true,
+      "test_path": "exercises/19_quizzes/quiz2Test.bx",
+      "test_mode": "read",
+      "hint": "1) n % 2 != 0 filters odds. 2) map() transforms each element — use .map(). 3) acc + n sums. 4) config.server.host accesses nested key."
+    },
+    {
+      "name": "quiz3",
+      "dir": "19_quizzes",
+      "path": "exercises/19_quizzes/quiz3.bx",
+      "test": true,
+      "test_path": "exercises/19_quizzes/quiz3Test.bx",
+      "test_mode": "read",
+      "hint": "Properties: name (string) and score (numeric). Fix variables.score +=. Grade: ternary chain. castAs int for the Java cast."
+    },
+    {
+      "name": "classes1",
+      "dir": "20_classes",
+      "path": "exercises/20_classes/classes1.bx",
+      "test": true,
+      "test_path": "exercises/20_classes/classes1Test.bx",
+      "test_mode": "read",
+      "hint": "property name=\"name\" type=\"string\" declares a property. BoxLang auto-generates getName()/setName() for you."
+    },
+    {
+      "name": "classes2",
+      "dir": "20_classes",
+      "path": "exercises/20_classes/classes2.bx",
+      "test": true,
+      "test_path": "exercises/20_classes/classes2Test.bx",
+      "test_mode": "read",
+      "hint": "For fluent chaining, each setter must return 'this'. The 'this' keyword refers to the current object instance."
+    },
+    {
+      "name": "classes3",
+      "dir": "20_classes",
+      "path": "exercises/20_classes/classes3.bx",
+      "test": true,
+      "test_path": "exercises/20_classes/classes3Test.bx",
+      "test_mode": "read",
+      "hint": "classes3Circle.bx extends classes3. Use super.init() to call the parent constructor. Override area() with pi() * radius^2."
+    },
+    {
+      "name": "classes4",
+      "dir": "20_classes",
+      "path": "exercises/20_classes/classes4.bx",
+      "test": true,
+      "test_path": "exercises/20_classes/classes4Test.bx",
+      "test_mode": "read",
+      "hint": "Declare static { count: 0 }. Increment with static.count += 1 in init(). Access with classes4::getCount()."
+    },
+    {
+      "name": "classes5",
+      "dir": "20_classes",
+      "path": "exercises/20_classes/classes5.bx",
+      "test": true,
+      "test_path": "exercises/20_classes/classes5Test.bx",
+      "test_mode": "read",
+      "hint": "The pseudo-constructor runs before init(). Use now() to set variables.createdAt in the space between the last property and the first function."
+    },
+    {
+      "name": "classes6",
+      "dir": "20_classes",
+      "path": "exercises/20_classes/classes6.bx",
+      "test": true,
+      "test_path": "exercises/20_classes/classes6Test.bx",
+      "test_mode": "read",
+      "hint": "Annotations go on their own line before the class/function/property: @singleton before class, @required before property, @cached before function."
+    },
+    {
+      "name": "classes7",
+      "dir": "20_classes",
+      "path": "exercises/20_classes/classes7.bx",
+      "test": false,
+      "hint": "this.$bx.meta contains the class metadata. Use .name for the class name and .properties for the array of defined properties."
+    },
+    {
+      "name": "classes8",
+      "dir": "20_classes",
+      "path": "exercises/20_classes/classes8.bx",
+      "test": false,
+      "hint": "onMissingMethod( missingMethodName, missingMethodArgs ) is called automatically. Use arguments.missingMethodName in the return string."
+    },
+    {
+      "name": "bifs1",
+      "dir": "21_bifs",
+      "path": "exercises/21_bifs/bifs1.bxs",
+      "test": true,
+      "test_path": "exercises/21_bifs/bifs1Test.bx",
+      "test_mode": "read",
+      "hint": "Member functions mirror the BIF names: trim(), uCase(), contains(), replace(), len(). Call them directly on the string variable."
+    },
+    {
+      "name": "bifs2",
+      "dir": "21_bifs",
+      "path": "exercises/21_bifs/bifs2.bxs",
+      "test": true,
+      "test_path": "exercises/21_bifs/bifs2Test.bx",
+      "test_mode": "read",
+      "hint": "Array member functions: sort(), find(), unique(), sum(). hasNine should store the INDEX where 9 was found (> 0 means found)."
+    },
+    {
+      "name": "bifs3",
+      "dir": "21_bifs",
+      "path": "exercises/21_bifs/bifs3.bxs",
+      "test": true,
+      "test_path": "exercises/21_bifs/bifs3Test.bx",
+      "test_mode": "read",
+      "hint": "Struct member functions: keyExists(), keyArray(), valueArray(), count(). All are called directly on the struct variable."
+    },
+    {
+      "name": "bifs4",
+      "dir": "21_bifs",
+      "path": "exercises/21_bifs/bifs4.bxs",
+      "test": true,
+      "test_path": "exercises/21_bifs/bifs4Test.bx",
+      "test_mode": "read",
+      "hint": "now() returns the current date. year( date ) extracts the year. dateFormat() formats a date. dateDiff( \"d\", d1, d2 ) computes day difference."
+    },
+    {
+      "name": "bifs5",
+      "dir": "21_bifs",
+      "path": "exercises/21_bifs/bifs5.bxs",
+      "test": false,
+      "hint": "Math BIFs: abs(), int() for truncation, round(), min(), max(). Power is: 2^10 using the ^ operator or using the power() BIF."
+    },
+    {
+      "name": "bifs6",
+      "dir": "21_bifs",
+      "path": "exercises/21_bifs/bifs6.bxs",
+      "test": false,
+      "hint": "getFunctionList() returns a struct. Use .count() for size, .keyExists( name ) to check for a specific BIF."
+    },
+    {
+      "name": "templating1",
+      "dir": "22_templating",
+      "path": "exercises/22_templating/templating1.bxm",
+      "test": false,
+      "hint": "In bxm templates, use #variableName# for interpolation inside bx:output. Replace both ??? with the variable names: title and version."
+    },
+    {
+      "name": "templating2",
+      "dir": "22_templating",
+      "path": "exercises/22_templating/templating2.bxm",
+      "test": true,
+      "test_path": "exercises/22_templating/templating2Test.bx",
+      "test_mode": "read",
+      "hint": "bx:loop array=\"#fruits#\" item=\"fruit\" { ... }. Inside the loop, use #fruit# to output each item."
+    },
+    {
+      "name": "templating3",
+      "dir": "22_templating",
+      "path": "exercises/22_templating/templating3.bxm",
+      "test": false,
+      "hint": "bx:if uses comparison operators: >= for greater-than-or-equal. Fix both ??? — the first condition needs >= 90, the second >= 70."
+    },
+    {
+      "name": "templating4",
+      "dir": "22_templating",
+      "path": "exercises/22_templating/templating4.bxm",
+      "test": true,
+      "test_path": "exercises/22_templating/templating4Test.bx",
+      "test_mode": "read",
+      "hint": "Inside bx:loop, access item properties with item.price and item.name. The total accumulates with each iteration. Pass total to numberFormat()."
+    },
+    {
+      "name": "cli_apps1",
+      "dir": "23_cli_apps",
+      "path": "exercises/23_cli_apps/cli_apps1.bx",
+      "test": false,
+      "hint": "args is an array. Access the first element with args[1]. The ternary args.len() > 0 ? args[1] : \"World\" provides the default."
+    },
+    {
+      "name": "cli_apps2",
+      "dir": "23_cli_apps",
+      "path": "exercises/23_cli_apps/cli_apps2.bxs",
+      "test": true,
+      "test_path": "exercises/23_cli_apps/cli_apps2Test.bx",
+      "test_mode": "read",
+      "hint": "CLIGetArgs() returns { positionals: [], options: {} }. Access positionals with .positionals and options with .options."
+    },
+    {
+      "name": "cli_apps3",
+      "dir": "23_cli_apps",
+      "path": "exercises/23_cli_apps/cli_apps3.bx",
+      "test": false,
+      "hint": "args[1] is num1, args[2] is the operation, args[3] is num2. Fix the index numbers in the ??? placeholders."
+    },
+    {
+      "name": "cli_apps4",
+      "dir": "23_cli_apps",
+      "path": "exercises/23_cli_apps/cli_apps4.bx",
+      "test": true,
+      "test_path": "exercises/23_cli_apps/cli_apps4Test.bx",
+      "test_mode": "read",
+      "hint": "getSystemSetting( \"KEY\", \"default\" ) reads from environment variables or JVM system properties. Fill in the env var names: APP_NAME, APP_PORT, APP_DEBUG."
+    },
+    {
+      "name": "java_interop1",
+      "dir": "24_java_interop",
+      "path": "exercises/24_java_interop/java_interop1.bxs",
+      "test": true,
+      "test_path": "exercises/24_java_interop/java_interop1Test.bx",
+      "test_mode": "read",
+      "hint": "The full class path is java.lang.StringBuilder. After building, call .toString() to convert the Java StringBuilder to a BoxLang string."
+    },
+    {
+      "name": "java_interop2",
+      "dir": "24_java_interop",
+      "path": "exercises/24_java_interop/java_interop2.bxs",
+      "test": true,
+      "test_path": "exercises/24_java_interop/java_interop2Test.bx",
+      "test_mode": "read",
+      "hint": "import java:java.util.UUID imports the Java UUID class. Call UUID.randomUUID().toString() to get a UUID string."
+    },
+    {
+      "name": "java_interop3",
+      "dir": "24_java_interop",
+      "path": "exercises/24_java_interop/java_interop3.bxs",
+      "test": true,
+      "test_path": "exercises/24_java_interop/java_interop3Test.bx",
+      "test_mode": "read",
+      "hint": "new java:java.util.ArrayList() creates a Java ArrayList. Java uses 0-based indexing: list.get(0) returns the first item."
+    },
+    {
+      "name": "java_interop4",
+      "dir": "24_java_interop",
+      "path": "exercises/24_java_interop/java_interop4.bxs",
+      "test": true,
+      "test_path": "exercises/24_java_interop/java_interop4Test.bx",
+      "test_mode": "read",
+      "hint": "javaCast( \"double\", value ) casts to a Java double. For abs(-99), cast -99 as a long. JMath.PI is a field accessed with .PI."
+    },
+    {
+      "name": "java_interop5",
+      "dir": "24_java_interop",
+      "path": "exercises/24_java_interop/java_interop5.bxs",
+      "test": false,
+      "hint": "Catch Java exceptions using catch( \"full.class.Name\" e ). Set result to \"caught\" and store e.message in errorType."
+    },
+    {
+      "name": "java_interop6",
+      "dir": "24_java_interop",
+      "path": "exercises/24_java_interop/java_interop6.bxs",
+      "test": false,
+      "hint": "map.put( key, value ) adds entries. The third ??? should be the key \"runtime\" with value \"JVM\"."
     }
   ]
 }

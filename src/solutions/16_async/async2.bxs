@@ -1,0 +1,6 @@
+var number = 21
+var future = asyncRun( () => {
+    return number * 2
+} )
+
+var result = future.get()

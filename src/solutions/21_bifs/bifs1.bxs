@@ -1,0 +1,7 @@
+var sentence = "  Hello, BoxLang World!  "
+
+var trimmed    = sentence.trim()
+var upper      = trimmed.uCase()
+var hasBoxLang = trimmed.contains( "BoxLang" )
+var replaced   = trimmed.replace( "World", "Universe" )
+var length     = trimmed.len()

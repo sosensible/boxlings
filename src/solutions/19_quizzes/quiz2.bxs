@@ -1,0 +1,13 @@
+var numbers = [ 1, 2, 3, 4, 5, 6, 7, 8, 9, 10 ]
+var odds = numbers.filter( n => n % 2 != 0 )
+
+var words = [ "hello", "world", "boxlang" ]
+var uppercased = words.map( w => w.uCase() )
+
+var total = numbers.reduce( ( acc, n ) => acc + n, 0 )
+
+var config = {
+    server: { host: "localhost", port: 8080 },
+    debug: true
+}
+var host = config.server.host

@@ -1,0 +1,8 @@
+var list = new java:java.util.ArrayList()
+
+list.add( "first" )
+list.add( "second" )
+list.add( "third" )
+
+var size      = list.size()
+var firstItem = list.get( 0 )

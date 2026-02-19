@@ -1,0 +1,11 @@
+var name = "BoxLang"
+var isString = name instanceOf "java.lang.String"
+
+var count = 10
+var isNumeric = count instanceOf "java.lang.Number"
+
+var active = true
+var isBoolean = active instanceOf "java.lang.Boolean"
+
+var items = [ 1, 2, 3 ]
+var isArray = items instanceOf "ortus.boxlang.runtime.types.Array"

@@ -1,0 +1,7 @@
+var now       = now()
+var year      = year( now )
+var birthday  = createDate( 1990, 6, 15 )
+var formatted = dateFormat( birthday, "yyyy-MM-dd" )
+var start     = createDate( 2026, 1, 1 )
+var end       = createDate( 2026, 12, 31 )
+var days      = dateDiff( "d", start, end )

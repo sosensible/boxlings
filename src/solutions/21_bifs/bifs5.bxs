@@ -1,0 +1,8 @@
+var absVal  = abs( -42 )
+var power   = 2 ^ 10
+var sqrtVal = sqr( 144 )
+var rounded = round( 3.7 )
+var minVal  = min( 10, 20 )
+var maxVal  = max( 10, 20 )
+
+println( "abs: #absVal#, power: #power#, sqrt: #sqrtVal#, round: #rounded#" )

@@ -1,0 +1,7 @@
+import java:java.util.UUID
+
+var id = UUID.randomUUID().toString()
+
+import java:java.lang.System as JSystem
+
+var timeMs = JSystem.currentTimeMillis()

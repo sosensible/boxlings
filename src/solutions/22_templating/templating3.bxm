@@ -1,0 +1,9 @@
+<bx:set score = 85>
+
+<bx:if score >= 90>
+<bx:output>Excellent!</bx:output>
+<bx:elseif score >= 70>
+<bx:output>Good job!</bx:output>
+<bx:else>
+<bx:output>Keep trying!</bx:output>
+</bx:if>

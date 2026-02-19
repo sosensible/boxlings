@@ -1,0 +1,32 @@
+class {
+
+    property name="name"  type="string"
+    property name="score" type="numeric" default=0
+
+    function init( required string name ) {
+        variables.name = arguments.name
+        return this
+    }
+
+    function addPoints( required numeric points ) {
+        variables.score += arguments.points
+        return this
+    }
+
+    function getGrade() {
+        return variables.score >= 90 ? "A"
+             : variables.score >= 75 ? "B"
+             : variables.score >= 60 ? "C"
+             : "F"
+    }
+
+    function getScoreAsInt() {
+        return variables.score castAs int
+    }
+
+    function main( args = [] ) {
+        var player = new quiz3( "BoxLanger" )
+        player.addPoints( 85 )
+        println( "Grade: #player.getGrade()#" )
+    }
+}

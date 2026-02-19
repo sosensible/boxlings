@@ -1,0 +1,4 @@
+bx:http url="https://httpbin.org/get" method="get" result="response" {}
+
+println( "Status: #response.statusCode#" )
+println( "Got a response: #response.statusCode == 200#" )

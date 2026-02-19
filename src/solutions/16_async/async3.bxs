@@ -1,0 +1,7 @@
+var futures = [
+    () => "apple",
+    () => "banana",
+    () => "cherry"
+]
+
+var combined = asyncAll( futures ).get()

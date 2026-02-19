@@ -1,0 +1,8 @@
+var strVal  = "123.45"
+var numVal  = val( strVal )
+
+var numIn   = 2026
+var strOut  = toString( numIn )
+
+var dbl     = 9.99
+var rounded = int( dbl )

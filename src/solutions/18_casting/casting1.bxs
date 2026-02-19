@@ -1,0 +1,8 @@
+var strNumber = "42"
+var asInt = strNumber castAs int
+
+var dblStr = "3.14"
+var asDouble = dblStr castAs double
+
+var boolStr = "true"
+var asBool = boolStr castAs boolean

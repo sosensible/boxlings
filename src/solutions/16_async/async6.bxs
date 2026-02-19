@@ -1,0 +1,7 @@
+var result = asyncRun( () => {
+    return 10 / 0
+}).exceptionally( err => {
+    return -1
+}).get()
+
+println( "Result: #result#" )

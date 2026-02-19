@@ -1,0 +1,33 @@
+class {
+
+    property name="title"  type="string"  default=""
+    property name="author" type="string"  default=""
+    property name="pages"  type="numeric" default=0
+
+    function setTitle( required string title ) {
+        variables.title = arguments.title
+        return this
+    }
+
+    function setAuthor( required string author ) {
+        variables.author = arguments.author
+        return this
+    }
+
+    function setPages( required numeric pages ) {
+        variables.pages = arguments.pages
+        return this
+    }
+
+    function describe() {
+        return "#variables.title# by #variables.author# (#variables.pages# pages)"
+    }
+
+    function main( args = [] ) {
+        var book = new classes2()
+            .setTitle( "BoxLang in Action" )
+            .setAuthor( "Luis Majano" )
+            .setPages( 350 )
+        println( book.describe() )
+    }
+}

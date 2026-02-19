@@ -1,0 +1,5 @@
+var num = 99
+var asString = num castAs String
+
+var numbers = [ 1, 2, 3 ]
+var asStringArray = numbers castAs String[]

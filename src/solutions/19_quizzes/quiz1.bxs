@@ -1,0 +1,11 @@
+var name = "BoxLang"
+var greeting = "Hello, #name#!"
+
+var maybeNull = null
+var safe = maybeNull ?: "default"
+
+var factor = 3
+var multiplier = ( n ) => n * factor
+
+var user = { name: "Alice" }
+var city = user?.address?.city ?: "Unknown"

@@ -1,0 +1,27 @@
+@singleton
+class {
+
+    @required
+    property name="apiKey" type="string"
+
+    function init( required string apiKey ) {
+        variables.apiKey = arguments.apiKey
+        return this
+    }
+
+    @cached
+    function fetchData() {
+        return "data-for-#variables.apiKey#"
+    }
+
+    function getMetaInfo() {
+        var meta = getMetadata( this )
+        return meta
+    }
+
+    function main( args = [] ) {
+        var svc = new classes6( "secret-key-123" )
+        var meta = svc.getMetaInfo()
+        println( "singleton: #meta.annotations.singleton#" )
+    }
+}

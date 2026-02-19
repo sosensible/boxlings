@@ -1,0 +1,22 @@
+class {
+
+    property name="color" type="string" default="white"
+
+    function init( required string color ) {
+        variables.color = arguments.color
+        return this
+    }
+
+    function area() {
+        return 0
+    }
+
+    function describe() {
+        return "A #variables.color# shape with area: #area()#"
+    }
+
+    function main( args = [] ) {
+        var c = new classes3Circle( "red", 5 )
+        println( c.describe() )
+    }
+}

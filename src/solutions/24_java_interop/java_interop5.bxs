@@ -1,0 +1,10 @@
+var result    = ""
+var errorType = ""
+
+try {
+    var parsed = createObject( "java", "java.lang.Integer" ).parseInt( "not-a-number" )
+    result = parsed
+} catch( "java.lang.NumberFormatException" e ) {
+    result    = "caught"
+    errorType = e.message
+}

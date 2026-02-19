@@ -1,0 +1,22 @@
+class {
+
+    static {
+        count: 0
+    }
+
+    function init() {
+        static.count += 1
+        return this
+    }
+
+    static function getCount() {
+        return static.count
+    }
+
+    function main( args = [] ) {
+        new classes4()
+        new classes4()
+        new classes4()
+        println( "Instances created: #classes4::getCount()#" )
+    }
+}

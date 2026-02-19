@@ -1,0 +1,20 @@
+class {
+
+    property name="name" type="string"
+    property name="age"  type="numeric" default=0
+
+    function init( required string name, required numeric age ) {
+        variables.name = arguments.name
+        variables.age  = arguments.age
+        return this
+    }
+
+    function greet() {
+        return "Hi, I'm #variables.name# and I'm #variables.age# years old."
+    }
+
+    function main( args = [] ) {
+        var p = new classes1( "BoxLang", 2 )
+        println( p.greet() )
+    }
+}

@@ -1,0 +1,13 @@
+class {
+
+    function main( args = [] ) {
+        var appName = getSystemSetting( "APP_NAME", "BoxLang App" )
+        var port    = getSystemSetting( "APP_PORT",  "8080" )
+        var debug   = getSystemSetting( "APP_DEBUG", "false" )
+
+        println( "Starting #appName# on port #port#" )
+        if ( debug == "true" ) {
+            println( "[DEBUG] Debug mode enabled" )
+        }
+    }
+}

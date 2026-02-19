@@ -1,0 +1,9 @@
+var allFunctions = getFunctionList()
+
+var count      = allFunctions.count()
+var hasLen     = allFunctions.keyExists( "len" )
+var hasNow     = allFunctions.keyExists( "now" )
+var hasIsNull  = allFunctions.keyExists( "isNull" )
+
+println( "Total BIFs registered: #count#" )
+println( "Has len(): #hasLen#" )

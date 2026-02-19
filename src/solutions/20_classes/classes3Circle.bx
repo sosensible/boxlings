@@ -1,0 +1,14 @@
+class extends="classes3" {
+
+    property name="radius" type="numeric" default=0
+
+    function init( required string color, required numeric radius ) {
+        super.init( arguments.color )
+        variables.radius = arguments.radius
+        return this
+    }
+
+    function area() {
+        return pi() * ( variables.radius ^ 2 )
+    }
+}

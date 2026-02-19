@@ -1,0 +1,7 @@
+class {
+
+    function main( args = [] ) {
+        var name = args.len() > 0 ? args[ 1 ] : "World"
+        println( "Hello, #name#!" )
+    }
+}

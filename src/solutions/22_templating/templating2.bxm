@@ -1,0 +1,6 @@
+<bx:set fruits = [ "apple", "banana", "cherry", "date" ]>
+
+<bx:loop array="#fruits#" item="fruit">
+<bx:output>#fruit#
+</bx:output>
+</bx:loop>

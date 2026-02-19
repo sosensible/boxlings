@@ -1,0 +1,14 @@
+import java:java.util.HashMap
+
+var map = new HashMap()
+
+map.put( "name",    "BoxLang" )
+map.put( "version", "2.0" )
+map.put( "runtime", "JVM" )
+
+var lang       = map.get( "name" )
+var runtime    = map.get( "runtime" )
+var size       = map.size()
+var hasVersion = map.containsKey( "version" )
+
+println( "#lang# runs on the #runtime#. Map size: #size#" )

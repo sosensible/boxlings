@@ -1,0 +1,6 @@
+var fruits = [ "apple", "banana", "cherry" ]
+var result = []
+
+bx:loop array="#fruits#" item="fruit" {
+    result.append( fruit )
+}

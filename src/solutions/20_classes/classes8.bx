@@ -1,0 +1,19 @@
+class {
+
+    property name="data" type="struct"
+
+    variables.data = {}
+
+    function init() {
+        return this
+    }
+
+    function set( required string key, required any value ) {
+        variables.data[ arguments.key ] = arguments.value
+        return this
+    }
+
+    function onMissingMethod( required string missingMethodName, required struct missingMethodArgs ) {
+        return "Method #missingMethodName# not found"
+    }
+}

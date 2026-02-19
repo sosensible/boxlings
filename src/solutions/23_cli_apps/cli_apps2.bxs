@@ -1,0 +1,12 @@
+var cliArgs = CLIGetArgs()
+
+var command = cliArgs.positionals[ 1 ] ?: "help"
+var name    = cliArgs.options.name ?: "Stranger"
+var loud    = cliArgs.options.loud ?: false
+
+var message = "Hello, #name#!"
+if ( loud ) {
+    message = message.uCase()
+}
+
+result = message
