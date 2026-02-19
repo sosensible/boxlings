@@ -1,6 +1,12 @@
 # 🥊 BoxLings
 
+[![Beta](https://img.shields.io/badge/status-beta-orange)](https://github.com/ortus-boxlang/boxlings)
+[![BoxLang](https://img.shields.io/badge/BoxLang-1.0%2B-blue)](https://boxlang.ortusbooks.com/)
+[![License](https://img.shields.io/badge/license-MIT-green)](LICENSE)
+
 > Small exercises to get you used to reading and writing **BoxLang** code while learning **Test-Driven Development (TDD)**!
+
+**🎉 Now in Beta!** We're looking for beta testers to help us improve BoxLings. [See Beta Testing section below](#-beta-testing).
 
 Inspired by [rustlings](https://github.com/rust-lang/rustlings), BoxLings is an interactive CLI tool that guides you through learning BoxLang fundamentals through hands-on exercises with intentional errors. You fix the code, run tests, and progress through topics at your own pace.
 
@@ -24,8 +30,12 @@ Inspired by [rustlings](https://github.com/rust-lang/rustlings), BoxLings is an 
 
 ## 📋 Prerequisites
 
-- **BoxLang 1.0+** installed ([Installation Guide](https://boxlang.ortusbooks.com/getting-started/installation))
-- **CommandBox** (optional, for development) ([Install CommandBox](https://commandbox.ortusbooks.com/setup/installation))
+You'll need BoxLang installed on your system. If you don't have it yet:
+
+- **BoxLang 1.0+** - [Installation Guide](https://boxlang.ortusbooks.com/getting-started/installation)
+- **Verify**: Run `boxlang --version` in your terminal
+
+**Note:** CommandBox is optional and only needed if you want to contribute to BoxLings development.
 
 ---
 
@@ -58,6 +68,49 @@ That's it! BoxLings will:
 - Start **watch mode**
 - Display the first exercise
 - Auto-rerun when you save changes
+
+---
+
+## 🧪 Beta Testing
+
+**We need your help!** BoxLings is in beta and we're looking for feedback from the community.
+
+### What We're Looking For
+
+- 🐛 **Bug Reports** - Find issues? Please report them!
+- 💡 **Exercise Quality** - Are instructions clear? Difficulty appropriate?
+- 🎨 **UX Feedback** - Is the CLI intuitive? Colors readable?
+- 📚 **Content Gaps** - Missing topics? Need more examples?
+- 💻 **Platform Testing** - Does it work on your OS? (macOS, Linux, Windows)
+
+### How to Provide Feedback
+
+1. **Open an Issue**: [GitHub Issues](https://github.com/ortus-boxlang/boxlings/issues)
+   - Bug reports: Use "Bug Report" template
+   - Feature requests: Use "Feature Request" template
+   - Exercise feedback: Use "Exercise Feedback" template
+
+2. **Join the Discussion**:
+   - [Community Forum](https://community.ortussolutions.com/c/boxlang/42)
+   - [BoxLang Slack](https://boxteam.ortussolutions.com/)
+
+3. **Contribute**: PRs welcome! See [Contributing](#-contributing) section
+
+### Known Limitations
+
+- Windows support is functional but has minor display issues with some ANSI colors
+- Some advanced exercises (async, Java interop) require BoxLang 1.0.0+
+- Watch mode may be slower on network drives
+
+### Beta Roadmap
+
+- [x] 126 exercises across 24 topics
+- [x] Watch mode with auto-rerun
+- [x] Hints and solutions system
+- [x] Progress tracking
+- [ ] Interactive tutorial mode
+- [ ] Leaderboard/achievements system
+- [ ] VS Code extension integration
 
 ---
 
@@ -134,7 +187,70 @@ boxlang BoxLings.bx list
 
 ---
 
-## 📚 Learning Path
+## � Troubleshooting
+
+### "Command not found: boxlang"
+
+**Solution:** BoxLang is not installed or not in your PATH.
+- Verify installation: Check if BoxLang binary exists
+- Add to PATH: Ensure BoxLang bin directory is in your system PATH
+- Reinstall: Try [reinstalling BoxLang](https://boxlang.ortusbooks.com/getting-started/installation)
+
+### "No exercises found" or "exercises/ folder is empty"
+
+**Solution:** You need to run `init` first:
+```bash
+boxlang BoxLings.bx init
+```
+
+This creates your personal `exercises/` folder from the templates.
+
+### Watch mode not detecting changes
+
+**Possible causes:**
+- **Network drives**: Watch mode may be slower on network/cloud synced folders
+- **File permissions**: Ensure BoxLings can read the exercises directory
+- **Manual rerun**: Press `r` to manually rerun the current exercise
+
+### Colors not displaying correctly (Windows)
+
+**Solution:** Enable ANSI color support:
+- Windows 10+: ANSI is supported by default in newer terminals
+- Use **Windows Terminal** for best experience
+- Or try **Git Bash** or **WSL**
+
+### TestBox errors or missing tests
+
+**Solution:** Ensure TestBox is installed:
+```bash
+box install
+```
+
+This installs TestBox into the `testbox/` directory (required for exercises with tests).
+
+### "Exercise already completed" but I want to redo it
+
+**Solution:** Reset the exercise:
+```bash
+boxlang BoxLings.bx reset exercise-name
+```
+
+Or reset your entire progress:
+```bash
+rm -rf .boxlings exercises
+boxlang BoxLings.bx init
+```
+
+### Still stuck?
+
+- 📖 Check [BoxLang Documentation](https://boxlang.ortusbooks.com/)
+- 💬 Ask on [Community Forum](https://community.ortussolutions.com/c/boxlang/42)
+- 💭 Join [BoxLang Slack](https://boxteam.ortussolutions.com/)
+- 🐛 [Open an issue](https://github.com/ortus-boxlang/boxlings/issues)
+
+---
+
+## �📚 Learning Path
 
 ### Phase 1: Core Fundamentals (50 exercises)
 
@@ -236,23 +352,36 @@ class extends="testbox.system.BaseSpec" {
 
 ## 📂 Project Structure
 
+**After running `boxlang BoxLings.bx init`, you'll see:**
+
 ```
 boxlings/
 ├── BoxLings.bx              # Main CLI entry point
 ├── box.json                 # Package descriptor
-├── info.json                # Exercise metadata
-├── exercises/               # Your workspace - fix these!
+├── info.json                # Exercise metadata (single source of truth)
+├── src/                     # BoxLings source code
+│   ├── AppState.bx
+│   ├── Exercise.bx
+│   ├── InfoFile.bx
+│   ├── Runner.bx
+│   ├── Terminal.bx
+│   ├── Watcher.bx
+│   ├── exercises/          # Exercise templates (for contributors)
+│   └── solutions/          # Working solutions (for reference)
+├── exercises/               # Your personal workspace (git-ignored!)
 │   ├── 00_intro/
-│   │   ├── intro1.bxs      # Exercise files
+│   │   ├── intro1.bxs      # Fix these files!
 │   │   └── intro2.bxs
 │   ├── 01_variables/
 │   │   ├── variables3.bxs
-│   │   └── variables3Test.bx   # Test files (visible!)
+│   │   └── variables3Test.bx   # Test files (read these!)
 │   └── ...
-├── solutions/               # Working solutions
+├── testbox/                 # TestBox framework
 └── .boxlings/              # Your progress (auto-created)
     └── state.json          # Progress tracking
 ```
+
+**Note:** The `exercises/` folder is created from `src/exercises/` templates when you run `init`. Your changes are saved here and won't be tracked by git!
 
 ---
 
@@ -306,7 +435,9 @@ println( "x = #x#" );
 
 ## 🛠️ Development
 
-### Install TestBox (for developing BoxLings itself)
+Want to improve BoxLings or add new exercises? Here's how to get started.
+
+### Install TestBox (For BoxLings Core Development)
 
 ```bash
 box install
@@ -318,27 +449,79 @@ box install
 box run-script test
 ```
 
-### Add New Exercise
+Or directly:
 
-1. Create exercise file in `exercises/{topic}/`
-2. Optionally create test file: `exercises/{topic}/{name}Test.bx`
-3. Add entry to `info.json`
-4. Create solution in `solutions/{topic}/`
-5. Test it!
+```bash
+box testbox run
+```
+
+### Adding New Exercises
+
+**Important:** Add exercises to `src/exercises/` and `src/solutions/`, NOT the user's `exercises/` folder!
+
+1. **Create exercise file**: `src/exercises/{topic}/{name}.bxs`
+2. **Create test file** (if applicable): `src/exercises/{topic}/{name}Test.bx`
+3. **Add to info.json**: Insert new entry in correct order
+4. **Create solution**: `src/solutions/{topic}/{name}.bxs`
+5. **Test it**:
+   ```bash
+   # Initialize fresh exercises
+   boxlang BoxLings.bx init
+   # Test your exercise
+   boxlang BoxLings.bx run {name}
+   ```
+
+### Directory Structure for Contributors
+
+```
+src/
+├── exercises/        # Template exercises (source of truth)
+├── solutions/        # Working solutions (for reference)
+└── AppState.bx       # Core BoxLings code
+
+exercises/           # User workspace (git-ignored, created by init)
+```
 
 ---
 
 ## 🤝 Contributing
 
-Contributions welcome! Please:
+We **love** contributions! BoxLings is a community project and we welcome:
 
-1. Fork the repository
-2. Create a feature branch
-3. Add your exercises or improvements
-4. Write tests for new features
-5. Submit a pull request
+- 🐛 Bug fixes
+- ✨ New exercises
+- 📚 Documentation improvements
+- 🎨 UI/UX enhancements
+- 🧪 Test improvements
 
-See `CONTRIBUTING.md` for detailed guidelines.
+### Quick Contribution Guide
+
+1. **Fork the repository**
+2. **Create a feature branch**: `git checkout -b feature/my-improvement`
+3. **Make your changes**
+4. **Test thoroughly**: `box test` (for BoxLings core) or test exercises manually
+5. **Commit with clear messages**: `git commit -m "Add: New async exercise for futures"`
+6. **Push and create PR**: `git push origin feature/my-improvement`
+
+### Adding New Exercises
+
+See our [Exercise Creation Guide](docs/CREATING_EXERCISES.md) for detailed instructions.
+
+**Quick steps:**
+
+1. Create exercise file in `src/exercises/{topic}/{name}.bxs`
+2. Add test file (if applicable): `src/exercises/{topic}/{name}Test.bx`
+3. Add entry to `info.json` in the correct order
+4. Create solution in `src/solutions/{topic}/{name}.bxs`
+5. Test the exercise: `boxlang BoxLings.bx run {name}`
+
+### Code Style
+
+- BoxLang: Follow [BoxLang Style Guide](https://boxlang.ortusbooks.com/programming-guide/style-guide)
+- Clear comments and hints in exercises
+- Progressive difficulty (each exercise slightly harder than previous)
+
+For detailed contributing guidelines, see [CONTRIBUTING.md](CONTRIBUTING.md).
 
 ---
 
@@ -366,6 +549,62 @@ MIT License - see [LICENSE](LICENSE) file for details.
 
 ---
 
+## ❓ FAQ
+
+### Do I need to know CFML to use BoxLings?
+
+**No!** BoxLings teaches BoxLang from scratch. While BoxLang has CFML compatibility, these exercises focus on modern BoxLang syntax. Prior programming experience in any language is helpful but not required.
+
+### How long does it take to complete all exercises?
+
+**Varies by experience:**
+- Beginners: 15-20 hours
+- Experienced programmers new to BoxLang: 6-10 hours
+- CFML developers: 4-6 hours
+
+You can take breaks anytime - progress is automatically saved!
+
+### Can I skip exercises?
+
+Yes! While we recommend doing them in order, you can run any exercise directly:
+```bash
+boxlang BoxLings.bx run exercise-name
+```
+
+### What's the difference between .bxs, .bx, and .bxm files?
+
+- **`.bxs`** - Scripts (most exercises): Execute directly, no class wrapper needed
+- **`.bx`** - Classes: BoxLang class files with `class { }` wrapper
+- **`.bxm`** - Templates: For HTML/template mixing exercises
+
+### Are solutions available?
+
+Yes! Use `boxlang BoxLings.bx solution exercise-name`. BoxLings will warn you if you haven't attempted the exercise yet, but you can still view it if needed.
+
+### Can I use BoxLings offline?
+
+Yes! Once cloned, BoxLings runs completely offline. Only the initial clone and any future updates require internet.
+
+### How do I update BoxLings?
+
+```bash
+cd boxlings
+git pull origin main
+boxlang BoxLings.bx init  # Refresh exercises with new content
+```
+
+Your progress in `.boxlings/state.json` is preserved!
+
+### Is BoxLings suitable for teaching/workshops?
+
+Absolutely! BoxLings is designed for self-paced learning, classrooms, workshops, and bootcamps. The progressive structure and built-in hints make it ideal for learning environments.
+
+### Can I contribute my own exercises?
+
+Yes! We welcome contributions. See the [Contributing](#-contributing) section for details.
+
+---
+
 ## 💬 Community & Support
 
 - **Community Forum**: https://community.ortussolutions.com/c/boxlang/42
@@ -379,17 +618,25 @@ MIT License - see [LICENSE](LICENSE) file for details.
 BoxLings aims to:
 
 - ✅ Make learning BoxLang fun and interactive
-- ✅ Teach TDD/BDD as a core skill
+- ✅ Teach TDD/BDD as a core skill (not an afterthought!)
 - ✅ Provide immediate feedback and guidance
 - ✅ Build confidence through progressive difficulty
-- ✅ Create a community of BoxLang learners
+- ✅ Create a supportive community of BoxLang learners
+- 🔄 Continuously improve based on community feedback (we're in beta!)
 
 ---
 
-**Happy Learning! 🚀**
-
-Start your BoxLang journey:
+**Ready to start learning? 🚀**
 
 ```bash
+git clone https://github.com/ortus-boxlang/boxlings.git
+cd boxlings
+boxlang BoxLings.bx init
 boxlang BoxLings.bx
 ```
+
+**Found a bug or have feedback?** [Open an issue](https://github.com/ortus-boxlang/boxlings/issues) or join us on [Slack](https://boxteam.ortussolutions.com/)!
+
+---
+
+**Made with ❤️ by the BoxLang Community**
