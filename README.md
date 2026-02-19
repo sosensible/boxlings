@@ -2,7 +2,7 @@
 
 [![Beta](https://img.shields.io/badge/status-beta-orange)](https://github.com/ortus-boxlang/boxlings)
 [![BoxLang](https://img.shields.io/badge/BoxLang-1.0%2B-blue)](https://boxlang.ortusbooks.com/)
-[![License](https://img.shields.io/badge/license-MIT-green)](LICENSE)
+[![License](https://img.shields.io/badge/license-Apache2-green)](LICENSE)
 
 > Small exercises to get you used to reading and writing **BoxLang** code while learning **Test-Driven Development (TDD)**!
 
