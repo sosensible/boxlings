@@ -16,6 +16,8 @@
  * Main CLI entry point with main() convention
  * Inspired by rustlings
  */
+import java.util.concurrent.LinkedBlockingQueue
+
 class {
 
     /**
@@ -50,8 +52,8 @@ class {
             // Initialize app state
             var appState = new src.AppState( exercises )
 
-            // Route to command (positionals is already an array)
-            var command = parsed.positionals.len() > 0 ? parsed.positionals[1] : "watch"
+            // Route to command (positionals is already an array), else default to "watch" mode
+            var command = parsed.positionals.len() > 0 ? parsed.positionals.first() : "watch"
 
             switch( command ) {
                 case "run":
@@ -312,160 +314,188 @@ class {
     }
 
     /**
-     * Watch mode - interactive learning with file monitoring
+     * Watch mode - event-queue-driven interactive learning
+     *
+     * Architecture:
+     *  - Controller thread: owns all state, exercise runs, rendering, and prompts.
+     *    Blocks on queue.take() between iterations - no busy-waiting or polling.
+     *  - Input thread: single long-lived asyncRun() that loops on CLIRead() and
+     *    posts { type:"INPUT", value:string } events. Exits after posting "q".
+     *  - Watcher thread: single long-lived asyncRun() running Watcher.start().
+     *    Posts { type:"FILE_CHANGED" } events. Supports updatePath() so the same
+     *    thread re-registers when the user advances to a new exercise.
      */
     private function watchCommand( required appState ) {
         var terminal = new src.Terminal()
-        var runner = new src.Runner()
+        var runner   = new src.Runner()
 
-        // Show welcome message on first run
+        // Show welcome on first launch, banner banner otherwise
         if ( appState.getCurrentIndex() == 1 && !appState.getCurrent().done ) {
             terminal.showWelcome()
         } else {
             terminal.showBoxLangBanner()
         }
 
-        var running = true
-        var loopCount = 0
+        // ── Shared event queue ─────────────────────────────────────────────────
+        var queue = new java.util.concurrent.LinkedBlockingQueue()
 
+        // ── Input thread ───────────────────────────────────────────────────────
+        // Owns stdin. Posts INPUT events. Exits naturally after posting "q".
+        var inputFuture = asyncRun( () => {
+            while ( true ) {
+                var value = CLIRead().trim().lcase()
+                queue.put( { type: "INPUT", value: value } )
+                if ( value == "q" ) break
+            }
+        } )
+
+        // ── File watcher thread ────────────────────────────────────────────────
+        // Single long-lived instance. Call watcher.updatePath() to switch files.
+        var watcher     = new src.Watcher( queue )
+        var initialPath = appState.getCurrent().path
+        var watcherFuture = asyncRun( () => {
+            watcher.start( initialPath )
+        } )
+
+        // ── Controller state ───────────────────────────────────────────────────
+        var running          = true
+        // trigger exercise run on the first iteration
+        var needsRerun       = true
+        var lastResult       = { success: false, output: "", errors: [] }
+        // an overlay (hint / list / test) is showing
+        var awaitingContinue = false
+
+        // ── Main event loop ────────────────────────────────────────────────────
         while ( running ) {
-            loopCount++
 
-            // SAFETY: Prevent infinite loops during debugging
-            if ( loopCount > 10 ) {
-                println( "[DEBUG] STOPPING - Loop limit reached!" )
-                sleep( 5000 )
-                break
-            }
+            if ( needsRerun ) {
+                needsRerun       = false
+                awaitingContinue = false
 
-            // Debug
-           // terminal.clear()
-
-            // Show header with box
-            terminal.printBoxed( [
-                "🥊 BoxLings - Interactive BoxLang Learning",
-                "Learn BoxLang + TDD through hands-on exercises"
-            ] )
-            println( "" )
-
-            var progress = appState.getProgress()
-            terminal.showProgress( progress.completed, progress.total )
-            println( "" )
-
-            var exercise = appState.getCurrent()
-
-            // Show current exercise in a box
-            println( "┌─ 👉 Current Exercise ──────────────────────────────────────┐" )
-            println( "│" )
-            println( "│  📝 #exercise.getDisplayName()#" )
-            println( "│  📂 #exercise.path#" )
-            if ( exercise.test ) {
-                println( "│  🧪 #exercise.test_path#" )
-                println( "│" )
-                println( "│  💡 Read the test file first to understand requirements!" )
-            }
-            println( "│" )
-            println( "└────────────────────────────────────────────────────────────┘" )
-            println( "" )
-
-            // Get initial file timestamp
-            var fullPath = expandPath( exercise.path )
-            var lastModified = fileExists( fullPath ) ? getFileInfo( fullPath ).lastModified : now()
-
-            // Run the exercise
-            var result = runner.runExercise( exercise )
-
-            if ( result.success ) {
+                // Header
+                terminal.printBoxed( [
+                    "🥊 BoxLings - Interactive BoxLang Learning",
+                    "Learn BoxLang + TDD through hands-on exercises"
+                ] )
                 println( "" )
-                println( "┌─ Success! ─────────────────────────────────────────────────┐" )
+
+                // Progress bar
+                var progress = appState.getProgress()
+                terminal.showProgress( progress.completed, progress.total )
+                println( "" )
+
+                // Current exercise info
+                var exercise = appState.getCurrent()
+                println( "┌─ 👉 Current Exercise ──────────────────────────────────────┐" )
                 println( "│" )
-                println( "│  ✅ Exercise complete!" )
+                println( "│  📝 #exercise.getDisplayName()#" )
+                println( "│  📂 #exercise.path#" )
+                if ( exercise.test ) {
+                    println( "│  🧪 #exercise.test_path#" )
+                    println( "│" )
+                    println( "│  💡 Read the test file first to understand requirements!" )
+                }
                 println( "│" )
                 println( "└────────────────────────────────────────────────────────────┘" )
                 println( "" )
-                var prompt = "[#terminal.BOLD & terminal.ansi256( 81 )#n#terminal.RESET#] Next  [#terminal.BOLD##terminal.ansi256(81)#h#terminal.RESET#] Hint  [#terminal.BOLD##terminal.ansi256(81)#l#terminal.RESET#] List  [#terminal.BOLD##terminal.ansi256(81)#q#terminal.RESET#] Quit: "
 
-                var cmd = promptForCommand( prompt, exercise, lastModified, false )
-
-                if ( cmd == "n" ) {
-                    appState.markCurrentDone()
-                    appState.moveToNext()
-
-                    if ( appState.isComplete() ) {
-                        terminal.clear()
-                        terminal.showCompletion( "You've completed all BoxLings exercises!" )
-                        running = false
-                    }
-                } else if ( cmd == "h" ) {
-                    showHintAndWait( terminal, exercise )
-                } else if ( cmd == "l" ) {
-                    showListAndWait( appState )
-                } else if ( cmd == "q" ) {
-                    running = false
-                } else if ( cmd == "TIMEOUT" || cmd == "ERROR" ) {
-                    println( "[DEBUG] TIMEOUT/ERROR in success branch - continuing" )
-                    sleep( 1000 )
-                    continue
-                } else {
-                    println( "[DEBUG] Unexpected input in success branch: [#cmd#] - continuing" )
-                    sleep( 1000 )
-                    continue
-                }
-            } else {
-                println( "" )
-                println( "┌─ ❌ Oops, keep trying! -───────────────────────────────┐" )
-                println( "│" )
-                println( "│  👀 Watching for file changes..." )
-                println( "│  💾 Save your file to auto-rerun or click [r/Enter]" )
-                println( "│" )
-                println( "└────────────────────────────────────────────────────────┘" )
-                println( "" )
-                var prompt = "[#terminal.BOLD##terminal.ansi256(81)#r/Enter#terminal.RESET#] Rerun  [#terminal.BOLD##terminal.ansi256(81)#h#terminal.RESET#] Hint  [#terminal.BOLD##terminal.ansi256(81)#t#terminal.RESET#] Test  [#terminal.BOLD##terminal.ansi256(81)#l#terminal.RESET#] List  [#terminal.BOLD##terminal.ansi256(81)#q#terminal.RESET#] Quit: "
-
-                var cmd = promptForCommand( prompt, exercise, lastModified, true )
-
-                if ( cmd == "FILE_CHANGED" ) {
-                    println( "" )
-                    println( "[DEBUG] FILE_CHANGED detected, updating timestamp and rerunning..." )
-                    lastModified = fileExists( fullPath ) ? getFileInfo( fullPath ).lastModified : now()
-                    println( "[DEBUG] Updated lastModified to: #lastModified#" )
-                    terminal.printSuccess( "File changed! Rerunning..." )
-                    sleep( 1000 )
-                    println( "[DEBUG] Waiting for watcher cleanup..." )
-                    sleep( 500 )
-                    continue
-                }
-
-                if ( cmd == "r" || cmd == "" ) {
-                    println( "[DEBUG] Manual rerun (cmd=#cmd#)" )
-                    sleep( 1000 )
-                    continue
-                }
-
-                if ( cmd == "h" ) {
-                    showHintAndWait( terminal, exercise )
-                } else if ( cmd == "t" && exercise.test ) {
-                    showTestCommand( appState, { positionals: [] } )
-                    print( "Press ENTER to continue..." )
-                    CLIRead()
-                } else if ( cmd == "l" ) {
-                    showListAndWait( appState )
-                } else if ( cmd == "q" ) {
-                    running = false
-                } else if ( cmd == "TIMEOUT" || cmd == "ERROR" ) {
-                    println( "[DEBUG] TIMEOUT/ERROR in failure branch - continuing" )
-                    sleep( 1000 )
-                    continue
-                } else {
-                    println( "[DEBUG] Unexpected input in failure branch: [#cmd#] - continuing" )
-                    sleep( 1000 )
-                    continue
-                }
+                // Run and display result + prompt
+                lastResult = runner.runExercise( exercise )
+                renderWatchPrompt( terminal, lastResult, exercise )
             }
 
-        }
-        // End LOOP
+            // Block until an event arrives (no CPU spinning)
+            var event = queue.take()
 
+            // ── FILE_CHANGED ───────────────────────────────────────────────────
+            if ( event.type == "FILE_CHANGED" ) {
+                terminal.printSuccess( "File changed! Re-running..." )
+                sleep( 300 )
+                terminal.clear()
+                needsRerun = true
+                continue
+            }
+
+            // ── INPUT ──────────────────────────────────────────────────────────
+            if ( event.type == "INPUT" ) {
+                var cmd = event.value
+
+                // Any key dismisses an overlay and re-renders the exercise
+                if ( awaitingContinue ) {
+                    awaitingContinue = false
+                    needsRerun = true
+                    continue;
+                }
+
+                switch ( cmd ) {
+                    // Quit
+                    case "q":
+                        running = false
+                        break;
+
+                    // Rerun current exercise
+                    case "r": case "":
+                        terminal.clear()
+                        needsRerun = true
+                        break;
+
+                    // Next exercise (only if current is passing)
+                    case "n":
+                        if ( lastResult.success ) {
+                            appState.markCurrentDone()
+                            appState.moveToNext()
+                            if ( appState.isComplete() ) {
+                                terminal.clear()
+                                terminal.showCompletion( "You've completed all BoxLings exercises!" )
+                                running = false
+                            } else {
+                                watcher.updatePath( appState.getCurrent().path )
+                                needsRerun = true
+                            }
+                        }
+                        break;
+
+                    // Help
+                    case "h":
+                        terminal.clear()
+                        terminal.printHint( appState.getCurrent().hint )
+                        println( "" )
+                        println( "Press any key to return..." )
+                        awaitingContinue = true
+                        break;
+
+                    // Show test file
+                    case "t":
+                        if ( appState.getCurrent().test ) {
+                            showTestCommand( appState, { positionals: [] } )
+                            println( "" )
+                            println( "Press any key to return..." )
+                            awaitingContinue = true
+                        }
+                        break;
+
+                    // List exercises
+                    case "l":
+                        listCommand( appState )
+                        println( "" )
+                        println( "Press any key to return..." )
+                        awaitingContinue = true
+                        break;
+
+                    // Unknown input — ignore
+                    default:
+                        // Unknown input — ignore
+                        break
+
+                } // switch
+            } // INPUT EVENT END
+
+        } // while running
+
+        // ── Cleanup ────────────────────────────────────────────────────────────
+        watcher.stop()
+        watcherFuture.cancel( true )
+        // inputFuture exits naturally: it posted "q" and broke its own loop
         terminal.clear()
 
         println( "" )
@@ -479,6 +509,42 @@ class {
         println( "│" )
         println( "└────────────────────────────────────────────────────────────┘" )
         println( "" )
+    }
+
+    /**
+     * Render the result box and command prompt after an exercise run.
+     * Called once per needsRerun cycle, after runner.runExercise().
+     *
+     * @terminal  src.Terminal instance
+     * @result    Struct returned by Runner.runExercise()
+     * @exercise  Current Exercise object
+     */
+    private function renderWatchPrompt( required terminal, required result, required exercise ) {
+        var b = terminal.BOLD
+        var c = terminal.ansi256( 81 )
+        var r = terminal.RESET
+
+        if ( result.success ) {
+            println( "" )
+            println( "┌─ ✅ Exercise Passed! ───────────────────────────────────────┐" )
+            println( "│" )
+            println( "│  Great work — fix accepted!" )
+            println( "│" )
+            println( "└────────────────────────────────────────────────────────────┘" )
+            println( "" )
+            print( "[#b##c#n#r#] Next  [#b##c#h#r#] Hint  [#b##c#l#r#] List  [#b##c#q#r#] Quit: " )
+        } else {
+            println( "" )
+            println( "┌─ ❌ Keep Trying! ───────────────────────────────────────────┐" )
+            println( "│" )
+            println( "│  👀 Watching for file changes..." )
+            println( "│  💾 Save your file to auto-rerun" )
+            println( "│" )
+            println( "└────────────────────────────────────────────────────────────┘" )
+            println( "" )
+            var testKey = exercise.test ? "  [#b##c#t#r#] Test" : ""
+            print( "[#b##c#r/Enter#r#] Rerun  [#b##c#h#r#] Hint#testKey#  [#b##c#l#r#] List  [#b##c#q#r#] Quit: " )
+        }
     }
 
     /**
@@ -531,126 +597,6 @@ class {
         }
 
         return lines
-    }
-
-    /**
-     * Wait for keyboard input or file changes - whichever happens first
-     * Uses Java WatchService for efficient event-driven file monitoring
-     *
-     * @exercise The current exercise
-     * @lastModified The last known modification time
-     * @return Command string or "FILE_CHANGED"
-     */
-    private function waitForCommandOrFileChange( required exercise, required lastModified ) {
-        var watcher = new src.Watcher()
-        var executor = executorNew( "boxlings", "cached" )
-        var asyncService = getBoxRuntime().getAsyncService()
-
-        try {
-            // Start watcher in background
-            var watcherFuture = asyncRun( () => {
-                var changed = watcher.watch( exercise.path, lastModified, 300 )
-                return changed ? "FILE_CHANGED" : "TIMEOUT"
-            }, executor )
-
-            // Start user input in background too
-            var inputFuture = asyncRun( () => {
-                return CLIRead().trim().lcase()
-            }, executor )
-
-            // Wait for whichever completes first
-            var result = asyncAny( [ watcherFuture, inputFuture ] ).get()
-
-            var watcherDone = watcherFuture.isDone() && !watcherFuture.isCompletedExceptionally()
-            var inputDone = inputFuture.isDone() && !inputFuture.isCompletedExceptionally()
-            var watcherResult = ""
-
-            if ( watcherDone ) {
-                watcherResult = watcherFuture.get()
-            }
-
-            // If watcher wins, use its result and cancel input immediately
-            if ( watcherDone && ( watcherResult == "FILE_CHANGED" || watcherResult == "TIMEOUT" ) ) {
-                result = watcherResult
-                inputFuture.cancel( true )
-            } else if ( inputDone ) {
-                result = inputFuture.get()
-                watcherFuture.cancel( true )
-            } else if ( isStruct( result ) ) {
-                result = "ERROR"
-            }
-
-            // DEBUG: Show what we got
-            println( "[DEBUG] waitForCommandOrFileChange returned: #result.toString()#" )
-            sleep( 500 )
-
-            // Stop watcher and cancel the other future
-            watcher.stop()
-
-            if ( result == "FILE_CHANGED" ) {
-                println( "[DEBUG] File changed - cancelling input future" )
-                var cancelled = inputFuture.cancel( true )
-                println( "[DEBUG] Input future cancelled: #cancelled#, isDone: #inputFuture.isDone()#, isCancelled: #inputFuture.isCancelled()#" )
-                return "FILE_CHANGED"
-            } else if ( result == "TIMEOUT" ) {
-                println( "[DEBUG] Timeout - cancelling input future" )
-                var cancelled = inputFuture.cancel( true )
-                println( "[DEBUG] Input future cancelled: #cancelled#" )
-                return "TIMEOUT"
-            } else {
-                // User input won
-                println( "[DEBUG] User input: [#result#] - cancelling watcher future" )
-                var cancelled = watcherFuture.cancel( true )
-                println( "[DEBUG] Watcher future cancelled: #cancelled#, isDone: #watcherFuture.isDone()#, isCancelled: #watcherFuture.isCancelled()#" )
-                return result
-            }
-
-        } catch( any e ) {
-            println( "⚠️  Watch error: #e.toString()#" )
-            return "ERROR"
-        } finally {
-            watcher.stop()
-            executor.shutdownNow()
-            asyncService.deleteExecutor( executor.name() )
-        }
-    }
-
-    /**
-     * Read command with optional file watching
-     */
-    private function readCommand( required exercise, required lastModified, boolean watchForChanges ) {
-        if ( watchForChanges ) {
-            return waitForCommandOrFileChange( exercise, lastModified )
-        }
-        return CLIRead().trim().lcase()
-    }
-
-    /**
-     * Prompt user for command with file watching
-     */
-    private function promptForCommand( required string prompt, required exercise, required lastModified, boolean watchForChanges ) {
-        print( prompt )
-        return readCommand( exercise, lastModified, watchForChanges )
-    }
-
-    /**
-     * Show hint and wait for user to press ENTER
-     */
-    private function showHintAndWait( required terminal, required exercise ) {
-        println( "" )
-        terminal.printHint( exercise.hint )
-        println( "" )
-        print( "Press ENTER to continue..." )
-        CLIRead()
-    }
-
-    /**
-     * Show exercise list and wait for user to press ENTER
-     */
-    private function showListAndWait( required appState ) {
-        listCommand( appState )
-        print( "Press ENTER to continue..." )
-        CLIRead()
     }
 
     /**
