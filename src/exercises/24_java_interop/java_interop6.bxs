@@ -1,0 +1,23 @@
+// TODO: Use a Java HashMap to demonstrate Java collection interop.
+// BoxLang auto-converts between its types and Java types where possible.
+
+import java:java.util.HashMap
+
+var map = new HashMap()
+
+// Put entries - Java HashMap.put( key, value )
+map.put( "name",    "BoxLang" )
+map.put( "version", "2.0" )
+map.put( "???",     "JVM" )    // TODO: add key "runtime" with value "JVM"
+
+// Get value by key
+var lang    = map.get( "name" )
+var runtime = map.get( "runtime" )
+
+// Check size
+var size = map.size()
+
+// Check containsKey
+var hasVersion = map.containsKey( "version" )
+
+println( "#lang# runs on the #runtime#. Map size: #size#" )

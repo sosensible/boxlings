@@ -1,0 +1,11 @@
+// TODO: Run multiple futures IN PARALLEL using asyncAll()
+// asyncAll() takes an array of futures/functions and waits for ALL of them.
+// Use .get() on the result to get all values as an array.
+
+var futures = [
+    () => "apple",
+    () => "banana",
+    () => "cherry"
+]
+
+var combined = ???( futures ).get()

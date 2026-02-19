@@ -1,0 +1,21 @@
+/**
+ * TestBox Test for classes2
+ */
+class extends="testbox.system.BaseSpec" {
+    function run() {
+        describe( "Classes 2 - fluent chaining with this", () => {
+            it( "chains setters and returns correct describe()", () => {
+                var book = new classes2()
+                    .setTitle( "BoxLang in Action" )
+                    .setAuthor( "Luis Majano" )
+                    .setPages( 350 )
+                expect( book.describe() ).toBe( "BoxLang in Action by Luis Majano (350 pages)" )
+            })
+            it( "each setter returns the same instance", () => {
+                var book = new classes2()
+                var result = book.setTitle( "Test" )
+                expect( result ).toBe( book )
+            })
+        })
+    }
+}

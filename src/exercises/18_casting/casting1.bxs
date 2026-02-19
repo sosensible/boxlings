@@ -1,0 +1,12 @@
+// TODO: Use the castAs operator to cast values to specific types.
+// castAs is a native BoxLang operator: value castAs type
+// Fix the ??? placeholders to perform the correct casts.
+
+var strNumber = "42"
+var asInt = strNumber castAs ???
+
+var dblStr = "3.14"
+var asDouble = dblStr castAs ???
+
+var boolStr = "true"
+var asBool = boolStr castAs ???

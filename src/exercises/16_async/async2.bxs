@@ -1,0 +1,10 @@
+// TODO: Use asyncRun() to double a number asynchronously.
+// The future should compute: number * 2
+// Call .get() to retrieve the value.
+
+var number = 21
+var future = asyncRun( () => {
+    return number ???
+} )
+
+var result = future.???()

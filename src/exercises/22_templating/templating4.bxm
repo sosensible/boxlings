@@ -1,0 +1,16 @@
+<bx:set items = [
+    { name: "Keyboard", price: 79.99 },
+    { name: "Mouse",    price: 29.99 },
+    { name: "Monitor",  price: 299.99 }
+]>
+
+<!--- TODO: Use bx:set to compute total, then bx:loop to output each item's name and price --->
+<bx:set total = 0>
+
+<bx:loop array="#items#" item="item">
+<bx:set total = total + item.???>
+<bx:output>#item.name#: $#numberFormat( item.price, "0.00" )#
+</bx:output>
+</bx:loop>
+
+<bx:output>Total: $#numberFormat( ???, "0.00" )#</bx:output>

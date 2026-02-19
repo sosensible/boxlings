@@ -1,0 +1,17 @@
+/**
+ * TestBox Test for casting2
+ */
+class extends="testbox.system.BaseSpec" {
+    function run() {
+        describe( "Casting 2 - castAs to String and String[]", () => {
+            it( "casts number to String", () => {
+                include "casting2.bxs"
+                expect( variables.asString ).toBeInstanceOf( "java.lang.String" )
+                expect( variables.asString ).toBe( "99" )
+            })
+            it( "casts array to String[]", () => {
+                expect( variables.asStringArray ).toBeInstanceOf( "java.lang.String[]" )
+            })
+        })
+    }
+}

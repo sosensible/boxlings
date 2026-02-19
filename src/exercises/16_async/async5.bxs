@@ -1,0 +1,8 @@
+// TODO: Chain async operations using .then()
+// .then( callback ) runs when the future completes, returning a new future.
+// Chain: start with 10, then multiply by 2, then add 5.
+
+var result = asyncRun( () => 10 )
+    .???( val => val * 2 )
+    .???( val => val + 5 )
+    .get()

@@ -1,0 +1,27 @@
+// TODO: Create a basic BoxLang class with properties.
+// BoxLang auto-generates getters/setters for all properties.
+// Fix the placeholders below.
+
+class {
+
+    // TODO: Add a "name" property of type "string"
+    property name="???" type="string"
+
+    // TODO: Add an "age" property of type "numeric" with a default of 0
+    property name="age" type="numeric" default=???
+
+    function init( required string name, required numeric age ) {
+        variables.name = arguments.name
+        variables.age  = arguments.age
+        return this
+    }
+
+    function greet() {
+        return "Hi, I'm #variables.name# and I'm #variables.age# years old."
+    }
+
+    function main( args = [] ) {
+        var p = new classes1( "BoxLang", 2 )
+        println( p.greet() )
+    }
+}

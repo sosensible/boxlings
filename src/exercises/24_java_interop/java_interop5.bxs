@@ -1,0 +1,15 @@
+// TODO: Catch Java exceptions thrown from Java method calls.
+// Java exceptions are caught just like BoxLang exceptions using try/catch.
+// The "type" in catch matches the full Java exception class name.
+
+var result = ""
+var errorType = ""
+
+try {
+    // This will throw java.lang.NumberFormatException
+    var parsed = createObject( "java", "java.lang.Integer" ).parseInt( "not-a-number" )
+    result = parsed
+} catch( "java.lang.NumberFormatException" e ) {
+    result = ???         // TODO: set result to "caught"
+    errorType = e.???    // TODO: store the error message
+}

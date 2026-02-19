@@ -1,0 +1,23 @@
+/**
+ * TestBox Test for templating4
+ */
+class extends="testbox.system.BaseSpec" {
+    function run() {
+        describe( "Templating 4 - bx:loop with totals", () => {
+            it( "outputs all item names", () => {
+                savecontent variable="out" {
+                    include "templating4.bxm"
+                }
+                expect( out ).toInclude( "Keyboard" )
+                expect( out ).toInclude( "Mouse" )
+                expect( out ).toInclude( "Monitor" )
+            })
+            it( "outputs correct total", () => {
+                savecontent variable="out" {
+                    include "templating4.bxm"
+                }
+                expect( out ).toInclude( "409.97" )
+            })
+        })
+    }
+}

@@ -1,0 +1,22 @@
+/**
+ * TestBox Test for quiz1
+ */
+class extends="testbox.system.BaseSpec" {
+    function run() {
+        describe( "Quiz 1 - Variables, Closures & Null Handling", () => {
+            it( "creates correct greeting", () => {
+                include "quiz1.bxs"
+                expect( variables.greeting ).toBe( "Hello, BoxLang!" )
+            })
+            it( "null coalescing returns default", () => {
+                expect( variables.safe ).toBe( "default" )
+            })
+            it( "multiplier closure works", () => {
+                expect( variables.multiplier( 4 ) ).toBe( 12 )
+            })
+            it( "safe navigation returns Unknown when address is null", () => {
+                expect( variables.city ).toBe( "Unknown" )
+            })
+        })
+    }
+}

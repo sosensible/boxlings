@@ -1,0 +1,18 @@
+/**
+ * TestBox Test for templating2
+ */
+class extends="testbox.system.BaseSpec" {
+    function run() {
+        describe( "Templating 2 - bx:loop over array", () => {
+            it( "outputs all fruits", () => {
+                savecontent variable="out" {
+                    include "templating2.bxm"
+                }
+                expect( out ).toInclude( "apple" )
+                expect( out ).toInclude( "banana" )
+                expect( out ).toInclude( "cherry" )
+                expect( out ).toInclude( "date" )
+            })
+        })
+    }
+}

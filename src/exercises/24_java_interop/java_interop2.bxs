@@ -1,0 +1,13 @@
+// TODO: Import a Java class using the import statement with the java: prefix.
+// Then use it directly without the full class path.
+
+// Import Java's UUID class
+import java:java.util.???
+
+// Generate a random UUID
+var id = UUID.randomUUID().toString()
+
+// Import Java's System class to get current time
+import java:java.lang.System as JSystem
+
+var timeMs = JSystem.currentTimeMillis()

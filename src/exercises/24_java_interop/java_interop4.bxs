@@ -1,0 +1,17 @@
+// TODO: Call Java static methods.
+// Static methods are called on the CLASS: ClassName::method() or ClassName.method()
+// Use javaCast() to provide typed arguments when needed.
+
+import java:java.lang.Math as JMath
+
+// PI constant (static field)
+var pi = JMath.PI
+
+// Call Math.max() with properly typed int arguments
+var maxVal = JMath.max( javaCast( "int", 100 ), javaCast( "int", 200 ) )
+
+// Call Math.sqrt() - fix the argument cast to double
+var sqrtOf144 = JMath.sqrt( javaCast( "???", 144 ) )
+
+// Math.abs() with a negative long
+var absVal = JMath.abs( javaCast( "long", ??? ) )  // should be 99

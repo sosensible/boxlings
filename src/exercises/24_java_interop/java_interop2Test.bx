@@ -1,0 +1,18 @@
+/**
+ * TestBox Test for java_interop2
+ */
+class extends="testbox.system.BaseSpec" {
+    function run() {
+        describe( "Java Interop 2 - import java: prefix", () => {
+            it( "generates a valid UUID string", () => {
+                include "java_interop2.bxs"
+                expect( variables.id ).toBeString()
+                expect( variables.id.len() ).toBe( 36 )  // UUID format: 8-4-4-4-12
+            })
+            it( "gets current time in ms", () => {
+                expect( variables.timeMs ).toBeGT( 0 )
+                expect( variables.timeMs ).toBeInstanceOf( "java.lang.Long" )
+            })
+        })
+    }
+}

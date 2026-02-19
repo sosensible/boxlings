@@ -1,0 +1,29 @@
+// TODO: Use static properties and functions.
+// Static members belong to the CLASS, not instances.
+// Access them with ClassName::method() or ClassName::property
+
+class {
+
+    // TODO: Declare a static counter property (numeric, default 0)
+    static {
+        count: ???
+    }
+
+    function init() {
+        // Increment the static counter each time an instance is created
+        static.count ???= 1
+        return this
+    }
+
+    // TODO: Return the static count
+    static function getCount() {
+        return static.???
+    }
+
+    function main( args = [] ) {
+        new classes4()
+        new classes4()
+        new classes4()
+        println( "Instances created: #classes4::getCount()#" )
+    }
+}

@@ -1,0 +1,21 @@
+/**
+ * TestBox Test for classes1
+ */
+class extends="testbox.system.BaseSpec" {
+    function run() {
+        describe( "Classes 1 - basic properties", () => {
+            it( "stores name property", () => {
+                var p = new classes1( "Alice", 30 )
+                expect( p.getName() ).toBe( "Alice" )
+            })
+            it( "stores age property", () => {
+                var p = new classes1( "Bob", 25 )
+                expect( p.getAge() ).toBe( 25 )
+            })
+            it( "greet() returns correct string", () => {
+                var p = new classes1( "Carol", 28 )
+                expect( p.greet() ).toBe( "Hi, I'm Carol and I'm 28 years old." )
+            })
+        })
+    }
+}

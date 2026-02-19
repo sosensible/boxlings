@@ -1,0 +1,21 @@
+// TODO: Use bx:query to run a query of queries (in-memory query).
+// Create a query named "people", then query it using queryExecute with dbtype="query".
+// The result should have only people older than 25.
+
+var people = queryNew(
+    "name,age",
+    "varchar,integer",
+    [
+        { name: "Alice", age: 30 },
+        { name: "Bob",   age: 22 },
+        { name: "Carol", age: 28 },
+        { name: "Dave",  age: 20 }
+    ]
+)
+
+// TODO: Fix the SQL - filter people WHERE age > 25
+var adults = queryExecute(
+    "SELECT name, age FROM people WHERE ???",
+    [],
+    { dbtype: "???" }
+)

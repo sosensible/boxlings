@@ -1,0 +1,19 @@
+// TODO: Use asyncAny() to race multiple futures and get the FIRST result.
+// asyncAny() takes an array of futures and returns the first one to complete.
+// Hint: The fastest future wins the race!
+
+var futures = [
+    asyncRun( () => {
+        sleep( 100 )
+        return "slow"
+    }),
+    asyncRun( () => {
+        return "fast"
+    }),
+    asyncRun( () => {
+        sleep( 50 )
+        return "medium"
+    })
+]
+
+var winner = ???( futures ).get()

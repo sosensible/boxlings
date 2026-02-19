@@ -1,0 +1,8 @@
+// TODO: Use bx:http to make an HTTP GET request.
+// Fix the missing attribute and value below.
+// The url attribute should point to: "https://httpbin.org/get"
+
+bx:http url="???" method="get" result="response" {}
+
+println( "Status: #response.statusCode#" )
+println( "Got a response: #response.statusCode == 200#" )

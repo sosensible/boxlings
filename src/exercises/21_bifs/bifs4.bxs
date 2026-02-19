@@ -1,0 +1,17 @@
+// TODO: Use date/time BIFs.
+// Fix the ??? to use the correct BIF names.
+
+// Get the current date/time
+var now  = ???()
+
+// Get just the year from the date
+var year = ???( now )
+
+// Format a specific date as "yyyy-MM-dd"
+var birthday = createDate( 1990, 6, 15 )
+var formatted = dateFormat( birthday, "???" )
+
+// Calculate difference between two dates in days
+var start = createDate( 2026, 1, 1 )
+var end   = createDate( 2026, 12, 31 )
+var days  = dateDiff( "???", start, end )

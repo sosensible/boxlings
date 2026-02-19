@@ -1,0 +1,23 @@
+// TODO: Access BoxLang's $bx meta-programming object.
+// Every BoxLang class instance has a $bx property that exposes metadata.
+// Use $bx.meta to inspect the class at runtime.
+
+class {
+
+    property name="value" type="string"
+
+    function init( required string value ) {
+        variables.value = arguments.value
+        return this
+    }
+
+    // TODO: Return the class name from $bx meta
+    function getClassName() {
+        return this.$bx.meta.???
+    }
+
+    // TODO: Return the number of properties defined on this class
+    function getPropertyCount() {
+        return this.$bx.meta.???.len()
+    }
+}

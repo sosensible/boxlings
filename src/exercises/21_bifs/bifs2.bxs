@@ -1,0 +1,19 @@
+// TODO: Use array BIFs as member functions.
+// All arrayXxx() BIFs can be called directly on arrays.
+
+var numbers = [ 3, 1, 4, 1, 5, 9, 2, 6, 5, 3 ]
+
+// Sort the array ascending
+var sorted = numbers.???()
+
+// Get the first element (after sort)
+var first = sorted[ 1 ]
+
+// Find if 9 exists
+var hasNine = numbers.???( 9 )
+
+// Remove duplicates using unique BIF
+var unique = numbers.???()
+
+// Sum all numbers using sum() member function
+var total = numbers.???()

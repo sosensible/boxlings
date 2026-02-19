@@ -1,0 +1,22 @@
+/**
+ * TestBox Test for bifs3
+ */
+class extends="testbox.system.BaseSpec" {
+    function run() {
+        describe( "BIFs 3 - Struct member functions", () => {
+            it( "checks key existence", () => {
+                include "bifs3.bxs"
+                expect( variables.hasAge ).toBeTrue()
+            })
+            it( "gets keys array", () => {
+                expect( variables.keys ).toHaveLength( 3 )
+            })
+            it( "gets values array", () => {
+                expect( variables.vals ).toHaveLength( 3 )
+            })
+            it( "counts keys", () => {
+                expect( variables.keyCount ).toBe( 3 )
+            })
+        })
+    }
+}

@@ -1,0 +1,37 @@
+// TODO: Fluent method chaining via returning "this".
+// Each setter should return "this" so calls can be chained.
+
+class {
+
+    property name="title"  type="string"  default=""
+    property name="author" type="string"  default=""
+    property name="pages"  type="numeric" default=0
+
+    // TODO: Fix each setter to return this (for chaining)
+    function setTitle( required string title ) {
+        variables.title = arguments.title
+        return ???
+    }
+
+    function setAuthor( required string author ) {
+        variables.author = arguments.author
+        return ???
+    }
+
+    function setPages( required numeric pages ) {
+        variables.pages = arguments.pages
+        return ???
+    }
+
+    function describe() {
+        return "#variables.title# by #variables.author# (#variables.pages# pages)"
+    }
+
+    function main( args = [] ) {
+        var book = new classes2()
+            .setTitle( "BoxLang in Action" )
+            .setAuthor( "Luis Majano" )
+            .setPages( 350 )
+        println( book.describe() )
+    }
+}

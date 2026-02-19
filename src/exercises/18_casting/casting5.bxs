@@ -1,0 +1,15 @@
+// TODO: Practice type conversion functions: val(), toString(), int(), bool()
+// These are BoxLang BIFs for common conversions.
+// Fix each conversion below.
+
+// Convert string "123.45" to a number using val()
+var strVal  = "123.45"
+var numVal  = ???( strVal )
+
+// Convert a number to a string using toString()
+var numIn   = 2026
+var strOut  = ???( numIn )
+
+// Round a double to an integer using int()
+var dbl     = 9.99
+var rounded = ???( dbl )

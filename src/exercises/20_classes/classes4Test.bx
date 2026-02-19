@@ -1,0 +1,20 @@
+/**
+ * TestBox Test for classes4
+ */
+class extends="testbox.system.BaseSpec" {
+    function run() {
+        describe( "Classes 4 - static properties and methods", () => {
+            it( "counts instances via static property", () => {
+                // Reset by accessing fresh
+                var before = classes4::getCount()
+                new classes4()
+                new classes4()
+                var after = classes4::getCount()
+                expect( after - before ).toBe( 2 )
+            })
+            it( "getCount() is callable on the class without instantiation", () => {
+                expect( classes4::getCount() ).toBeGTE( 0 )
+            })
+        })
+    }
+}

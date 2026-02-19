@@ -1,0 +1,20 @@
+/**
+ * TestBox Test for casting1
+ */
+class extends="testbox.system.BaseSpec" {
+    function run() {
+        describe( "Casting 1 - castAs operator with primitives", () => {
+            it( "casts string to int", () => {
+                include "casting1.bxs"
+                expect( variables.asInt ).toBe( 42 )
+                expect( variables.asInt ).toBeInstanceOf( "java.lang.Integer" )
+            })
+            it( "casts string to double", () => {
+                expect( variables.asDouble ).toBe( 3.14 )
+            })
+            it( "casts string to boolean", () => {
+                expect( variables.asBool ).toBeTrue()
+            })
+        })
+    }
+}

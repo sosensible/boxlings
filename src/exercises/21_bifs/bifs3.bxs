@@ -1,0 +1,18 @@
+// TODO: Use struct BIFs as member functions.
+
+var person = { name: "Alice", age: 30, city: "Boston" }
+
+// Check if "age" key exists
+var hasAge = person.???( "age" )
+
+// Get all keys as an array
+var keys = person.???()
+
+// Get all values as an array
+var vals = person.???()
+
+// Delete "city" key and return the new struct
+var smaller = person.delete( "city" )
+
+// Count the number of keys
+var keyCount = person.???()

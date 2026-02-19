@@ -1,0 +1,23 @@
+/**
+ * TestBox Test for bifs2
+ */
+class extends="testbox.system.BaseSpec" {
+    function run() {
+        describe( "BIFs 2 - Array member functions", () => {
+            it( "sorts array ascending", () => {
+                include "bifs2.bxs"
+                expect( variables.sorted[ 1 ] ).toBe( 1 )
+                expect( variables.sorted.last() ).toBe( 9 )
+            })
+            it( "finds element in array", () => {
+                expect( variables.hasNine ).toBeGT( 0 )
+            })
+            it( "removes duplicates", () => {
+                expect( variables.unique.len() ).toBeLT( variables.numbers.len() )
+            })
+            it( "computes sum", () => {
+                expect( variables.total ).toBe( 39 )
+            })
+        })
+    }
+}

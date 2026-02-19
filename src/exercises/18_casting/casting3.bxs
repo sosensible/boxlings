@@ -1,0 +1,13 @@
+// TODO: Use javaCast() to cast values for Java method calls.
+// javaCast( type, value ) casts a BoxLang value to a Java primitive/type.
+// Available types: "int", "long", "double", "float", "boolean", "string", "null"
+
+// Cast 42 to a Java int
+var asInt = javaCast( "???", 42 )
+
+// Cast 3.14 to a Java double
+var asDouble = javaCast( "???", 3.14 )
+
+// Demonstrate: pass typed values to Java's Math.max()
+var jMath = createObject( "java", "java.lang.Math" )
+var maxVal = jMath.max( javaCast( "int", 10 ), javaCast( "int", 20 ) )

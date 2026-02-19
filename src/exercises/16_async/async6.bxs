@@ -1,0 +1,12 @@
+// TODO: Handle errors in async code using .exceptionally()
+// .exceptionally( handler ) catches exceptions from the future.
+// The handler receives the exception and should return a fallback value.
+// Fix the future so that division-by-zero returns -1 as the fallback.
+
+var result = asyncRun( () => {
+    return 10 / 0   // This will throw!
+}).exceptionally( err => {
+    return ???
+}).get()
+
+println( "Result: #result#" )

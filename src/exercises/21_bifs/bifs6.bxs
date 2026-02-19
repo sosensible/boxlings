@@ -1,0 +1,17 @@
+// TODO: Discover available BIFs using getFunctionList().
+// getFunctionList() returns a struct of all registered BIFs.
+// Use it to inspect the runtime.
+
+// Get the full function list
+var allFunctions = getFunctionList()
+
+// Count how many BIFs are available
+var count = allFunctions.???()
+
+// Check that some specific BIFs exist
+var hasLen  = allFunctions.???( "len" )
+var hasNow  = allFunctions.???( "now" )
+var hasIsNull = allFunctions.???( "isNull" )
+
+println( "Total BIFs registered: #count#" )
+println( "Has len(): #hasLen#" )

@@ -1,0 +1,15 @@
+/**
+ * TestBox Test for casting3
+ */
+class extends="testbox.system.BaseSpec" {
+    function run() {
+        describe( "Casting 3 - javaCast()", () => {
+            it( "uses javaCast to create typed values", () => {
+                include "casting3.bxs"
+                expect( variables.asInt ).toBe( 42 )
+                expect( variables.asDouble ).toBe( 3.14 )
+                expect( variables.maxVal ).toBe( 20 )
+            })
+        })
+    }
+}

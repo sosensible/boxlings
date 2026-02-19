@@ -1,0 +1,22 @@
+// TODO: Use math BIFs.
+// BoxLang has many math functions built-in.
+
+// Absolute value
+var absVal = abs( ??? )      // should be 42
+
+// Power: 2 raised to the 10th
+var power = ???( 2, 10 )
+
+// Square root of 144
+var sqrtVal = ???( 144 )
+
+// Round 3.7 to nearest integer
+var rounded = ???( 3.7 )
+
+// Min of 10 and 20
+var minVal = ???( 10, 20 )
+
+// Max of 10 and 20
+var maxVal = ???( 10, 20 )
+
+println( "abs: #absVal#, power: #power#, sqrt: #sqrtVal#, round: #rounded#" )

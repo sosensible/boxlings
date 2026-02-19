@@ -1,0 +1,20 @@
+// TODO: Create a Circle class that extends classes3 (the Shape base class).
+// Override area() to return PI * radius^2.
+// Use variables.radius for the radius, and the built-in pi() BIF.
+
+class extends="classes3" {
+
+    property name="radius" type="numeric" default=0
+
+    function init( required string color, required numeric radius ) {
+        // Call the parent init to set color
+        super.init( arguments.color )
+        variables.radius = arguments.???
+        return this
+    }
+
+    // TODO: Override area() to compute pi * radius^2
+    function area() {
+        return ??? * ( variables.radius ^ 2 )
+    }
+}

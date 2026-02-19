@@ -1,0 +1,39 @@
+// QUIZ 3: OOP, Error Handling & Casting
+// This class is a combined quiz. Fix ALL the ??? placeholders.
+
+class {
+
+    // TODO: Add a property for "name" (string) and "score" (numeric, default 0)
+    property name="???" type="string"
+    property name="???" type="numeric" default=0
+
+    function init( required string name ) {
+        variables.name = arguments.name
+        return this
+    }
+
+    // TODO: Add points to score - fix the variable reference
+    function addPoints( required numeric points ) {
+        variables.??? += arguments.points
+        return this
+    }
+
+    // TODO: Return a grade using a ternary: A(>=90), B(>=75), C(>=60), else F
+    function getGrade() {
+        return variables.score >= 90 ? "A"
+             : variables.score >= 75 ? "B"
+             : variables.score >= 60 ? "???"
+             : "???"
+    }
+
+    // TODO: Safely cast score to a Java int using castAs
+    function getScoreAsInt() {
+        return variables.score castAs ???
+    }
+
+    function main( args = [] ) {
+        var player = new quiz3( "BoxLanger" )
+        player.addPoints( 85 )
+        println( "Grade: #player.getGrade()#" )
+    }
+}

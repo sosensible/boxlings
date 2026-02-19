@@ -1,0 +1,21 @@
+// TODO: Use CLIGetArgs() to parse named command-line options.
+// CLIGetArgs() returns a struct: { positionals: [], options: {} }
+// Fix the placeholders to correctly access positionals and options.
+
+var cliArgs = CLIGetArgs()
+
+// Get the first positional argument (e.g. "boxlang cli_apps2.bxs greet")
+var command = cliArgs.???[ 1 ] ?: "help"
+
+// Get the --name option (e.g. --name=BoxLang), default to "Stranger"
+var name = cliArgs.???.name ?: "Stranger"
+
+// Get the --loud flag (boolean option, e.g. --loud)
+var loud = cliArgs.???.loud ?: false
+
+var message = "Hello, #name#!"
+if ( loud ) {
+    message = message.uCase()
+}
+
+result = message

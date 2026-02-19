@@ -1,0 +1,22 @@
+/**
+ * TestBox Test for java_interop4
+ */
+class extends="testbox.system.BaseSpec" {
+    function run() {
+        describe( "Java Interop 4 - static methods, javaCast", () => {
+            it( "reads PI constant", () => {
+                include "java_interop4.bxs"
+                expect( variables.pi ).toBeCloseTo( 3.14159, 4 )
+            })
+            it( "calls Math.max()", () => {
+                expect( variables.maxVal ).toBe( 200 )
+            })
+            it( "calls Math.sqrt()", () => {
+                expect( variables.sqrtOf144 ).toBeCloseTo( 12.0, 4 )
+            })
+            it( "calls Math.abs() on -99", () => {
+                expect( variables.absVal ).toBe( 99 )
+            })
+        })
+    }
+}

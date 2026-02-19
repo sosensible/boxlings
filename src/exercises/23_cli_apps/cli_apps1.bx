@@ -1,0 +1,12 @@
+// TODO: A CLI app in BoxLang is a .bx class with a main( args ) method.
+// The args parameter receives command-line arguments as an array.
+// Fix the main() method to greet the first argument, or "World" if none provided.
+
+class {
+
+    function main( args = [] ) {
+        // TODO: Use args[1] as the name, defaulting to "World" if not provided
+        var name = args.len() > 0 ? ???[ 1 ] : "World"
+        println( "Hello, #name#!" )
+    }
+}

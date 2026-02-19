@@ -1,0 +1,22 @@
+/**
+ * TestBox Test for bifs4
+ */
+class extends="testbox.system.BaseSpec" {
+    function run() {
+        describe( "BIFs 4 - Date/Time BIFs", () => {
+            it( "now() returns a date", () => {
+                include "bifs4.bxs"
+                expect( variables.now ).toBeInstanceOf( "java.util.Date" )
+            })
+            it( "year() extracts the year", () => {
+                expect( variables.year ).toBe( year( now() ) )
+            })
+            it( "formats birthday correctly", () => {
+                expect( variables.formatted ).toBe( "1990-06-15" )
+            })
+            it( "calculates days in 2026", () => {
+                expect( variables.days ).toBe( 364 )
+            })
+        })
+    }
+}

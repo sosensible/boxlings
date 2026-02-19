@@ -1,0 +1,7 @@
+<bx:set title = "BoxLang Templates">
+<bx:set version = "2026">
+
+<bx:output>
+Welcome to #???#!
+Version: #???#
+</bx:output>

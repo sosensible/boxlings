@@ -1,0 +1,32 @@
+// TODO: Use annotations to add metadata to a class.
+// Annotations go BEFORE the class/function/property declaration with @.
+// Add: @singleton annotation to the class, @required to the "apiKey" property,
+// and @cached annotation to the fetchData() function.
+
+// TODO: Add @singleton annotation here
+class {
+
+    // TODO: Add @required annotation to this property
+    property name="apiKey" type="string"
+
+    function init( required string apiKey ) {
+        variables.apiKey = arguments.apiKey
+        return this
+    }
+
+    // TODO: Add @cached annotation here
+    function fetchData() {
+        return "data-for-#variables.apiKey#"
+    }
+
+    function getMetaInfo() {
+        var meta = getMetadata( this )
+        return meta
+    }
+
+    function main( args = [] ) {
+        var svc = new classes6( "secret-key-123" )
+        var meta = svc.getMetaInfo()
+        println( "singleton: #meta.annotations.singleton#" )
+    }
+}

@@ -1,0 +1,11 @@
+// TODO: Use bx:loop to iterate over an array and build a result.
+// Loop over "fruits" and collect each fruit into the "result" array.
+// Hint: bx:loop syntax: bx:loop array="#fruits#" item="fruit" { ... }
+
+var fruits = [ "apple", "banana", "cherry" ]
+var result = []
+
+// TODO: Fix the bx:loop below - replace ??? with the correct attribute value
+bx:loop array="#fruits#" item="???" {
+    result.append( ??? )
+}

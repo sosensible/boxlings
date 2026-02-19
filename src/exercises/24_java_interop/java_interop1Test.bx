@@ -1,0 +1,14 @@
+/**
+ * TestBox Test for java_interop1
+ */
+class extends="testbox.system.BaseSpec" {
+    function run() {
+        describe( "Java Interop 1 - createObject and StringBuilder", () => {
+            it( "builds string with StringBuilder", () => {
+                include "java_interop1.bxs"
+                expect( variables.result ).toBe( "Hello, BoxLang!" )
+                expect( variables.result ).toBeInstanceOf( "java.lang.String" )
+            })
+        })
+    }
+}

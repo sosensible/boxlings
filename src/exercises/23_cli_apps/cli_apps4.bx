@@ -1,0 +1,22 @@
+// TODO: Use environment variables in a CLI app.
+// getSystemSetting( name, default ) reads env vars or JVM properties.
+// Fix the placeholders to read configuration from the environment.
+
+class {
+
+    function main( args = [] ) {
+        // TODO: Read "APP_NAME" env var, default to "BoxLang App"
+        var appName = getSystemSetting( "???", "BoxLang App" )
+
+        // TODO: Read "APP_PORT" env var, default to "8080"
+        var port = getSystemSetting( "???", "8080" )
+
+        // TODO: Read "APP_DEBUG" env var, default to "false"
+        var debug = getSystemSetting( "???", "false" )
+
+        println( "Starting #appName# on port #port#" )
+        if ( debug == "true" ) {
+            println( "[DEBUG] Debug mode enabled" )
+        }
+    }
+}

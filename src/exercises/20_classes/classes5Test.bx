@@ -1,0 +1,17 @@
+/**
+ * TestBox Test for classes5
+ */
+class extends="testbox.system.BaseSpec" {
+    function run() {
+        describe( "Classes 5 - pseudo-constructor", () => {
+            it( "createdAt is set automatically", () => {
+                var obj = new classes5( "Widget" )
+                expect( obj.getTimestamp() ).toBeInstanceOf( "java.util.Date" )
+            })
+            it( "name is set via init()", () => {
+                var obj = new classes5( "Gadget" )
+                expect( obj.getName() ).toBe( "Gadget" )
+            })
+        })
+    }
+}

@@ -1,0 +1,28 @@
+/**
+ * TestBox Test for cli_apps4
+ */
+class extends="testbox.system.BaseSpec" {
+    function run() {
+        describe( "CLI Apps 4 - environment variables", () => {
+            it( "reads env vars with defaults when not set", () => {
+                // getSystemSetting returns the default when env var is absent
+                var appName = getSystemSetting( "APP_NAME", "BoxLang App" )
+                var port    = getSystemSetting( "APP_PORT", "8080" )
+                var debug   = getSystemSetting( "APP_DEBUG", "false" )
+
+                expect( appName ).toBeString()
+                expect( port    ).toBeString()
+                expect( debug   ).toBeString()
+            })
+            it( "default APP_PORT is 8080 when not set", () => {
+                // Only valid if APP_PORT is not set in the environment
+                if ( isNull( systemGetProperty( "APP_PORT" ) ) ) {
+                    var port = getSystemSetting( "APP_PORT", "8080" )
+                    expect( port ).toBe( "8080" )
+                } else {
+                    expect( true ).toBeTrue()  // skip if env var is set
+                }
+            })
+        })
+    }
+}

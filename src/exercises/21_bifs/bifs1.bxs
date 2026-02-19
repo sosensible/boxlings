@@ -1,0 +1,20 @@
+// TODO: Use string BIFs and member functions.
+// BoxLang's string BIFs can be called as methods directly on strings.
+// Fix the ??? placeholders.
+
+var sentence = "  Hello, BoxLang World!  "
+
+// Remove leading/trailing whitespace
+var trimmed = sentence.???()
+
+// Convert to uppercase using a member function
+var upper = trimmed.???()
+
+// Check if it contains "BoxLang"
+var hasBoxLang = trimmed.???( "BoxLang" )
+
+// Replace "World" with "Universe"
+var replaced = trimmed.???( "World", "Universe" )
+
+// Get the length
+var length = trimmed.???()

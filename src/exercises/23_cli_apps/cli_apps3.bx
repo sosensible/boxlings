@@ -1,0 +1,29 @@
+// TODO: Build a simple number calculator CLI app.
+// It reads two numbers and an operation from args.
+// Supported operations: add, subtract, multiply, divide
+
+class {
+
+    function main( args = [] ) {
+        if ( args.len() < 3 ) {
+            println( "Usage: boxlang cli_apps3.bx <num1> <operation> <num2>" )
+            println( "Example: boxlang cli_apps3.bx 10 add 5" )
+            return
+        }
+
+        var num1 = val( args[ 1 ] )
+        // TODO: Fix the operation and num2 extraction
+        var op   = args[ ??? ]
+        var num2 = val( args[ ??? ] )
+
+        var result = switch( op ) {
+            case "add"      => num1 + num2
+            case "subtract" => num1 - num2
+            case "multiply" => num1 * num2
+            case "divide"   => num2 != 0 ? num1 / num2 : "Error: division by zero"
+            default         => "Unknown operation: #op#"
+        }
+
+        println( "#num1# #op# #num2# = #result#" )
+    }
+}

@@ -1,0 +1,15 @@
+// TODO: Use the instanceOf operator to check types before casting.
+// instanceOf returns true/false: value instanceOf "typeName"
+// Fix the type checks to match each variable's actual type.
+
+var name = "BoxLang"
+var isString = name instanceOf "???"
+
+var count = 10
+var isNumeric = count instanceOf "???"
+
+var active = true
+var isBoolean = active instanceOf "???"
+
+var items = [ 1, 2, 3 ]
+var isArray = items instanceOf "ortus.boxlang.runtime.types.Array"

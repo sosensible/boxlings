@@ -1,0 +1,20 @@
+// QUIZ 2: Arrays, Structs & Functional Programming
+// Fix ALL the ??? placeholders.
+
+// 1. Filter odd numbers from the array
+var numbers = [ 1, 2, 3, 4, 5, 6, 7, 8, 9, 10 ]
+var odds = numbers.filter( n => n ??? 2 != 0 )
+
+// 2. Map each word to uppercase
+var words = [ "hello", "world", "boxlang" ]
+var uppercased = words.???( w => w.uCase() )
+
+// 3. Reduce to sum
+var total = numbers.reduce( ( acc, n ) => acc ??? n, 0 )
+
+// 4. Struct deep access + member function
+var config = {
+    server: { host: "localhost", port: 8080 },
+    debug: true
+}
+var host = config.server.???

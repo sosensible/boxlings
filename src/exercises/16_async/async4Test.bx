@@ -1,0 +1,13 @@
+/**
+ * TestBox Test for async4
+ */
+class extends="testbox.system.BaseSpec" {
+    function run() {
+        describe( "Async 4 - asyncAny race", () => {
+            it( "returns the first future to complete", () => {
+                include "async4.bxs"
+                expect( variables.winner ).toBe( "fast" )
+            })
+        })
+    }
+}

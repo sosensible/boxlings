@@ -1,0 +1,28 @@
+/**
+ * TestBox Test for classes6
+ */
+class extends="testbox.system.BaseSpec" {
+    function run() {
+        describe( "Classes 6 - annotations and metadata", () => {
+            it( "class has @singleton annotation", () => {
+                var obj  = new classes6( "key" )
+                var meta = getMetadata( obj )
+                expect( meta.annotations ).toHaveKey( "singleton" )
+            })
+            it( "apiKey property has @required annotation", () => {
+                var obj  = new classes6( "key" )
+                var meta = getMetadata( obj )
+                var prop = meta.properties.filter( p => p.name == "apiKey" )
+                expect( prop ).toHaveLength( 1 )
+                expect( prop[ 1 ].annotations ).toHaveKey( "required" )
+            })
+            it( "fetchData() has @cached annotation", () => {
+                var obj  = new classes6( "key" )
+                var meta = getMetadata( obj )
+                var fn   = meta.functions.filter( f => f.name == "fetchData" )
+                expect( fn ).toHaveLength( 1 )
+                expect( fn[ 1 ].annotations ).toHaveKey( "cached" )
+            })
+        })
+    }
+}

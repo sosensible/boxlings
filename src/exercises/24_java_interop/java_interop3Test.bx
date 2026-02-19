@@ -1,0 +1,16 @@
+/**
+ * TestBox Test for java_interop3
+ */
+class extends="testbox.system.BaseSpec" {
+    function run() {
+        describe( "Java Interop 3 - new java: instantiation", () => {
+            it( "creates ArrayList with 3 items", () => {
+                include "java_interop3.bxs"
+                expect( variables.size ).toBe( 3 )
+            })
+            it( "retrieves first item (index 0)", () => {
+                expect( variables.firstItem ).toBe( "first" )
+            })
+        })
+    }
+}

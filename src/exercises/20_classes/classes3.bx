@@ -1,0 +1,27 @@
+// TODO: BoxLang supports single inheritance using "extends".
+// Create a Shape base class, then a Circle that extends it.
+// Override the area() method in Circle.
+
+class {
+
+    property name="color" type="string" default="white"
+
+    function init( required string color ) {
+        variables.color = arguments.color
+        return this
+    }
+
+    // Base area - returns 0 (to be overridden)
+    function area() {
+        return 0
+    }
+
+    function describe() {
+        return "A #variables.color# shape with area: #area()#"
+    }
+
+    function main( args = [] ) {
+        var c = new classes3Circle( "red", 5 )
+        println( c.describe() )
+    }
+}

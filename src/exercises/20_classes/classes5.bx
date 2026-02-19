@@ -1,0 +1,28 @@
+// TODO: Use the pseudo-constructor block.
+// Code BETWEEN the last property and the first function is the pseudo-constructor.
+// It runs BEFORE init() when an object is created.
+// Use it to set up a "createdAt" timestamp.
+
+class {
+
+    property name="name"      type="string"
+    property name="createdAt" type="date"
+
+    // -- Pseudo-constructor: runs automatically on creation --
+    // TODO: Set variables.createdAt to now()
+    variables.createdAt = ???()
+
+    function init( required string name ) {
+        variables.name = arguments.name
+        return this
+    }
+
+    function getTimestamp() {
+        return variables.createdAt
+    }
+
+    function main( args = [] ) {
+        var obj = new classes5( "Widget" )
+        println( "Created at: #obj.getTimestamp()#" )
+    }
+}

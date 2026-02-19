@@ -1,0 +1,8 @@
+// TODO: Run a function asynchronously using asyncRun()
+// asyncRun() returns a BoxFuture. Call .get() to wait for the result.
+
+var result = ???( () => {
+    return "Hello from the future!"
+} ).get()
+
+println( result )

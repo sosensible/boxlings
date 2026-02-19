@@ -1,0 +1,11 @@
+<bx:set score = 85>
+
+<!--- TODO: Fix the bx:if condition - show the correct message for each range --->
+<!--- score >= 90 → "Excellent!", score >= 70 → "Good job!", else → "Keep trying!" --->
+<bx:if score ??? 90>
+<bx:output>Excellent!</bx:output>
+<bx:elseif score ??? 70>
+<bx:output>Good job!</bx:output>
+<bx:else>
+<bx:output>Keep trying!</bx:output>
+</bx:if>

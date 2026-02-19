@@ -1,0 +1,16 @@
+/**
+ * TestBox Test for async3
+ */
+class extends="testbox.system.BaseSpec" {
+    function run() {
+        describe( "Async 3 - asyncAll", () => {
+            it( "resolves all futures in parallel", () => {
+                include "async3.bxs"
+                expect( variables.combined ).toHaveLength( 3 )
+                expect( variables.combined ).toInclude( "apple" )
+                expect( variables.combined ).toInclude( "banana" )
+                expect( variables.combined ).toInclude( "cherry" )
+            })
+        })
+    }
+}

@@ -1,0 +1,16 @@
+// TODO: Instantiate a Java class using the new java: syntax.
+// Syntax: new java:fully.qualified.ClassName( args )
+
+// Create a Java ArrayList
+var list = new java:java.util.???()
+
+// Add some items
+list.add( "first" )
+list.add( "second" )
+list.add( "third" )
+
+// Get size
+var size = list.size()
+
+// Get item at index 0 (Java is 0-based!)
+var firstItem = list.get( ??? )

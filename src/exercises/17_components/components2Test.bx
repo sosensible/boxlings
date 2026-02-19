@@ -1,0 +1,15 @@
+/**
+ * TestBox Test for components2
+ */
+class extends="testbox.system.BaseSpec" {
+    function run() {
+        describe( "Components 2 - bx:query / queryExecute", () => {
+            it( "filters people older than 25", () => {
+                include "components2.bxs"
+                expect( variables.adults.recordCount ).toBe( 2 )
+                expect( listFindNoCase( valueList( variables.adults.name ), "Alice" ) ).toBeGT( 0 )
+                expect( listFindNoCase( valueList( variables.adults.name ), "Carol" ) ).toBeGT( 0 )
+            })
+        })
+    }
+}

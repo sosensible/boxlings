@@ -1,0 +1,22 @@
+/**
+ * TestBox Test for casting4
+ */
+class extends="testbox.system.BaseSpec" {
+    function run() {
+        describe( "Casting 4 - instanceOf operator", () => {
+            it( "checks type of string", () => {
+                include "casting4.bxs"
+                expect( variables.isString ).toBeTrue()
+            })
+            it( "checks type of number", () => {
+                expect( variables.isNumeric ).toBeTrue()
+            })
+            it( "checks type of boolean", () => {
+                expect( variables.isBoolean ).toBeTrue()
+            })
+            it( "checks type of array", () => {
+                expect( variables.isArray ).toBeTrue()
+            })
+        })
+    }
+}

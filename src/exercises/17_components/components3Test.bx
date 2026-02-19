@@ -1,0 +1,16 @@
+/**
+ * TestBox Test for components3
+ */
+class extends="testbox.system.BaseSpec" {
+    function run() {
+        describe( "Components 3 - bx:loop over array", () => {
+            it( "collects all fruits into result array", () => {
+                include "components3.bxs"
+                expect( variables.result ).toHaveLength( 3 )
+                expect( variables.result[ 1 ] ).toBe( "apple" )
+                expect( variables.result[ 2 ] ).toBe( "banana" )
+                expect( variables.result[ 3 ] ).toBe( "cherry" )
+            })
+        })
+    }
+}

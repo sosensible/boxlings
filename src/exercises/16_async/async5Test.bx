@@ -1,0 +1,13 @@
+/**
+ * TestBox Test for async5
+ */
+class extends="testbox.system.BaseSpec" {
+    function run() {
+        describe( "Async 5 - .then() chaining", () => {
+            it( "chains transformations on a future", () => {
+                include "async5.bxs"
+                expect( variables.result ).toBe( 25 )
+            })
+        })
+    }
+}

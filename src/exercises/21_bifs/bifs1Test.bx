@@ -1,0 +1,25 @@
+/**
+ * TestBox Test for bifs1
+ */
+class extends="testbox.system.BaseSpec" {
+    function run() {
+        describe( "BIFs 1 - String member functions", () => {
+            it( "trims whitespace", () => {
+                include "bifs1.bxs"
+                expect( variables.trimmed ).toBe( "Hello, BoxLang World!" )
+            })
+            it( "converts to uppercase", () => {
+                expect( variables.upper ).toBe( "HELLO, BOXLANG WORLD!" )
+            })
+            it( "finds BoxLang in string", () => {
+                expect( variables.hasBoxLang ).toBeTrue()
+            })
+            it( "replaces Word", () => {
+                expect( variables.replaced ).toBe( "Hello, BoxLang Universe!" )
+            })
+            it( "returns correct length", () => {
+                expect( variables.length ).toBe( 21 )
+            })
+        })
+    }
+}

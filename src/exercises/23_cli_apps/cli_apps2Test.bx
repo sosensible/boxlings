@@ -1,0 +1,17 @@
+/**
+ * TestBox Test for cli_apps2
+ */
+class extends="testbox.system.BaseSpec" {
+    function run() {
+        describe( "CLI Apps 2 - CLIGetArgs() parsing", () => {
+            it( "parses positionals and options correctly", () => {
+                include "cli_apps2.bxs"
+                // Since we're in test mode, CLIGetArgs() returns empty args
+                // Defaults should apply: command="help", name="Stranger", loud=false
+                expect( variables.command ).toBe( "help" )
+                expect( variables.name ).toBe( "Stranger" )
+                expect( variables.result ).toBe( "Hello, Stranger!" )
+            })
+        })
+    }
+}

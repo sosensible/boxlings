@@ -1,0 +1,19 @@
+// QUIZ 1: Variables, Closures & Null Handling
+// This quiz tests what you've learned in topics 01-11.
+// Fix ALL the ??? placeholders to make the tests pass.
+
+// 1. String interpolation - create a greeting using #name#
+var name = "BoxLang"
+var greeting = "Hello, ???!"
+
+// 2. Null coalescing - use ?: to provide a default
+var maybeNull = null
+var safe = maybeNull ??? "default"
+
+// 3. Closure that multiplies by a captured factor
+var factor = 3
+var multiplier = ( n ) => n ??? factor
+
+// 4. Safe navigation - avoid null errors with ?.
+var user = { name: "Alice" }
+var city = user?.address?.city ??? "Unknown"

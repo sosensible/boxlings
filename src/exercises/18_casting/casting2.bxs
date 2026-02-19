@@ -1,0 +1,9 @@
+// TODO: Cast a numeric value to a Java String using castAs.
+// Then cast an array of numbers to a String array.
+// Hint: Use castAs String  and  castAs String[]
+
+var num = 99
+var asString = num castAs ???
+
+var numbers = [ 1, 2, 3 ]
+var asStringArray = numbers castAs ???

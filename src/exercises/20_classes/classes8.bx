@@ -1,0 +1,25 @@
+// TODO: Implement the onMissingMethod() handler.
+// When a method doesn't exist, BoxLang calls onMissingMethod() automatically.
+// Use it to return a helpful "not found" message.
+
+class {
+
+    property name="data" type="struct"
+
+    // Pseudo-constructor
+    variables.data = {}
+
+    function init() {
+        return this
+    }
+
+    function set( required string key, required any value ) {
+        variables.data[ arguments.key ] = arguments.value
+        return this
+    }
+
+    // TODO: Implement onMissingMethod to return "Method {name} not found"
+    function onMissingMethod( required string missingMethodName, required struct missingMethodArgs ) {
+        return "Method ??? not found"
+    }
+}
