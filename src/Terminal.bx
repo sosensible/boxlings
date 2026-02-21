@@ -303,14 +303,14 @@ class {
             bar &= i <= filledWidth ? "█" : "░";
         }
 
-        // Color based on progress
-        var color = "red";
+        // Color based on progress (Electric theme: yellow → orange → green)
+        var color = "color226";
         if ( percentage >= 75 ) {
-            color = "green";
+            color = "color46";
         } else if ( percentage >= 50 ) {
-            color = "yellow";
+            color = "color208";
         } else if ( percentage >= 25 ) {
-            color = "cyan";
+            color = "color214";
         }
 
         print( variables.BOLD );
