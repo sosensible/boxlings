@@ -50,7 +50,8 @@ class {
             }
 
             // Auto-init: first-time users won't have an exercises/ folder yet
-            if ( !directoryExists( expandPath( "exercises" ) ) ) {
+            // 'challenge' command handles its own exercise setup - skip this check
+            if ( command != "challenge" && !directoryExists( expandPath( "exercises" ) ) ) {
                 println( "" )
                 println( "┌─ 👋 Welcome to BoxLings! ───────────────────────────────────┐" )
                 println( "│" )
@@ -107,6 +108,9 @@ class {
                     break;
                 case "list":
                     listCommand( appState )
+                    break;
+                case "challenge":
+                    challengeCommand( parsed )
                     break;
                 case "watch":
                 default:
@@ -470,6 +474,112 @@ class {
     }
 
     /**
+     * Conference / booth challenge mode.
+     *
+     * Picks N random exercises (excluding intro), copies them fresh into exercises/,
+     * and launches watch mode with a separate state file and challenge UI.
+     *
+     * Usage:
+     *   boxlang BoxLings.bx challenge        → 10 random exercises
+     *   boxlang BoxLings.bx challenge <N>    → N random exercises
+     */
+    private function challengeCommand( required parsed ) {
+        var terminal = new src.Terminal()
+
+        // ── Determine how many exercises to select ─────────────────────────────
+        var count = 10
+        if ( parsed.positionals.len() > 1 ) {
+            var rawCount = parsed.positionals[ 2 ]
+            if ( isNumeric( rawCount ) && val( rawCount ) > 0 ) {
+                count = int( val( rawCount ) )
+            }
+        }
+
+        // ── Load all exercises and filter out intro ────────────────────────────
+        var infoFile     = new src.InfoFile()
+        var allExercises = infoFile.loadExercises()
+        var pool         = allExercises.filter( e -> e.dir != "00_intro" )
+
+        if ( pool.isEmpty() ) {
+            println( "❌ No exercises available for the challenge!" )
+            cliExit( 1 )
+        }
+
+        // Cap at pool size
+        count = min( count, pool.len() )
+
+        // ── Fisher-Yates shuffle ───────────────────────────────────────────────
+        var shuffled = pool.map( e -> e )  // shallow copy so we don't mutate pool
+        for ( var i = shuffled.len(); i > 1; i-- ) {
+            var j    = randRange( 1, i )
+            var temp = shuffled[ i ]
+            shuffled[ i ] = shuffled[ j ]
+            shuffled[ j ] = temp
+        }
+
+        // Take first N from shuffled array
+        var selected = []
+        for ( var i = 1; i <= count; i++ ) {
+            selected.append( shuffled[ i ] )
+        }
+
+        // ── Rebuild exercises/ with only the selected files ────────────────────
+        var destDir = expandPath( "exercises" )
+        var srcBase = expandPath( "src/exercises" )
+
+        if ( directoryExists( destDir ) ) {
+            directoryDelete( destDir, true )
+        }
+        directoryCreate( destDir, true, true )
+
+        selected.each( ( exercise ) => {
+            var exerciseDestDir = destDir & "/" & exercise.dir
+            if ( !directoryExists( exerciseDestDir ) ) {
+                directoryCreate( exerciseDestDir, true, true )
+            }
+
+            // Copy the exercise source file
+            var srcFile  = srcBase & "/" & exercise.dir & "/" & exercise.name & exercise.getExtension()
+            var destFile = exerciseDestDir & "/" & exercise.name & exercise.getExtension()
+            if ( fileExists( srcFile ) ) {
+                fileCopy( srcFile, destFile )
+            }
+
+            // Copy the test file if the exercise has one
+            if ( exercise.test && exercise.test_path != "" ) {
+                var testFileName = listLast( exercise.test_path, "/" )
+                var srcTestFile  = srcBase & "/" & exercise.dir & "/" & testFileName
+                var destTestFile = exerciseDestDir & "/" & testFileName
+                if ( fileExists( srcTestFile ) ) {
+                    fileCopy( srcTestFile, destTestFile )
+                }
+            }
+        })
+
+        // ── Ensure .boxlings/ dir exists ───────────────────────────────────────
+        var stateDir = expandPath( ".boxlings" )
+        if ( !directoryExists( stateDir ) ) {
+            directoryCreate( stateDir, true, true )
+        }
+
+        // ── Wipe any stale challenge state so each session starts fresh ─────────
+        var challengeStatePath = expandPath( ".boxlings/challenge_state.json" )
+        if ( fileExists( challengeStatePath ) ) {
+            fileDelete( challengeStatePath )
+        }
+
+        // Mark all selected exercises as pending and create a fresh AppState
+        selected.each( e -> e.markPending() )
+        var appState = new src.AppState( selected, ".boxlings/challenge_state.json", true )
+
+        // ── Show challenge banner (waits for Enter before starting) ────────────
+        terminal.showChallengeBanner( count )
+
+        // ── Enter watch mode in challenge mode ─────────────────────────────────
+        watchCommand( appState )
+    }
+
+    /**
      * Watch mode - event-queue-driven interactive learning
      *
      * Architecture:
@@ -480,13 +590,19 @@ class {
      *  - Watcher thread: single long-lived asyncRun() running Watcher.start().
      *    Posts { type:"FILE_CHANGED" } events. Supports updatePath() so the same
      *    thread re-registers when the user advances to a new exercise.
+     *
+     * @appState      AppState instance; a challenge AppState has isChallenge()==true
      */
     private function watchCommand( required appState ) {
-        var terminal = new src.Terminal()
-        var runner   = new src.Runner()
+        var terminal      = new src.Terminal()
+        var runner        = new src.Runner()
+        var challengeMode = appState.isChallenge()
 
-        // Show welcome on first launch, banner banner otherwise
-        if ( appState.getCurrentIndex() == 1 && !appState.getCurrent().done ) {
+        // Challenge banner is already shown by challengeCommand; just clear screen.
+        // Normal mode: show welcome on first launch, the BoxLang banner otherwise.
+        if ( challengeMode ) {
+            terminal.clear()
+        } else if ( appState.getCurrentIndex() == 1 && !appState.getCurrent().done ) {
             terminal.showWelcome()
         } else {
             terminal.showBoxLangBanner()
@@ -528,10 +644,10 @@ class {
                 awaitingContinue = false
 
                 // Header
-                terminal.printBoxed( [
-                    "🥊 BoxLings - Interactive BoxLang Learning",
-                    "Learn BoxLang + TDD through hands-on exercises"
-                ] )
+                var headerLines = challengeMode
+                    ? [ "⚡ BoxLings Challenge ⚡", "Solve all exercises to win a prize!" ]
+                    : [ "🥊 BoxLings - Interactive BoxLang Learning", "Learn BoxLang + TDD through hands-on exercises" ]
+                terminal.printBoxed( headerLines )
                 println( "" )
 
                 // Progress bar
@@ -596,12 +712,17 @@ class {
 
                     // Next exercise (only if current is passing)
                     case "n":
+                        terminal.clear()
                         if ( lastResult.success ) {
                             appState.markCurrentDone()
                             appState.moveToNext()
                             if ( appState.isComplete() ) {
                                 terminal.clear()
-                                terminal.showCompletion( "You've completed all BoxLings exercises!" )
+                                if ( challengeMode ) {
+                                    terminal.showChallengeComplete( appState.getProgress().total )
+                                } else {
+                                    terminal.showCompletion( "You've completed all BoxLings exercises!" )
+                                }
                                 running = false
                             } else {
                                 watcher.updatePath( appState.getCurrent().path )
@@ -820,6 +941,7 @@ class {
         println( "│    hint [name]          Show hint" )
         println( "│    show-test [name]     Display test file" )
         println( "│    list                 List all exercises" )
+        println( "│    challenge [N]        Conference challenge: N random exercises (default 10)" )
         println( "│" )
         println( "│  OPTIONS:" )
         println( "│    --help               Show this help" )
@@ -834,6 +956,8 @@ class {
         println( "│    boxlang BoxLings.bx run variables1" )
         println( "│    boxlang BoxLings.bx hint intro2" )
         println( "│    boxlang BoxLings.bx solution variables3" )
+        println( "│    boxlang BoxLings.bx challenge     (10 exercises)" )
+        println( "│    boxlang BoxLings.bx challenge 5   (5 exercises)" )
         println( "│" )
         println( "└────────────────────────────────────────────────────────────┘" )
     }

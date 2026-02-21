@@ -37,16 +37,24 @@ class {
     property name="statePath" type="string" default=".boxlings/state.json";
 
     /**
+     * Whether this is a conference challenge session
+     */
+    property name="challengeMode" type="boolean" default="false";
+
+    /**
      * Constructor
      *
-     * @exercises Array of exercise objects to manage
+     * @exercises      Array of exercise objects to manage
+     * @statePath      Path to the JSON state file (override for challenge sessions)
+     * @challengeMode  When true, this is a conference challenge session
      */
-    function init( required array exercises ) {
-        variables.exercises = arguments.exercises
-        variables.currentIndex = 1
+    function init( required array exercises, string statePath = ".boxlings/state.json", boolean challengeMode = false ) {
+        variables.exercises     = arguments.exercises
+        variables.currentIndex  = 1
+        variables.challengeMode = arguments.challengeMode
 
         // Store statePath expanded for later use
-        variables.statePath = expandPath( variables.statePath )
+        variables.statePath = expandPath( arguments.statePath )
 
         // Load saved state if exists
         loadState()
@@ -262,5 +270,12 @@ class {
      */
     function getExercisesByTopic( required string topic ) {
         return variables.exercises.filter( exercise -> exercise.dir == topic )
+    }
+
+    /**
+     * Whether this AppState is running in conference challenge mode
+     */
+    function isChallenge() {
+        return variables.challengeMode
     }
 }

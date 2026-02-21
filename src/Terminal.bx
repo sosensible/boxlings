@@ -573,4 +573,79 @@ class {
 
         println( row );
     }
+
+    /**
+     * Show the conference challenge banner (Electric theme)
+     * @param count Number of exercises in this challenge session
+     */
+    function showChallengeBanner( required numeric count ) {
+        CLIClear()
+
+        // Electric gradient colours (matches the "Electric" theme in showBoxLangBanner)
+        var gradient = [ "color226", "color220", "color214", "color208", "color202", "color196" ]
+
+        var lines = [
+            "  ██████╗██╗  ██╗ █████╗ ██╗     ██╗     ███████╗███╗  ██╗ ██████╗ ███████╗",
+            " ██╔════╝██║  ██║██╔══██╗██║     ██║     ██╔════╝████╗ ██║██╔════╝ ██╔════╝",
+            " ██║     ███████║███████║██║     ██║     █████╗  ██╔██╗██║██║  ███╗█████╗  ",
+            " ██║     ██╔══██║██╔══██║██║     ██║     ██╔══╝  ██║╚████║██║   ██║██╔══╝  ",
+            " ╚██████╗██║  ██║██║  ██║███████╗███████╗███████╗██║ ╚███║╚██████╔╝███████╗",
+            "  ╚═════╝╚═╝  ╚═╝╚═╝  ╚═╝╚══════╝╚══════╝╚══════╝╚═╝  ╚══╝ ╚═════╝ ╚══════╝"
+        ]
+
+        println( "" )
+        for ( var i = 1; i <= arrayLen( lines ); i++ ) {
+            printLine( lines[ i ], gradient[ i ] )
+        }
+        println( "" )
+        printLine( "                  ⚡  B O X L A N G   C H A L L E N G E  ⚡", "color226" )
+        println( "" )
+        printRainbowDivider( 80 )
+        println( "" )
+        printLine( "  🎯  Solve ALL #count# exercises to complete the challenge!", "color46" )
+        printLine( "  🏆  Winners get a prize at the booth!", "color226" )
+        println( "" )
+        printLine( "  RULES:", "color214" )
+        println( "    • Fix each exercise until its tests pass" )
+        println( "    • Use 'h' for hints if you get stuck" )
+        println( "    • Save your file — BoxLings auto-reruns on save" )
+        println( "    • Complete all #count# to WIN!" )
+        println( "" )
+        printRainbowDivider( 80 )
+        println( "" )
+        print( "  Press ENTER to start the challenge... " )
+        CLIRead()
+        CLIClear()
+    }
+
+    /**
+     * Show the challenge complete / winner screen
+     * @param count Number of exercises that were solved
+     */
+    function showChallengeComplete( required numeric count ) {
+        println( "" )
+        printRainbowDivider( 80 )
+        println( "" )
+        printLine( "  ████████╗██████╗  ██████╗ ██████╗ ██╗  ██╗██╗   ██╗", "color226" )
+        printLine( "     ██╔══╝██╔══██╗██╔═══██╗██╔══██╗██║  ██║╚██╗ ██╔╝", "color220" )
+        printLine( "     ██║   ██████╔╝██║   ██║██████╔╝███████║ ╚████╔╝ ", "color214" )
+        printLine( "     ██║   ██╔══██╗██║   ██║██╔═══╝ ██╔══██║  ╚██╔╝  ", "color208" )
+        printLine( "     ██║   ██║  ██║╚██████╔╝██║     ██║  ██║   ██║   ", "color202" )
+        printLine( "     ╚═╝   ╚═╝  ╚═╝ ╚═════╝ ╚═╝     ╚═╝  ╚═╝   ╚═╝   ", "color196" )
+        println( "" )
+        printRainbowDivider( 80 )
+        println( "" )
+        printLine( "  🏆  YOU SOLVED ALL #count# EXERCISES — YOU WIN! 🏆", "color226" )
+        println( "" )
+        printLine( "  🎯  You're a BoxLang champion!", "color46" )
+        printLine( "  🚀  Visit the booth to claim your prize!", "color214" )
+        println( "" )
+        printLine( "  Keep exploring BoxLang:", "color248" )
+        println( "    🌏  https://www.boxlang.io" )
+        println( "    📚  https://boxlang.ortusbooks.com" )
+        println( "    💬  https://community.ortussolutions.com" )
+        println( "" )
+        printRainbowDivider( 80 )
+        println( "" )
+    }
 }
