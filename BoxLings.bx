@@ -705,9 +705,32 @@ class {
                         break;
 
                     // Rerun current exercise
-                    case "r": case "":
+                    case "r":
                         terminal.clear()
                         needsRerun = true
+                        break;
+
+                    // Enter: next if passing, rerun if failing
+                    case "":
+                        terminal.clear()
+                        if ( lastResult.success ) {
+                            appState.markCurrentDone()
+                            appState.moveToNext()
+                            if ( appState.isComplete() ) {
+                                terminal.clear()
+                                if ( challengeMode ) {
+                                    terminal.showChallengeComplete( appState.getProgress().total )
+                                } else {
+                                    terminal.showCompletion( "You've completed all BoxLings exercises!" )
+                                }
+                                running = false
+                            } else {
+                                watcher.updatePath( appState.getCurrent().path )
+                                needsRerun = true
+                            }
+                        } else {
+                            needsRerun = true
+                        }
                         break;
 
                     // Next exercise (only if current is passing)
@@ -806,7 +829,7 @@ class {
         var r = terminal.RESET
 
         if ( result.success ) {
-            var promptText = "[#b##c#n#r#] Next  [#b##c#h#r#] Hint  [#b##c#l#r#] List  [#b##c#q#r#] Quit: "
+            var promptText = "[#b##c#Enter/n#r#] Next  [#b##c#h#r#] Hint  [#b##c#l#r#] List  [#b##c#q#r#] Quit: "
             println( "" )
             println( "┌─ ✅ Exercise Passed! ──────────────────────────────────────┐" )
             println( "│" )
