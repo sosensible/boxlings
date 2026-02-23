@@ -11,13 +11,14 @@ class extends="testbox.system.BaseSpec" {
     function run() {
         describe( "Variables Exercise 5 - Shadowing", () => {
             
-            it( "should start with x equal to 5", () => {
-                // We can't easily test intermediate values in a script
-                // So we'll just verify the final result
+            it( "should produce a numeric result", () => {
                 include "variables5.bxs"
                 
-                // The result variable should exist
+                // The result variable should exist and be numeric
                 expect( variables ).toHaveKey( "result" )
+                assert isNumeric( variables.result ) : "result should be a number"
+                // x=5, x=x*2 => 10, x=x+5 => 15
+                assert variables.result == 15 : "Expected result to be 15 but got #variables.result#"
             })
             
             it( "should end with x equal to 15", () => {

@@ -1,0 +1,24 @@
+/**
+ * SOLUTION: TestBox tests for testing2 (reverseString function)
+ *
+ * This is an example of what your tests should look like.
+ * Students replace `expect( true ).toBeFalse()` with real assertions.
+ */
+class extends="testbox.system.BaseSpec" {
+    function run() {
+        describe( "Testing 2 - reverseString()", () => {
+            it( "reverses a simple word", () => {
+                include "testing2.bxs"
+                expect( reverseString( "boxlang" ) ).toBe( "gnalxob" )
+            })
+            it( "reverses a three-letter string", () => {
+                include "testing2.bxs"
+                expect( reverseString( "abc" ) ).toBe( "cba" )
+            })
+            it( "a single character returns itself", () => {
+                include "testing2.bxs"
+                expect( reverseString( "x" ) ).toBe( "x" )
+            })
+        })
+    }
+}

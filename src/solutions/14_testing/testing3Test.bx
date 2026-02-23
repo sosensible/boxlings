@@ -1,0 +1,26 @@
+/**
+ * SOLUTION: TestBox tests for testing3 (buildUser function)
+ *
+ * This is an example of what your tests should look like.
+ * Students replace `expect( true ).toBeFalse()` with real assertions.
+ */
+class extends="testbox.system.BaseSpec" {
+    function run() {
+        describe( "Testing 3 - buildUser()", () => {
+            it( "returns a struct with the correct name", () => {
+                include "testing3.bxs"
+                var user = buildUser( "Alice", 25 )
+                expect( user.name ).toBe( "Alice" )
+            })
+            it( "returns a struct with the correct age", () => {
+                include "testing3.bxs"
+                var user = buildUser( "Bob", 30 )
+                expect( user.age ).toBe( 30 )
+            })
+            it( "result is a struct", () => {
+                include "testing3.bxs"
+                expect( isStruct( buildUser( "Carol", 22 ) ) ).toBeTrue()
+            })
+        })
+    }
+}
