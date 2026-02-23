@@ -1,10 +1,11 @@
-// The test told us: x=10, y=20, sum=30
+// This exercise has tests! Read variables3Test.bx first to see what's expected.
 
 function main() {
     var x = 10
     var y = 20
     var sum = x + y
-    
+
+    assert sum == 30
     println( "The sum of #x# and #y# is #sum#" )
 }
 
