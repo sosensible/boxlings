@@ -1,13 +1,16 @@
-// In BoxLang, variables inside functions are automatically local-scoped!
-// This is different from CFML where you need the `var` keyword.
-// However, using `var` is still a good practice for clarity.
-//
-// TODO: This code works as-is, but add `var` for better readability!
+// Variables are used to store data. They can be changed throughout the program.
+// In this exercise, we will see how variables work in BXS.
+// Every template has a global variables scope, which means that variables defined outside of any function are accessible from anywhere in the template.
 
+// Every function has its own scope called `local`, which means that variables defined inside a function are only accessible within that function.
 function main() {
+    // We use var to create it in the local scope of the function. This means that this x is different from the global x.
     var x = 5
-    // x = 5;  // This works, but it's better to declare with `var` for clarity --- IGNORE ---
-    println( "local variable [x] has the value #x#" )
+
+    assert x == "5" // or local.x == 5
+    println( "local scope x is 5!" )
 }
 
+x = "variables"
 main()
+println( "variables scope x is variables!" )
