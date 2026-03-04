@@ -274,33 +274,70 @@ class {
 
         if ( !fileExists( testFullPath ) ) {
             return {
-                success: true,
-                output: "ℹ️  No test file found (expected: #exercise.test_path#)",
-                errors: []
+                success: false,
+                output: "❌ Test file not found (expected: #exercise.test_path#)",
+                errors: [ "Test file missing" ]
             }
         }
 
         try {
             var output = ""
-            var exitCode = 0
+            var errorOutput = ""
+            var exitCode = 1
 
-            // Run TestBox via BoxLang CLI
-            // TestBox will print results directly to console
+            // Convert exercises/01_variables/variables3Test.bx -> exercises.01_variables.variables3Test
+            var bundleName = exercise.test_path
+
+            if ( bundleName.right( 4 ).lcase() == ".bxs" ) {
+                bundleName = bundleName.left( bundleName.len() - 4 )
+            } else if ( bundleName.right( 3 ).lcase() == ".bx" ) {
+                bundleName = bundleName.left( bundleName.len() - 3 )
+            }
+
+            bundleName = replace( bundleName, "/", ".", "all" )
+            bundleName = replace( bundleName, char( 92 ), ".", "all" )
+            bundleName = reReplaceNoCase( bundleName, "^\\.+", "" )
+
+            var osName = createObject( "java", "java.lang.System" ).getProperty( "os.name" )
+            var runnerCommand = osName.findNoCase( "windows" )
+                ? expandPath( "testbox/run.bat" )
+                : expandPath( "testbox/run" )
+
+            // Run via local TestBox launcher so tests execute in the project context.
             bx:execute
-                name="boxlang"
-                arguments="testbox run --bundles=#testFullPath#"
+                name="#runnerCommand#"
+                arguments="--bundles=#bundleName#"
                 variable="output"
                 errorVariable="errorOutput"
                 returnVariable="exitCode"
                 timeout="30" {
             }
 
-            // Exit code 0 = all tests passed
-            var success = exitCode == 0
+            var allOutput = ( output ?: "" ) & char( 10 ) & ( errorOutput ?: "" )
+
+            // Parse TestBox summary to determine true pass/fail even when runner post-processing errors out.
+            // Normalize NBSP output and use literal checks for stable matching across terminals/engines.
+            var normalizedOutput = replace( allOutput, char( 160 ), " ", "all" )
+
+            var hasSummaryCounts = normalizedOutput.findNoCase( "Failed:" ) > 0
+                && normalizedOutput.findNoCase( "Errors:" ) > 0
+
+            var hasZeroFailed = normalizedOutput.findNoCase( "Failed: 0" ) > 0
+            var hasZeroErrors = normalizedOutput.findNoCase( "Errors: 0" ) > 0
+
+            // Guardrail: if TestBox emitted summary counts, those are authoritative.
+            // Fallback only when no summary is present, and require both clean exit and no failure markers.
+            var hasFailureMarkers = normalizedOutput.findNoCase( "Tests failed" ) > 0
+                || normalizedOutput.findNoCase( "❌" ) > 0
+                || normalizedOutput.findNoCase( "💥" ) > 0
+
+            var success = hasSummaryCounts
+                ? ( hasZeroFailed && hasZeroErrors )
+                : ( exitCode == 0 && !hasFailureMarkers )
 
             return {
                 success: success,
-                output: output ?: errorOutput,
+                output: allOutput.trim(),
                 errors: success ? [] : [ "Tests failed" ]
             }
 

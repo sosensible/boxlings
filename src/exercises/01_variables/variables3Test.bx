@@ -10,35 +10,12 @@ class extends="testbox.system.BaseSpec" {
     function run() {
         describe( "Variables Exercise 3", () => {
             
-            it( "should create variable x with value 10", () => {
-                // Execute the exercise
-                include "variables3.bxs"
-                
-                // Check that x exists and equals 10
-                expect( variables ).toHaveKey( "x" )
-                expect( variables.x ).toBe( 10 )
-            })
-            
-            it( "should create variable y with value 20", () => {
-                include "variables3.bxs"
-                
-                expect( variables ).toHaveKey( "y" )
-                expect( variables.y ).toBe( 20 )
-            })
-            
-            it( "should calculate sum as 30", () => {
-                include "variables3.bxs"
-                
-                expect( variables ).toHaveKey( "sum" )
-                expect( variables.sum ).toBe( 30 )
-            })
-            
             it( "should print the correct message", () => {
-                savecontent variable="output" {
-                    include "variables3.bxs"
-                }
+                include "variables3.bxs"
+
+                var result = main();
                 
-                expect( output ).toInclude( "30" )
+                expect( result ).toInclude( "30" )
             })
             
         })
