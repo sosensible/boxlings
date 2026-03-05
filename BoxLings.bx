@@ -683,6 +683,7 @@ class {
                 terminal.printSuccess( "File changed! Re-running..." )
                 sleep( 300 )
                 terminal.clear()
+                queue.clear()  // discard any pending input events that arrived during the run
                 needsRerun = true
                 continue
             }
