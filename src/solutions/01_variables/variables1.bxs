@@ -4,13 +4,13 @@
 
 // Every function has its own scope called `local`, which means that variables defined inside a function are only accessible within that function.
 function main() {
+    // We use var to create it in the local scope of the function. This means that this x is different from the global x.
     var x = 5
 
-    assert x == "variables"
-    println( "Function scoped x is ?" )
+    assert x == "5" // or local.x == 5
+    println( "local scope x is 5!" )
 }
 
 x = "variables"
 main()
-assert x == 5
-println( "variables scope x is ?" )
+println( "variables scope x is variables!" )
