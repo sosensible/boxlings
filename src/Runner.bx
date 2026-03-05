@@ -335,7 +335,7 @@ class {
 
             return {
                 success: success,
-                output: allOutput.trim(),
+                output: allOutput,
                 errors: success ? [] : [ "Tests failed" ]
             }
 
