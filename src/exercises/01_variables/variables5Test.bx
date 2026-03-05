@@ -1,42 +1,19 @@
 /**
- * TestBox Test for variables5 exercise
+ * TestBox Test for variables3 exercise
  *
- * READ THIS FIRST! This test demonstrates variable shadowing.
+ * READ THIS FIRST! This test shows you what your code should do.
  *
- * Shadowing: You can declare a variable with the same name multiple times,
- * and each new declaration "shadows" (hides) the previous one.
+ * Your task: Make the exercise code pass these tests!
  */
 class extends="testbox.system.BaseSpec" {
 
     function run() {
-        describe( "Variables Exercise 5 - Shadowing", () => {
+        describe( "Variables Exercise 5", () => {
 
-            it( "should produce a numeric result", () => {
+            it( "should have the correct convention casing for constants", () => {
                 include "variables5.bxs"
 
-                // The result variable should exist and be numeric
-                expect( variables ).toHaveKey( "result" )
-                assert isNumeric( variables.result ) : "result should be a number"
-                // x=5, x=x*2 => 10, x=x+5 => 15
-                assert variables.result == 15 : "Expected result to be 15 but got #variables.result#"
-            })
-
-            it( "should end with x equal to 15", () => {
-                include "variables5.bxs"
-
-                // After all the shadowing:
-                // x = 5
-                // x = x * 2  => x = 10
-                // x = x + 5  => x = 15
-                expect( variables.result ).toBe( 15 )
-            })
-
-            it( "should demonstrate shadowing by declaring var x multiple times", () => {
-                var content = fileRead( expandPath( "exercises/01_variables/variables5.bxs" ) )
-
-                // The code should have multiple "var x" declarations
-                var matches = reMatchNoCase( "var\s+x\s*=", content )
-                expect( matches.len() ).toBeGTE( 3, "Should have at least 3 'var x' declarations" )
+                expect( variables ).toHaveKeyWithCase( "MAX_POINTS" )
             })
 
         })

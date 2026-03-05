@@ -6,13 +6,13 @@ function main() {
         english: 87,
         science: 92
     }
-    
+
     // TODO: Get the count of keys
-    var count = ???
-    
+    variables.count = ???
+
     // TODO: Check if 'math' key exists
-    var hasMath = ???
-    
+    variables.hasMath = ???
+
     println( "Total subjects: #count#" )
     println( "Has math: #hasMath#" )
 }

@@ -1,9 +1,9 @@
 // TODO: Fix string escaping
 
 function main() {
-    // How do you print: He said "Hello"
+    // How do you print: He said "Hello"?  Use two quotes in a row to escape the quote character.
     var quote = "He said "Hello"";  // This will break!
-    
+
     println( quote )
 }
 

@@ -6,10 +6,3 @@ function bigger( a, b ) {
     }
     // Missing else clause!
 }
-
-function main() {
-    println( bigger( 10, 5 ) );   // Should print 10
-    println( bigger( 3, 8 ) );    // Should print 8
-}
-
-main()

@@ -5,10 +5,10 @@ function main() {
     var part1 = "Hello"
     var part2 = " "
     var part3 = "World"
-    
-    var message = part1 + part2 + part3;  // Wrong operator!
-    
-    println( message )
+
+    variables.message = part1 + part2 + part3;  // Wrong operator!
+
+    println( variables.message )
 }
 
 main()

@@ -4,10 +4,3 @@ function add( a, b ) {
     var sum = a + b
     // Missing return statement!
 }
-
-function main() {
-    var result = add( 5, 10 )
-    println( "The sum is: #result#" )
-}
-
-main()

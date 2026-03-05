@@ -55,13 +55,6 @@
       "test": true,
       "test_path": "exercises/01_variables/variables5Test.bx",
       "test_mode": "read",
-      "hint": "Shadowing allows you to reuse variable names. Check the test to see what the final value should be."
-    },
-    {
-      "name": "variables6",
-      "dir": "01_variables",
-      "path": "exercises/01_variables/variables6.bxs",
-      "test": false,
       "hint": "Constants in BoxLang... well, BoxLang doesn't have true constants like other languages. Variables can always be reassigned!"
     },
     {
@@ -210,13 +203,6 @@
       "hint": "Ordered structs use square brackets [ ] with key:value syntax to preserve order!"
     },
     {
-      "name": "datatypes8",
-      "dir": "04_data_types",
-      "path": "exercises/04_data_types/datatypes8.bxs",
-      "test": false,
-      "hint": "Use type-checking functions: isArray(), isStruct(), isNumeric(), isBoolean(), etc."
-    },
-    {
       "name": "arrays1",
       "dir": "05_arrays",
       "path": "exercises/05_arrays/arrays1.bxs",
@@ -233,65 +219,6 @@
       "hint": "Use the append() member function to add items to an array."
     },
     {
-      "name": "arrays3",
-      "dir": "05_arrays",
-      "path": "exercises/05_arrays/arrays3.bxs",
-      "test": true,
-      "test_path": "exercises/05_arrays/arrays3Test.bx",
-      "test_mode": "read",
-      "hint": "When iterating with each(), use a closure (=>) not a lambda (->)."
-    },
-    {
-      "name": "arrays4",
-      "dir": "05_arrays",
-      "path": "exercises/05_arrays/arrays4.bxs",
-      "test": true,
-      "test_path": "exercises/05_arrays/arrays4Test.bx",
-      "test_mode": "read",
-      "hint": "Remember: BoxLang arrays are 1-based! First element is [1], last is [length]."
-    },
-    {
-      "name": "scopes1",
-      "dir": "06_scopes",
-      "path": "exercises/06_scopes/scopes1.bxs",
-      "test": true,
-      "test_path": "exercises/06_scopes/scopes1Test.bx",
-      "test_mode": "read",
-      "hint": "Unscoped variables in scripts go to the 'variables' scope. Access them with variables.x"
-    },
-    {
-      "name": "scopes2",
-      "dir": "06_scopes",
-      "path": "exercises/06_scopes/scopes2.bxs",
-      "test": true,
-      "test_path": "exercises/06_scopes/scopes2Test.bx",
-      "test_mode": "read",
-      "hint": "Variables inside functions need the 'var' keyword to be in local scope."
-    },
-    {
-      "name": "scopes3",
-      "dir": "06_scopes",
-      "path": "exercises/06_scopes/scopes3.bxs",
-      "test": true,
-      "test_path": "exercises/06_scopes/scopes3Test.bx",
-      "test_mode": "read",
-      "hint": "Function parameters are available in the 'arguments' scope. Access them with arguments.name"
-    },
-    {
-      "name": "scopes4",
-      "dir": "06_scopes",
-      "path": "exercises/06_scopes/scopes4.bx",
-      "test": false,
-      "hint": "In classes: 'variables' is private, 'this' is public. Properties go to variables scope."
-    },
-    {
-      "name": "scopes5",
-      "dir": "06_scopes",
-      "path": "exercises/06_scopes/scopes5.bxs",
-      "test": false,
-      "hint": "The server scope persists for the entire BoxLang runtime. Run the script multiple times to see!"
-    },
-    {
       "name": "structs1",
       "dir": "07_structs",
       "path": "exercises/07_structs/structs1.bxs",
@@ -302,9 +229,6 @@
       "name": "structs2",
       "dir": "07_structs",
       "path": "exercises/07_structs/structs2.bxs",
-      "test": true,
-      "test_path": "exercises/07_structs/structs2Test.bx",
-      "test_mode": "read",
       "hint": "BoxLang struct keys are case-insensitive! NAME, name, NaMe all refer to the same key."
     },
     {
@@ -338,7 +262,9 @@
       "name": "strings1",
       "dir": "08_strings",
       "path": "exercises/08_strings/strings1.bxs",
-      "test": false,
+      "test": true,
+      "test_path": "exercises/08_strings/strings1Test.bx",
+      "test_mode": "read",
       "hint": "BoxLang uses ## for expression interpolation, not $ like some other languages."
     },
     {

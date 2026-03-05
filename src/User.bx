@@ -1,0 +1,10 @@
+class {
+    property name="name";
+    property name="age";
+
+    function init( name, age ) {
+        variables.name = name
+        variables.age = age
+        return this
+    }
+}

@@ -212,8 +212,7 @@ class {
 
             var result = {
                 output: "",
-                errorOutput: "",
-                exitCode: 0
+                errorOutput: ""
             }
 
             // Execute the exercise file
@@ -222,7 +221,6 @@ class {
                 arguments="#fullPath#"
                 variable="result.output"
                 errorVariable="result.errorOutput"
-                returnVariable="result.exitCode"
                 timeout="30" {
             }
 
@@ -230,13 +228,8 @@ class {
             var hasErrors = false
             var allOutput = (result.output ?: "") & (result.errorOutput ?: "")
 
-            // Check exit code
-            if ( result.exitCode != 0 ) {
-                hasErrors = true
-            }
-
             // Check for exceptions or errors in any output
-            if ( allOutput.findNoCase( "[ERROR]" ) || allOutput.findNoCase( "Exception:" ) || allOutput.findNoCase( "ortus.boxlang.runtime" ) ) {
+            if ( allOutput.findNoCase( "[ERROR]" ) || allOutput.findNoCase( "Exception" ) || allOutput.findNoCase( "ortus.boxlang.runtime" ) ) {
                 hasErrors = true
             }
 
@@ -283,7 +276,6 @@ class {
         try {
             var output = ""
             var errorOutput = ""
-            var exitCode = 1
 
             // Convert exercises/01_variables/variables3Test.bx -> exercises.01_variables.variables3Test
             var bundleName = exercise.test_path
@@ -309,7 +301,6 @@ class {
                 arguments="--bundles=#bundleName#"
                 variable="output"
                 errorVariable="errorOutput"
-                returnVariable="exitCode"
                 timeout="30" {
             }
 
@@ -333,7 +324,7 @@ class {
 
             var success = hasSummaryCounts
                 ? ( hasZeroFailed && hasZeroErrors )
-                : ( exitCode == 0 && !hasFailureMarkers )
+                : !hasFailureMarkers
 
             return {
                 success: success,

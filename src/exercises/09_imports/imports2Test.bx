@@ -4,12 +4,7 @@ class extends="testbox.system.BaseSpec" {
             it( "should import and use Java ArrayList", () => {
                 // Execute the class main method
                 var importsClass = new imports2()
-                
-                savecontent variable="output" {
-                    importsClass.main( [] )
-                }
-                
-                expect( output ).toInclude( "List size: 2" )
+                expect( importsClass.main( [] ) ).toBe( 2 )
             })
         })
     }

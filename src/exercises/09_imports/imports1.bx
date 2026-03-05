@@ -1,10 +1,10 @@
 // TODO: Import the User class
-// Assume there's a User.bx class in the same directory
+// There is a User class in the `src` directory.  How do you import it?
 
 class {
     function main( args = [] ) {
         // TODO: Add import statement at the top
-        var user = new User( "Luis", 40 )
-        println( user.getName() )
+        var luis = new User( "Luis", 40 )
+        println( luis.getName() )
     }
 }

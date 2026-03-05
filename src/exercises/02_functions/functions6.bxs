@@ -3,11 +3,17 @@
 
 function main() {
     var numbers = [ 1, 2, 3, 4, 5 ]
-    
+    var outside = true
+
     // TODO: This is trying to use a lambda, but the syntax is wrong!
     // Lambdas use -> (skinny arrow), not =>
-    var doubled = numbers.map( (n) => n * 2 )
-    
+    var doubled = numbers.map( (n) => {
+        if ( isDefined( "outside" ) ) {
+            throw( "Lambdas should not have access to outside variables.  That means this is a closure." )
+        }
+        return n * 2
+    } )
+
     println( "Original: #numbers.toString()#" )
     println( "Doubled: #doubled.toString()#" )
 }

@@ -3,12 +3,7 @@ class extends="testbox.system.BaseSpec" {
         describe( "Imports Exercise 4 - Using Imports", () => {
             it( "should create and use HashMap", () => {
                 var importsClass = new imports4()
-                
-                savecontent variable="output" {
-                    importsClass.main( [] )
-                }
-                
-                expect( output ).toInclude( "Language: BoxLang" )
+                expect( importsClass.main( [] ) ).toInclude( "Language: BoxLang" )
             })
         })
     }

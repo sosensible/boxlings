@@ -13,11 +13,3 @@ function getDayType( day ) {
             return "Unknown"
     }
 }
-
-function main() {
-    println( getDayType( "Monday" ) );    // Weekday
-    println( getDayType( "Saturday" ) );  // Should be Weekend!
-    println( getDayType( "Sunday" ) );    // Should be Weekend!
-}
-
-main()

@@ -1,19 +1,14 @@
-// Shadowing allows you to reuse variable names within the same scope.
-// This exercise has tests! Read variables5Test.bx first.
+// In BoxLang, all variables can be reassigned - there are no true constants
+// like in some other languages. However, you can use naming conventions.
 //
-// TODO: Fix this code to make the tests pass!
+// TODO: Fix this code by following BoxLang conventions
 
-function main() {
-    var x = 5
-    println( "x is: #x#" )
-    
-    var x = x * 2
-    println( "x is now: #x#" )
-    
-    var x = x + 5
-    println( "x is finally: #x#" )
-    
-    return x
-}
+// Convention: Use UPPERCASE for "constant" values
+variables.MAX_POINTS = 100
 
-var result = main()
+println( "The maximum points is: #MAX_POINTS#" )
+
+// This works in BoxLang (no true constants)
+variables.MAX_POINTS = 200
+
+println( "But we can still change it to: #max_points#" )

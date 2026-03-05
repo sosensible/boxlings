@@ -4,11 +4,11 @@
 class {
     function main( args = [] ) {
         // TODO: Add import for ArrayList
-        
+
         var list = new ArrayList()
         list.add( "BoxLang" )
         list.add( "Rocks" )
-        
-        println( "List size: #list.size()#" )
+
+        return list.size()
     }
 }

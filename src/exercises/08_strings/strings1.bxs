@@ -2,10 +2,7 @@
 
 function main() {
     var name = "BoxLang"
-    var version = "1.0"
-    
-    // TODO: Use ## for expression interpolation in BoxLang
-    println( "Welcome to $name version $version" );  // Wrong! Use ##
-}
 
-main()
+    // TODO: Use ## for expression interpolation in BoxLang
+    return "Welcome to $name"  // Wrong! Use ##
+}

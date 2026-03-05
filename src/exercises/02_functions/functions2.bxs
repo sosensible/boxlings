@@ -2,12 +2,5 @@
 // The function should accept a 'name' parameter
 
 function greet() {
-    println( "Hello, #name#!" )
+    return "Hello, #name#!"
 }
-
-function main() {
-    greet( "BoxLang" )
-    greet( "Luis" )
-}
-
-main()

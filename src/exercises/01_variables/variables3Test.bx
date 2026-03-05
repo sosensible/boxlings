@@ -1,23 +1,23 @@
 /**
  * TestBox Test for variables3 exercise
- * 
+ *
  * READ THIS FIRST! This test shows you what your code should do.
- * 
+ *
  * Your task: Make the exercise code pass these tests!
  */
 class extends="testbox.system.BaseSpec" {
-    
+
     function run() {
         describe( "Variables Exercise 3", () => {
-            
+
             it( "should print the correct message", () => {
                 include "variables3.bxs"
 
                 var result = main();
-                
+
                 expect( result ).toInclude( "30" )
             })
-            
+
         })
     }
 }

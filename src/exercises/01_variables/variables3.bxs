@@ -10,6 +10,5 @@ function main() {
 
     assert sum == 30
     println( "The sum of #x# and #y# is #sum#" )
+    return sum;
 }
-
-main()

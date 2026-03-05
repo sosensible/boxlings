@@ -3,9 +3,9 @@ class extends="testbox.system.BaseSpec" {
         describe( "Strings Exercise 3 - Member Functions", () => {
             it( "should convert to uppercase", () => {
                 include "strings3.bxs"
-                expect( variables.upper ).toInclude( "BOXLANG" )
+                expect( variables.upper ).toIncludeWithCase( "BOXLANG" )
             })
-            
+
             it( "should trim whitespace", () => {
                 include "strings3.bxs"
                 expect( variables.trimmed ).toBe( "BoxLang is awesome!" )

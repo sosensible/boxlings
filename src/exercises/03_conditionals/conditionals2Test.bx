@@ -1,26 +1,26 @@
 /**
  * TestBox Test for conditionals2 exercise
- * 
+ *
  * This test checks that you're using the ternary operator.
  */
 class extends="testbox.system.BaseSpec" {
-    
+
     function run() {
         describe( "Conditionals Exercise 2 - Ternary", () => {
-            
+
             it( "should correctly identify adults and minors", () => {
                 include "conditionals2.bxs"
                 expect( isAdult( 20 ) ).toBe( "Adult" )
                 expect( isAdult( 15 ) ).toBe( "Minor" )
                 expect( isAdult( 18 ) ).toBe( "Adult" )
             })
-            
+
             it( "should use ternary operator, not if/else", () => {
-                var code = fileRead( expandPath( "exercises/03_conditionals/conditionals2.bxs" ) )
+                var code = fileRead( expandPath( "/exercises/03_conditionals/conditionals2.bxs" ) )
                 // Should use ternary (contains ?)
-                expect( code ).toInclude( "?" )
+                expect( code ).toMatch( "age.*\?", "Did not detect a ternary operator in your code" );
             })
-            
+
         })
     }
 }

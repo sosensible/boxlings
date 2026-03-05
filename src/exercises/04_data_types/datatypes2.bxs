@@ -3,12 +3,12 @@
 function main() {
     var a = 10
     var b = 3
-    
-    var remainder = a % b
-    var quotient = a / b;  // This gives decimal, we need integer!
-    
-    println( "Quotient: #quotient#" )
-    println( "Remainder: #remainder#" )
+
+    variables.remainder = a % b
+    variables.quotient = a / b;  // This gives decimal, we need integer!
+
+    println( "Quotient: #variables.quotient#" )
+    println( "Remainder: #variables.remainder#" )
 }
 
 main()

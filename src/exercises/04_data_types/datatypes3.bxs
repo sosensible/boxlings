@@ -1,19 +1,12 @@
-// TODO: Fix the boolean type!
+// TODO: make the condition truthy
 
 function main() {
-    var isActive = "true";  // This is a STRING, not a boolean!
     var count = 0
-    
-    if ( isActive ) {
-        println( "System is active" )
-    }
-    
+
     // In BoxLang, 0 is falsey
     if ( count ) {
-        println( "Count is truthy" )
+        return "Count is truthy"
     } else {
-        println( "Count is falsey" )
+        return "Count is falsey"
     }
 }
-
-main()

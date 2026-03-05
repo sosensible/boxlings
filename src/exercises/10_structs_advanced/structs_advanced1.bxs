@@ -6,10 +6,10 @@ function main() {
     var updates = { age: 41, city: "Miami" }
 
     // TODO: merge profile and updates
-    var merged = ???
+    var merged = {}
 
     println( "Name: #merged.name#, Age: #merged.age#, City: #merged.city#" )
     return merged
 }
 
-var result = main()
+variables.result = main()

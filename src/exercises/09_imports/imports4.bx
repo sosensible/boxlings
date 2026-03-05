@@ -6,10 +6,10 @@ class {
     function main( args = [] ) {
         // TODO: Create a HashMap instance
         var map = ???
-        
+
         map.put( "language", "BoxLang" )
         map.put( "version", "1.0" )
-        
-        println( "Language: #map.get( 'language' )#" )
+
+        return "Language: #map.get( 'language' )#"
     }
 }

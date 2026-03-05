@@ -2,10 +2,10 @@
 
 function main() {
     var csv = "apple,banana,orange"
-    
+
     // TODO: Convert comma-separated list to array
-    var fruits = ???
-    
+    variables.fruits = []
+
     println( "Array: #fruits.toString()#" )
     println( "First fruit: #fruits[1]#" )
 }

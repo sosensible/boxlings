@@ -1,22 +1,19 @@
 /**
  * TestBox Test for functions2 exercise
- * 
+ *
  * READ THIS FIRST! This test checks that your function accepts arguments.
  */
 class extends="testbox.system.BaseSpec" {
-    
+
     function run() {
         describe( "Functions Exercise 2 - Arguments", () => {
-            
+
             it( "should accept a name parameter and greet properly", () => {
-                savecontent variable="output" {
-                    include "functions2.bxs"
-                }
-                
-                expect( output ).toInclude( "Hello, BoxLang!" )
-                expect( output ).toInclude( "Hello, Luis!" )
+                include "functions2.bxs"
+                expect( greet( "BoxLang" ) ).toBe( "Hello, BoxLang!" )
+                expect( greet( "Luis" ) ).toBe( "Hello, Luis!" )
             })
-            
+
         })
     }
 }

@@ -2,12 +2,12 @@
 
 function main() {
     // Regular struct - order not guaranteed
-    var steps = {
+    variables.steps = {
         first: "Wash",
         second: "Rinse",
         third: "Dry"
     }
-    
+
     // We need order preserved!
     steps.each( (key, value) => {
         println( "#key#: #value#" )

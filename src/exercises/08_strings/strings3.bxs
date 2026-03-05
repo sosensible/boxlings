@@ -2,13 +2,13 @@
 
 function main() {
     var text = "  BoxLang is awesome!  "
-    
-    // TODO: Convert to uppercase
-    var upper = ???
-    
-    // TODO: Trim whitespace
-    var trimmed = ???
-    
+
+    // TODO: Convert to uppercase (ucase)
+    variables.upper = text
+
+    // TODO: Trim whitespace (trim)
+    variables.trimmed = text
+
     println( "Upper: #upper#" )
     println( "Trimmed: '#trimmed#'" )
 }

@@ -1,29 +1,21 @@
 /**
  * TestBox Test for functions4 exercise
- * 
+ *
  * This test checks that your function has proper default arguments.
  */
 class extends="testbox.system.BaseSpec" {
-    
+
     function run() {
         describe( "Functions Exercise 4 - Default Arguments", () => {
-            
             it( "should use provided greeting when given", () => {
-                savecontent variable="output" {
-                    include "functions4.bxs"
-                }
-                
-                expect( output ).toInclude( "Hi, BoxLang!" )
+                include "functions4.bxs"
+                expect( greet( "BoxLang", "Hi" ) ).toBe( "Hi, BoxLang!" )
             })
-            
+
             it( "should use default greeting when not provided", () => {
-                savecontent variable="output" {
-                    include "functions4.bxs"
-                }
-                
-                expect( output ).toInclude( "Hello, Luis!" )
+                include "functions4.bxs"
+                expect( greet( "Luis" ) ).toBe( "Hello, Luis!" )
             })
-            
         })
     }
 }

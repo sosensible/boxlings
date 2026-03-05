@@ -6,8 +6,8 @@ import java:java.util.Date as JavaDate
 class {
     function main( args = [] ) {
         // TODO: Fix the instantiation - use the alias!
-        var javaDate = new Date()
-        
-        println( "Java Date: #javaDate.toString()#" )
+        var jDate = new Date()
+
+        println( "Java Date: #jDate.toString()#" )
     }
 }

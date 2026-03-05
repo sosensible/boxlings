@@ -2,8 +2,8 @@
 // In BoxLang, just use one quote and continue on new lines!
 
 function main() {
-    var poem = "Roses are red";  // TODO: Make this multi-line!
-    
+    variables.poem = "Roses are red";  // TODO: Make this multi-line!
+
     println( poem )
 }
 
