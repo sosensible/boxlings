@@ -216,9 +216,16 @@ class {
             }
 
             // Execute the exercise file
+            var command = "boxlang";
+            var args = "#fullPath#"
+            // detect windows
+            if( server.system.properties["os.name" ] contains "Windows" ) {
+                command = "cmd.exe"
+                args = '""/c boxlang #fullPath#""';
+            }
             bx:execute
-                name="boxlang"
-                arguments="#fullPath#"
+                name="#command#"
+                arguments="#args#"
                 variable="result.output"
                 errorVariable="result.errorOutput"
                 timeout="30" {
