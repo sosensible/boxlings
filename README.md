@@ -1,7 +1,7 @@
 # 🥊 BoxLings
 
 [![Beta](https://img.shields.io/badge/status-beta-orange)](https://github.com/ortus-boxlang/boxlings)
-[![BoxLang](https://img.shields.io/badge/BoxLang-1.0%2B-blue)](https://boxlang.ortusbooks.com/)
+[![BoxLang](https://img.shields.io/badge/BoxLang-1.11%2B-blue)](https://boxlang.ortusbooks.com/)
 [![License](https://img.shields.io/badge/license-Apache2-green)](LICENSE)
 
 > Small exercises to get you used to reading and writing **BoxLang** code while learning **Test-Driven Development (TDD)**!
@@ -32,7 +32,7 @@ Inspired by [rustlings](https://github.com/rust-lang/rustlings), BoxLings is an 
 
 You'll need BoxLang installed on your system. If you don't have it yet:
 
-- **BoxLang 1.0+** - [Installation Guide](https://boxlang.ortusbooks.com/getting-started/installation)
+- **BoxLang 1.11+** - [Installation Guide](https://boxlang.ortusbooks.com/getting-started/installation)
 - **Verify**: Run `boxlang --version` in your terminal
 
 **Note:** CommandBox is optional and only needed if you want to contribute to BoxLings development.
