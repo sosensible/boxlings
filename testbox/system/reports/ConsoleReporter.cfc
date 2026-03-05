@@ -78,7 +78,7 @@ component extends="TextReporter" {
 		// send to console
 		variables.out.printLn(
 			reReplace(
-				trim( local.report ),
+				local.report,
 				"[\r\n]+",
 				chr( 10 ),
 				"all"
