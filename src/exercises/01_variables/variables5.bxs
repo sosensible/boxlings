@@ -4,11 +4,11 @@
 // TODO: Fix this code by following BoxLang conventions
 
 // Convention: Use UPPERCASE for "constant" values
-variables.MAX_POINTS = 100
+variables.max_points = 100
 
-println( "The maximum points is: #MAX_POINTS#" )
+println( "The maximum points is: #max_points#" )
 
 // This works in BoxLang (no true constants)
-variables.MAX_POINTS = 200
+variables.max_points = 200
 
 println( "But we can still change it to: #max_points#" )
