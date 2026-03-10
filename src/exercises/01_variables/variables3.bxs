@@ -8,7 +8,7 @@ function main() {
     var y = ???
     var sum = x + y
 
-    assert sum == 30
+    assert sum == 30 : "Expected sum to equal 30 but got: #sum#"
     println( "The sum of #x# and #y# is #sum#" )
     return sum;
 }

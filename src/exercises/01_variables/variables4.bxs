@@ -10,7 +10,7 @@ function main() {
     println( "x is now a string: #x#" )
 
     x = now()
-    assert isBoolean( x )
+    assert isBoolean( x ) : "Expected x to be a Boolean after reassignment, but got: #x#"
     println( "x is now a boolean: #x#" )
 }
 

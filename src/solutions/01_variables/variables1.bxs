@@ -7,7 +7,7 @@ function main() {
     // We use var to create it in the local scope of the function. This means that this x is different from the global x.
     var x = 5
 
-    assert x == "5" // or local.x == 5
+    assert x == "5" : "Expected x to equal '5' but got: #x#" // or local.x == 5
     println( "local scope x is 5!" )
 }
 

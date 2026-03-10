@@ -6,11 +6,11 @@
 function main() {
     var x = 5
 
-    assert x == "variables"
+    assert x == "variables" : "Expected x to equal 'variables' but got: #x#"
     println( "Function scoped x is ?" )
 }
 
 x = "variables"
 main()
-assert x == 5
+assert x == 5 : "Expected x to equal 5 but got: #x#"
 println( "variables scope x is ?" )
