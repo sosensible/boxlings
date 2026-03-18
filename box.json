@@ -33,7 +33,7 @@
         }
     ],
     "devDependencies": {
-        "testbox": "^6.0.0"
+        "testbox": "^7.0.0"
     },
     "installPaths": {
         "testbox": "testbox/"
