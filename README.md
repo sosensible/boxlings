@@ -227,6 +227,10 @@ This creates your personal `exercises/` folder from the templates.
 chcp 65001
 ```
 - This is a temporary fix which will only last until the terminal is closed
+- Tip: You can place the following line in a Windows shortcut to open the command prompt directly in UTF-8:
+```
+cmd.exe /k "chcp 65001"
+```
 
 ### TestBox errors or missing tests
 
