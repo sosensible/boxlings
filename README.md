@@ -6,9 +6,7 @@
 
 > Small exercises to get you used to reading and writing **BoxLang** code while learning **Test-Driven Development (TDD)**!
 
-**🎉 Now in Beta!** We're looking for beta testers to help us improve BoxLings. [See Beta Testing section below](#-beta-testing).
-
-Inspired by [rustlings](https://github.com/rust-lang/rustlings), BoxLings is an interactive CLI tool that guides you through learning BoxLang fundamentals through hands-on exercises with intentional errors. You fix the code, run tests, and progress through topics at your own pace.
+Inspired by [rustlings](https://github.com/rust-lang/rustlings), **BoxLings** is an interactive CLI tool that guides you through learning BoxLang fundamentals through hands-on exercises with intentional errors. You fix the code, run tests, and progress through topics at your own pace.
 
 **What makes BoxLings special?** We teach you **TDD/BDD** alongside BoxLang! Tests are visible and part of the learning experience. Read tests first to understand requirements, then fix code to make them pass.
 
@@ -16,7 +14,7 @@ Inspired by [rustlings](https://github.com/rust-lang/rustlings), BoxLings is an 
 
 ## ✨ Features
 
-- 🎯 **126 Progressive Exercises** across 24 topics
+- 🎯 **129 Progressive Exercises** across 28 topics
 - 🧪 **TDD/BDD Learning** - Read and write TestBox tests
 - 👀 **Watch Mode** - Auto-rerun on file changes
 - 💡 **Hints System** - Get help when stuck
@@ -32,10 +30,20 @@ Inspired by [rustlings](https://github.com/rust-lang/rustlings), BoxLings is an 
 
 You'll need BoxLang installed on your system. If you don't have it yet:
 
-- **BoxLang 1.11+** - [Installation Guide](https://boxlang.ortusbooks.com/getting-started/installation)
-- **Verify**: Run `boxlang --version` in your terminal
+- **BoxLang 1.12+** - [Installation Guide](https://boxlang.ortusbooks.com/getting-started/installation)
+- **VScode** with our BoxLang Extension - As your IDE: https://boxlang.ortusbooks.com/getting-started/ide-tooling/boxlang-ide
+- Terminal with ANSI color support (Windows users: Windows Terminal, Git Bash, or WSL recommended)
+- Your favorite beverage ☕ for coding fuel!
 
-**Note:** CommandBox is optional and only needed if you want to contribute to BoxLings development.
+We encourage you to use BVM ([BoxLang Version Manager](https://boxlang.ortusbooks.com/getting-started/installation/boxlang-version-manager-bvm)) to manage your BoxLang versions:
+
+```bash
+# Install BVM
+curl -fsSL https://install-bvm.boxlang.io/ | bash
+bvm install 1.12.0
+bvm use 1.12.0
+boxlang --version  # Verify BoxLang 1.12.0 is active
+```
 
 ---
 
@@ -68,49 +76,6 @@ That's it! BoxLings will:
 - Start **watch mode**
 - Display the first exercise
 - Auto-rerun when you save changes
-
----
-
-## 🧪 Beta Testing
-
-**We need your help!** BoxLings is in beta and we're looking for feedback from the community.
-
-### What We're Looking For
-
-- 🐛 **Bug Reports** - Find issues? Please report them!
-- 💡 **Exercise Quality** - Are instructions clear? Difficulty appropriate?
-- 🎨 **UX Feedback** - Is the CLI intuitive? Colors readable?
-- 📚 **Content Gaps** - Missing topics? Need more examples?
-- 💻 **Platform Testing** - Does it work on your OS? (macOS, Linux, Windows)
-
-### How to Provide Feedback
-
-1. **Open an Issue**: [GitHub Issues](https://github.com/ortus-boxlang/boxlings/issues)
-   - Bug reports: Use "Bug Report" template
-   - Feature requests: Use "Feature Request" template
-   - Exercise feedback: Use "Exercise Feedback" template
-
-2. **Join the Discussion**:
-   - [Community Forum](https://community.ortussolutions.com/c/boxlang/42)
-   - [BoxLang Slack](https://boxteam.ortussolutions.com/)
-
-3. **Contribute**: PRs welcome! See [Contributing](#-contributing) section
-
-### Known Limitations
-
-- Windows support is functional but has minor display issues with some ANSI colors
-- Some advanced exercises (async, Java interop) require BoxLang 1.0.0+
-- Watch mode may be slower on network drives
-
-### Beta Roadmap
-
-- [x] 126 exercises across 24 topics
-- [x] Watch mode with auto-rerun
-- [x] Hints and solutions system
-- [x] Progress tracking
-- [ ] Interactive tutorial mode
-- [ ] Leaderboard/achievements system
-- [ ] VS Code extension integration
 
 ---
 
@@ -280,7 +245,7 @@ Dive deeper into BoxLang:
 17. **Async** (6) - Threads, futures, async programming
 18. **Components** (3) - bx:http, bx:query, etc.
 
-### Phase 3: Advanced (36 exercises)
+### Phase 3: Advanced (48 exercises)
 
 Master BoxLang-specific features:
 
@@ -291,6 +256,10 @@ Master BoxLang-specific features:
 23. **Templating** (4) - .bxm files, template syntax
 24. **CLI Apps** (4) - Building CLI tools
 25. **Java Interop** (6) - Calling Java, java: prefix
+26. **Destructuring** (4) - Struct and array destructuring, renaming, nesting
+27. **Spread** (4) - Spread operator for arrays, structs, and function calls
+28. **Range** (2) - The `..` range operator and functional methods on ranges
+29. **Assert** (2) - The `assert` statement with custom messages
 
 ---
 
@@ -537,7 +506,7 @@ For detailed contributing guidelines, see [CONTRIBUTING.md](CONTRIBUTING.md).
 
 ## 📝 License
 
-MIT License - see [LICENSE](LICENSE) file for details.
+Apache 2 License - see [LICENSE](LICENSE) file for details.
 
 ---
 

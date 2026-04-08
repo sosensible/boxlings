@@ -1,0 +1,13 @@
+/**
+ * TestBox Test for destructuring4
+ */
+class extends="testbox.system.BaseSpec" {
+    function run() {
+        describe( "Destructuring 4 - Nested Structs", () => {
+            it( "extracts values from nested structs", () => {
+                include "destructuring4.bxs"
+                expect( variables.result ).toBe( "Diego works on core" )
+            })
+        })
+    }
+}

@@ -1,0 +1,14 @@
+// TODO: Use NESTED struct destructuring
+// You can destructure nested structs in one step:
+//   ({ outerKey, innerStruct: { innerKey } } = data)
+// 'innerKey' is pulled directly from the nested struct
+
+var user = { name: "Diego", meta: { team: "core", level: 5 } }
+
+// TODO: Destructure 'name' and the nested 'team' from meta in one expression
+???
+
+// name should be "Diego"
+// team should be "core"
+
+var result = "#name# works on #team#"

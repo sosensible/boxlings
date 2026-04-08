@@ -1,0 +1,23 @@
+// TODO: Write assert statements with descriptive custom messages
+// Use: assert condition : "message explaining what went wrong"
+// Good messages help developers understand failing assertions immediately
+
+function processOrder( order ) {
+    // TODO: Assert that order is not null with message "Order must not be null"
+    ???
+
+    // TODO: Assert that order.amount > 0 with message "Order amount must be positive"
+    ???
+
+    // TODO: Assert that order.keyExists( "customerId" ) with message "Order must have a customerId"
+    ???
+
+    return "processed: #order.customerId# for $#order.amount#"
+}
+
+function main() {
+    var order = { customerId: "cust-42", amount: 99.99 }
+    return processOrder( order )
+}
+
+var result = main()

@@ -1,0 +1,5 @@
+// Spread structs inside a struct literal
+
+var defaults = { timeout: 30, retries: 3, debug: false }
+
+var config = { ...defaults, debug: true, host: "localhost" }

@@ -1,0 +1,16 @@
+/**
+ * TestBox Test for spread3
+ */
+class extends="testbox.system.BaseSpec" {
+    function run() {
+        describe( "Spread 3 - Struct Literal Spread", () => {
+            it( "merges structs and overrides with spread", () => {
+                include "spread3.bxs"
+                expect( variables.config.timeout ).toBe( 30 )
+                expect( variables.config.retries ).toBe( 3 )
+                expect( variables.config.debug ).toBe( true )
+                expect( variables.config.host ).toBe( "localhost" )
+            })
+        })
+    }
+}

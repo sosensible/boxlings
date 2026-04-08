@@ -1,0 +1,15 @@
+/**
+ * TestBox Test for destructuring3
+ */
+class extends="testbox.system.BaseSpec" {
+    function run() {
+        describe( "Destructuring 3 - Array with Rest", () => {
+            it( "extracts first and last, captures middle as array", () => {
+                include "destructuring3.bxs"
+                expect( variables.first ).toBe( 10 )
+                expect( variables.middle ).toBe( [ 20, 30, 40 ] )
+                expect( variables.last ).toBe( 50 )
+            })
+        })
+    }
+}

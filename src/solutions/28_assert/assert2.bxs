@@ -1,0 +1,16 @@
+// Multiple assert guards with descriptive messages
+
+function processOrder( order ) {
+    assert order != null : "Order must not be null"
+    assert order.amount > 0 : "Order amount must be positive"
+    assert order.keyExists( "customerId" ) : "Order must have a customerId"
+
+    return "processed: #order.customerId# for $#order.amount#"
+}
+
+function main() {
+    var order = { customerId: "cust-42", amount: 99.99 }
+    return processOrder( order )
+}
+
+var result = main()

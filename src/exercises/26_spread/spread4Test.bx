@@ -1,0 +1,15 @@
+/**
+ * TestBox Test for spread4
+ */
+class extends="testbox.system.BaseSpec" {
+    function run() {
+        describe( "Spread 4 - Struct Shorthand Keys", () => {
+            it( "builds a struct using shorthand key syntax", () => {
+                include "spread4.bxs"
+                expect( variables.serverInfo.host ).toBe( "localhost" )
+                expect( variables.serverInfo.port ).toBe( 8080 )
+                expect( variables.serverInfo.version ).toBe( "1.0" )
+            })
+        })
+    }
+}

@@ -1,0 +1,7 @@
+// Struct destructuring with key renaming
+
+var config = { host: "localhost", port: 8080 }
+
+({ host: serverHost, port: serverPort } = config)
+
+var result = "#serverHost#:#serverPort#"

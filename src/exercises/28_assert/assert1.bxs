@@ -1,0 +1,25 @@
+// TODO: Add a custom message to the assert statement
+// BoxLang assert syntax with a message:
+//   assert expression : "your message here"
+// If the expression is falsy the message appears in the thrown AssertException
+
+function validateAge( age ) {
+    // TODO: Fix the assert - add a custom message "Age cannot be negative"
+    assert age >= 0
+
+    return age
+}
+
+function main() {
+    var caught = ""
+
+    try {
+        validateAge( -1 )
+    } catch( any e ) {
+        caught = e.message
+    }
+
+    return caught
+}
+
+var result = main()

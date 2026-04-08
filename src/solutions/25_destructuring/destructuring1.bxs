@@ -1,0 +1,7 @@
+// Use struct destructuring to extract 'name' and 'role' from the user struct
+
+var user = { name: "Luis", role: "admin", age: 30 }
+
+({ name, role } = user)
+
+var result = "#name# is a #role#"

@@ -991,6 +991,114 @@
       "path": "exercises/24_java_interop/java_interop6.bxs",
       "test": false,
       "hint": "map.put( key, value ) adds entries. The third ??? should be the key \"runtime\" with value \"JVM\"."
+    },
+    {
+      "name": "destructuring1",
+      "dir": "25_destructuring",
+      "path": "exercises/25_destructuring/destructuring1.bxs",
+      "test": true,
+      "test_path": "exercises/25_destructuring/destructuring1Test.bx",
+      "test_mode": "read",
+      "hint": "Struct destructuring syntax: ({ key1, key2 } = struct). The parentheses are required when the destructuring is a statement (not a declaration)."
+    },
+    {
+      "name": "destructuring2",
+      "dir": "25_destructuring",
+      "path": "exercises/25_destructuring/destructuring2.bxs",
+      "test": true,
+      "test_path": "exercises/25_destructuring/destructuring2Test.bx",
+      "test_mode": "read",
+      "hint": "To rename during destructuring: ({ originalKey: newVariableName } = struct). The colon maps the source key to a different local variable name."
+    },
+    {
+      "name": "destructuring3",
+      "dir": "25_destructuring",
+      "path": "exercises/25_destructuring/destructuring3.bxs",
+      "test": true,
+      "test_path": "exercises/25_destructuring/destructuring3Test.bx",
+      "test_mode": "read",
+      "hint": "Array destructuring: [ first, ...middle, last ] = array. The ...rest binds to a new array containing all elements between the positional slots."
+    },
+    {
+      "name": "destructuring4",
+      "dir": "25_destructuring",
+      "path": "exercises/25_destructuring/destructuring4.bxs",
+      "test": true,
+      "test_path": "exercises/25_destructuring/destructuring4Test.bx",
+      "test_mode": "read",
+      "hint": "Nested struct destructuring: ({ outerKey, innerStruct: { innerKey } } = data). The nested pattern mirrors the shape of the data."
+    },
+    {
+      "name": "spread1",
+      "dir": "26_spread",
+      "path": "exercises/26_spread/spread1.bxs",
+      "test": true,
+      "test_path": "exercises/26_spread/spread1Test.bx",
+      "test_mode": "read",
+      "hint": "Spread an array into a function call: functionName( ...myArray ). Each element becomes a separate positional argument."
+    },
+    {
+      "name": "spread2",
+      "dir": "26_spread",
+      "path": "exercises/26_spread/spread2.bxs",
+      "test": true,
+      "test_path": "exercises/26_spread/spread2Test.bx",
+      "test_mode": "read",
+      "hint": "Spread arrays inside an array literal: [ ...arr1, ...arr2 ]. This flattens each source into the new array."
+    },
+    {
+      "name": "spread3",
+      "dir": "26_spread",
+      "path": "exercises/26_spread/spread3.bxs",
+      "test": true,
+      "test_path": "exercises/26_spread/spread3Test.bx",
+      "test_mode": "read",
+      "hint": "Spread structs inside a struct literal: { ...defaults, overrideKey: value }. Keys declared after the spread take precedence."
+    },
+    {
+      "name": "spread4",
+      "dir": "26_spread",
+      "path": "exercises/26_spread/spread4.bxs",
+      "test": true,
+      "test_path": "exercises/26_spread/spread4Test.bx",
+      "test_mode": "read",
+      "hint": "Struct shorthand key syntax: { host } is shorthand for { host: host }. Use it when the variable name matches the desired key name."
+    },
+    {
+      "name": "range1",
+      "dir": "27_range",
+      "path": "exercises/27_range/range1.bxs",
+      "test": true,
+      "test_path": "exercises/27_range/range1Test.bx",
+      "test_mode": "read",
+      "hint": "The .. range operator generates inclusive integer arrays: 1..5 gives [1,2,3,4,5] and 5..1 gives [5,4,3,2,1]."
+    },
+    {
+      "name": "range2",
+      "dir": "27_range",
+      "path": "exercises/27_range/range2.bxs",
+      "test": true,
+      "test_path": "exercises/27_range/range2Test.bx",
+      "test_mode": "read",
+      "hint": "Ranges are plain arrays — call functional methods directly on them. Wrap the range expression in parentheses before calling a member function: (1..10).reduce( ... )."
+    },
+    {
+      "name": "assert1",
+      "dir": "28_assert",
+      "path": "exercises/28_assert/assert1.bxs",
+      "test": true,
+      "test_path": "exercises/28_assert/assert1Test.bx",
+      "test_mode": "read",
+      "hint": "Add a custom message to assert using a colon: assert condition : \"your message\". The message appears in the AssertException when the condition is falsy."
+    },
+    {
+      "name": "assert2",
+      "dir": "28_assert",
+      "path": "exercises/28_assert/assert2.bxs",
+      "test": true,
+      "test_path": "exercises/28_assert/assert2Test.bx",
+      "test_mode": "read",
+      "hint": "Write one assert per guard condition with a message that explains exactly what violated. Use order.keyExists( \"key\" ) to check for struct keys."
     }
   ]
 }

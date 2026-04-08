@@ -1,0 +1,13 @@
+/**
+ * TestBox Test for destructuring1
+ */
+class extends="testbox.system.BaseSpec" {
+    function run() {
+        describe( "Destructuring 1 - Struct Basics", () => {
+            it( "extracts name and role from a struct", () => {
+                include "destructuring1.bxs"
+                expect( variables.result ).toBe( "Luis is a admin" )
+            })
+        })
+    }
+}

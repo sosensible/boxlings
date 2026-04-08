@@ -1,0 +1,17 @@
+/**
+ * TestBox Test for range1
+ */
+class extends="testbox.system.BaseSpec" {
+    function run() {
+        describe( "Range 1 - Basic Range Operator", () => {
+            it( "generates ascending range 1..5", () => {
+                include "range1.bxs"
+                expect( variables.ascending ).toBe( [ 1, 2, 3, 4, 5 ] )
+            })
+            it( "generates descending range 5..1", () => {
+                include "range1.bxs"
+                expect( variables.descending ).toBe( [ 5, 4, 3, 2, 1 ] )
+            })
+        })
+    }
+}

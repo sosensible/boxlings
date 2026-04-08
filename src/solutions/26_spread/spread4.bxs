@@ -1,0 +1,7 @@
+// Struct shorthand key syntax
+
+var host    = "localhost"
+var port    = 8080
+var version = "1.0"
+
+var serverInfo = { host, port, version }

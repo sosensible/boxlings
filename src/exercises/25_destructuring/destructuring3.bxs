@@ -1,0 +1,12 @@
+// TODO: Use array destructuring with rest capture
+// Array destructuring syntax: [ first, ...rest, last ] = array
+// The '...' rest operator captures all remaining elements into an array
+
+var numbers = [ 10, 20, 30, 40, 50 ]
+
+// TODO: Destructure to get 'first', capture middle elements into 'middle', and get 'last'
+???
+
+// first  should be 10
+// middle should be [ 20, 30, 40 ]
+// last   should be 50

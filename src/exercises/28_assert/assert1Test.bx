@@ -1,0 +1,13 @@
+/**
+ * TestBox Test for assert1
+ */
+class extends="testbox.system.BaseSpec" {
+    function run() {
+        describe( "Assert 1 - Custom Assert Messages", () => {
+            it( "includes the custom message when assertion fails", () => {
+                include "assert1.bxs"
+                expect( variables.result ).toInclude( "Age cannot be negative" )
+            })
+        })
+    }
+}

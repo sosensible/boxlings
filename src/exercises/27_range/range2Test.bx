@@ -1,0 +1,17 @@
+/**
+ * TestBox Test for range2
+ */
+class extends="testbox.system.BaseSpec" {
+    function run() {
+        describe( "Range 2 - Range with Functional Methods", () => {
+            it( "sums 1 through 10 using range and reduce", () => {
+                include "range2.bxs"
+                expect( variables.sum ).toBe( 55 )
+            })
+            it( "maps 1..5 to squares", () => {
+                include "range2.bxs"
+                expect( variables.squares ).toBe( [ 1, 4, 9, 16, 25 ] )
+            })
+        })
+    }
+}

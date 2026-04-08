@@ -1,0 +1,4 @@
+// Range operator basics
+
+var ascending  = 1..5
+var descending = 5..1

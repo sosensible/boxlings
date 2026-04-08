@@ -1,0 +1,11 @@
+// TODO: Combine the range operator with functional methods
+// Ranges produce regular arrays, so you can call map(), filter(), reduce(), etc. on them
+
+// TODO: Use range to generate 1..10, then reduce to compute the sum
+var sum = ???
+
+// TODO: Use range to generate 1..5, then map each number to its square (n * n)
+var squares = ???
+
+// sum     should be 55
+// squares should be [ 1, 4, 9, 16, 25 ]

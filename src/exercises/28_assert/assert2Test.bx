@@ -1,0 +1,23 @@
+/**
+ * TestBox Test for assert2
+ */
+class extends="testbox.system.BaseSpec" {
+    function run() {
+        describe( "Assert 2 - Multiple Assert Guards", () => {
+            it( "processes a valid order successfully", () => {
+                include "assert2.bxs"
+                expect( variables.result ).toBe( "processed: cust-42 for $99.99" )
+            })
+            it( "fails with correct message when amount is zero", () => {
+                var caught = ""
+                try {
+                    var order = { customerId: "x", amount: 0 }
+                    include "assert2.bxs"
+                } catch( any e ) {
+                    caught = e.message
+                }
+                expect( caught ).toInclude( "Order amount must be positive" )
+            })
+        })
+    }
+}

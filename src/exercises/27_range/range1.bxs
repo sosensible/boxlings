@@ -1,0 +1,10 @@
+// TODO: Use the inclusive range operator (..) to generate integer arrays
+// The .. operator creates an ascending or descending array of integers:
+//   1..5  produces [ 1, 2, 3, 4, 5 ]
+//   5..1  produces [ 5, 4, 3, 2, 1 ]
+
+// TODO: Use the range operator to create an array of integers from 1 to 5
+var ascending = ???
+
+// TODO: Use the range operator to create an array counting down from 5 to 1
+var descending = ???

@@ -1,0 +1,20 @@
+// Assert with custom message
+
+function validateAge( age ) {
+    assert age >= 0 : "Age cannot be negative"
+    return age
+}
+
+function main() {
+    var caught = ""
+
+    try {
+        validateAge( -1 )
+    } catch( any e ) {
+        caught = e.message
+    }
+
+    return caught
+}
+
+var result = main()

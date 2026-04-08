@@ -1,0 +1,9 @@
+// Spread array into function arguments
+
+function add( a, b, c ) {
+    return a + b + c
+}
+
+var args = [ 10, 20, 30 ]
+
+var result = add( ...args )

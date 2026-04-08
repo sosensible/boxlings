@@ -1,0 +1,13 @@
+/**
+ * TestBox Test for spread1
+ */
+class extends="testbox.system.BaseSpec" {
+    function run() {
+        describe( "Spread 1 - Function Call Spread", () => {
+            it( "spreads array into function arguments", () => {
+                include "spread1.bxs"
+                expect( variables.result ).toBe( 60 )
+            })
+        })
+    }
+}

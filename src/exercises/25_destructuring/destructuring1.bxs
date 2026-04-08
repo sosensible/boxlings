@@ -1,0 +1,10 @@
+// TODO: Use struct destructuring to extract 'name' and 'role' from the user struct
+// Struct destructuring syntax: ({ key1, key2 } = struct)
+// The extracted variables become available in the current scope
+
+var user = { name: "Luis", role: "admin", age: 30 }
+
+// TODO: Destructure 'name' and 'role' from user
+???
+
+var result = "#name# is a #role#"

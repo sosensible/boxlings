@@ -1,0 +1,13 @@
+// TODO: Use struct SHORTHAND key syntax
+// When a variable name matches the key you want in the struct, you can write
+// just the variable name instead of 'key: variable'.
+// Example: { name } is the same as { name: name }
+
+var host    = "localhost"
+var port    = 8080
+var version = "1.0"
+
+// TODO: Build a 'serverInfo' struct using shorthand keys for all three variables
+var serverInfo = ???
+
+// serverInfo should have host="localhost", port=8080, version="1.0"

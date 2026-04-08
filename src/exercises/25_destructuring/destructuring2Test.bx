@@ -1,0 +1,13 @@
+/**
+ * TestBox Test for destructuring2
+ */
+class extends="testbox.system.BaseSpec" {
+    function run() {
+        describe( "Destructuring 2 - Struct Renaming", () => {
+            it( "renames keys during destructuring", () => {
+                include "destructuring2.bxs"
+                expect( variables.result ).toBe( "localhost:8080" )
+            })
+        })
+    }
+}

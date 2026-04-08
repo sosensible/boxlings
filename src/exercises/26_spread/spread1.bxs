@@ -1,0 +1,12 @@
+// TODO: Use spread syntax to pass array elements as function arguments
+// Spread syntax: functionName( ...arrayVariable )
+// Each element of the array is passed as a separate positional argument
+
+function add( a, b, c ) {
+    return a + b + c
+}
+
+var args = [ 10, 20, 30 ]
+
+// TODO: Call add() using spread - pass args as individual arguments
+var result = add( ??? )

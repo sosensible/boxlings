@@ -1,0 +1,11 @@
+// TODO: Use struct destructuring with key RENAMING
+// When the destination variable name differs from the struct key, use:
+//   ({ originalKey: newName } = struct)
+// This extracts 'host' into a variable named 'serverHost', etc.
+
+var config = { host: "localhost", port: 8080 }
+
+// TODO: Destructure config, renaming 'host' to 'serverHost' and 'port' to 'serverPort'
+???
+
+var result = "#serverHost#:#serverPort#"

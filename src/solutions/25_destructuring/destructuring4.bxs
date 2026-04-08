@@ -1,0 +1,7 @@
+// Nested struct destructuring
+
+var user = { name: "Diego", meta: { team: "core", level: 5 } }
+
+({ name, meta: { team } } = user)
+
+var result = "#name# works on #team#"

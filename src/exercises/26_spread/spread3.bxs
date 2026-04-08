@@ -1,0 +1,11 @@
+// TODO: Use spread syntax to merge structs inside a struct literal
+// Syntax: { ...existingStruct, newKey: value }
+// Keys declared AFTER the spread override those from the spread source
+
+var defaults = { timeout: 30, retries: 3, debug: false }
+
+// TODO: Create a 'config' struct that starts from defaults but overrides
+//       'debug' to true and adds a new key 'host' set to "localhost"
+var config = ???
+
+// config should have: timeout=30, retries=3, debug=true, host="localhost"

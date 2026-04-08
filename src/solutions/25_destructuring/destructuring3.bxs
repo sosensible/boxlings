@@ -1,0 +1,9 @@
+// Array destructuring with rest capture
+
+var numbers = [ 10, 20, 30, 40, 50 ]
+
+[ first, ...middle, last ] = numbers
+
+// first  = 10
+// middle = [ 20, 30, 40 ]
+// last   = 50
