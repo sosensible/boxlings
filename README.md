@@ -184,6 +184,19 @@ This creates your personal `exercises/` folder from the templates.
 - Use **Windows Terminal** for best experience
 - Or try **Git Bash** or **WSL**
 
+### Menu displays question marks instead of icons (Windows 11)
+
+**Solution:** Temporarily force the terminal to use UTF-8
+- Windows 11: Before starting boxlings, run 
+```bash
+chcp 65001
+```
+- This is a temporary fix which will only last until the terminal is closed
+- Tip: You can place the following line in a Windows shortcut to open the command prompt directly in UTF-8:
+```
+cmd.exe /k "chcp 65001"
+```
+
 ### TestBox errors or missing tests
 
 **Solution:** Ensure TestBox is installed:
