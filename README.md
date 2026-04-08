@@ -4,6 +4,8 @@
 [![BoxLang](https://img.shields.io/badge/BoxLang-1.11%2B-blue)](https://boxlang.ortusbooks.com/)
 [![License](https://img.shields.io/badge/license-Apache2-green)](LICENSE)
 
+![alt text](boxlings-banner.jpg)
+
 > Small exercises to get you used to reading and writing **BoxLang** code while learning **Test-Driven Development (TDD)**!
 
 Inspired by [rustlings](https://github.com/rust-lang/rustlings), **BoxLings** is an interactive CLI tool that guides you through learning BoxLang fundamentals through hands-on exercises with intentional errors. You fix the code, run tests, and progress through topics at your own pace.
@@ -23,6 +25,8 @@ Inspired by [rustlings](https://github.com/rust-lang/rustlings), **BoxLings** is
 - 📝 **Three File Types** - Scripts (.bxs), Classes (.bx), Templates (.bxm)
 - ✅ **Solutions Included** - Compare your code
 - 🚀 **Built in BoxLang** - Dogfooding at its finest!
+
+![alt text](boxlings-intro.png)
 
 ---
 
