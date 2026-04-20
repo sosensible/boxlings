@@ -11,4 +11,4 @@ function main() {
     return doubled
 }
 
-varesult = main()
+variables.result = main()
